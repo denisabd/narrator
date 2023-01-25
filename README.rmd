@@ -1,5 +1,17 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # Narrator
 
@@ -8,23 +20,31 @@ Template-based NLG framework for creating text narratives out of data
 <!-- badges: start -->
 <!-- badges: end -->
 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>"
+)
+```
+
+
 ## Installation
 
-You can install the development version of narrator from
-[GitHub](https://github.com/) with:
+You can install the development version of narrator from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("denisabd/narrator")
 ```
 
+
 ## Basic Use
 
-``` r
+```{r}
 library(narrator)
 
 sales %>%
   narrate_desc(measure = "sales",
                dimensions = c("territory", "productline"))
-#> sales across all territories is 10032628.85. Outlying territory by sales is EMEA (5 M, 49.6%). Outlying productline by sales is Classic Cars (3.9 M, 39.1%).
 ```
+
