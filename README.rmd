@@ -19,6 +19,7 @@ Template-based NLG framework for creating text narratives out of data
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
+[![Codecov test coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
 <!-- badges: end -->
 
 

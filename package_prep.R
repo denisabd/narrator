@@ -22,12 +22,12 @@ rhub::check_for_cran()
 
 
 # testing -----------------------------------------------------------------
-library(testthat)
 #usethis::use_testthat(3)
+
+library(testthat)
 testthat::test_check(package = "narrator")
 
 usethis::use_test("narrate_desc")
-
 
 devtools::test()
 devtools::check()
@@ -64,7 +64,9 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 
 # github actions
 # Run once
-usethis::use_pkgdown_github_pages()
+usethis::use_github_action("pkgdown")
+usethis::use_github_action("test-coverage")
+
 
 # CRAN --------------------------------------------------------------------
 usethis::use_cran_badge()
