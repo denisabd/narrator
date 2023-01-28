@@ -30,7 +30,7 @@ testthat::test_check(package = "narrator")
 usethis::use_test("narrate_desc")
 
 devtools::test()
-covr::codecov(path = "tests")
+covr::codecov()
 
 
 devtools::check()
