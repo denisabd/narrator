@@ -6,6 +6,9 @@
 Template-based NLG framework for creating text narratives out of data
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
 <!-- badges: end -->
 
 ## Installation
