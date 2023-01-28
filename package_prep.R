@@ -57,8 +57,6 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 # github actions
 # Run once
 # usethis::use_pkgdown_github_pages()
-usethis::use_github_pages()
-usethis::use_pkgdown_github_pages()
 
 # CRAN --------------------------------------------------------------------
 usethis::use_cran_badge()
