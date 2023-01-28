@@ -30,6 +30,9 @@ testthat::test_check(package = "narrator")
 usethis::use_test("narrate_desc")
 
 devtools::test()
+covr::codecov(path = "tests")
+
+
 devtools::check()
 
 # licence -----------------------------------------------------------------
