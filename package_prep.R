@@ -25,10 +25,10 @@ rhub::check_for_cran()
 #usethis::use_testthat(3)
 
 library(testthat)
-testthat::test_check(package = "narrator")
 
 usethis::use_test("narrate_desc")
 usethis::use_test("format_number")
+usethis::use_test("pluralize")
 
 devtools::test()
 
