@@ -28,9 +28,12 @@ library(testthat)
 testthat::test_check(package = "narrator")
 
 usethis::use_test("narrate_desc")
+usethis::use_test("format_number")
 
 devtools::test()
-covr::codecov()
+
+# covr::package_coverage()
+# covr::codecov()
 
 
 devtools::check()
