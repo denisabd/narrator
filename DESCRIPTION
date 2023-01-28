@@ -1,11 +1,19 @@
 Package: narrator
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Create Natural Language Text Narratives from the Data
+Version: 0.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person(
+        given = "Denis", 
+        family = "Abdullin", 
+        email = "denisabdullincz@gmail.com", 
+        role = c("aut", "cre")
+        )
+Description: Template-based NLG system that converts a data frame to text. 
+    Different narrative types are available depending on the data frame structure.
+    Templates are built with the 'glue' package.
 License: MIT + file LICENSE
+URL: https://denisabd.github.io/narrator/
+BugReports: https://github.com/denisabd/narrator/issues/
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -20,9 +28,10 @@ Imports:
     V8
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.6)
 LazyData: true
-URL: https://denisabd.github.io/narrator/
+Config/testthat/edition: 3
