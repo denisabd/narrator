@@ -48,7 +48,7 @@ library(narrator)
 library(dplyr)
 
 sales %>%
-  narrate_desc(measure = "Sales",
+  narrate_descriptive(measure = "Sales",
                dimensions = c("Territory", "State"))
 
 sales <- sales %>%

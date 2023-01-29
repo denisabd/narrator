@@ -2,7 +2,7 @@
 
 export("%>%")
 export(format_number)
-export(narrate_desc)
+export(narrate_descriptive)
 export(pluralize)
 import(V8)
 importFrom(magrittr,"%>%")

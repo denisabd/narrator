@@ -46,7 +46,7 @@ devtools::install_github("denisabd/narrator")
 library(narrator)
 
 sales %>%
-  narrate_desc(measure = "Sales",
+  narrate_descriptive(measure = "Sales",
                dimensions = c("Territory", "Productline"))
 ```
 
