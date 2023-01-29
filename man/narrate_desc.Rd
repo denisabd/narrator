@@ -23,3 +23,8 @@ narrate_desc(
 \description{
 Create Descriptive Narrative
 }
+\examples{
+sales \%>\%
+narrate_desc(measure = "Sales",
+            dimensions = c("Territory", "State"))
+}

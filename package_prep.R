@@ -35,7 +35,6 @@ devtools::test()
 # covr::package_coverage()
 # covr::codecov()
 
-
 devtools::check()
 
 # licence -----------------------------------------------------------------
@@ -43,23 +42,19 @@ usethis::use_mit_license("Denis Abdullin")
 
 
 # data --------------------------------------------------------------------
-usethis::use_data(sales)
+usethis::use_data(sales, overwrite = TRUE)
 
 library(narrator)
+library(dplyr)
 
 sales %>%
-  narrate_desc(measure = "sales",
-               dimensions = c("territory", "state"))
+  narrate_desc(measure = "Sales",
+               dimensions = c("Territory", "State"))
 
-sales <- read.csv("sales_data_sample.csv", na = "") %>%
-  readr::type_convert() %>%
-  as_tibble()
+sales <- sales %>%
+  select(-year_id, -qtr_id, -month_id, -phone, -addressline1, -addressline2)
 
-names(sales) <- tolower(names(sales))
-
-sales$orderdate <- as.Date(sales$orderdate,format = "%m/%d/%Y")
-sales$orderdate
-
+names(sales) <- stringr::str_to_title(names(sales))
 sales
 
 # vignettes ---------------------------------------------------------------

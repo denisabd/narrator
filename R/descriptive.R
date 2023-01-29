@@ -14,6 +14,9 @@
 #' @export
 #'
 #' @examples
+#' sales %>%
+#' narrate_desc(measure = "Sales",
+#'             dimensions = c("Territory", "State"))
 narrate_desc <- function(
     df,
     measure = NULL,
