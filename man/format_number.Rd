@@ -23,6 +23,9 @@ format_number(
 
 \item{format_list}{List of formats to use for automated}
 }
+\value{
+vector of numerics
+}
 \description{
 Format numeric value
 }

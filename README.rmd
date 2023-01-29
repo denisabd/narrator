@@ -42,7 +42,7 @@ devtools::install_github("denisabd/narrator")
 
 ## Basic Use
 
-```{r}
+```{r, results='asis'}
 library(narrator)
 
 sales %>%

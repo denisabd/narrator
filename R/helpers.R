@@ -6,7 +6,7 @@
 #' @param threshold Threshold for converting to a specific format, below threshold only thousand delimiters will be added
 #' @param format_list List of formats to use for automated
 #'
-#' @return
+#' @return vector of numerics
 #' @export
 #'
 #' @examples format_number(27334254)

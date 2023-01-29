@@ -31,5 +31,8 @@ library(narrator)
 sales %>%
   narrate_descriptive(measure = "Sales",
                dimensions = c("Territory", "Productline"))
-#> Sales across all Territories is 10032628.85. Outlying Territory by Sales is EMEA (5 M, 49.6%). Outlying Productline by Sales is Classic Cars (3.9 M, 39.1%).
 ```
+
+Sales across all Territories is 10 M. Outlying Territory by Sales is
+EMEA (5 M, 49.6 %). Outlying Productline by Sales is Classic Cars (3.9
+M, 39.1 %).

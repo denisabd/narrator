@@ -10,10 +10,89 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
   comment = "#>"
 )
 ```
 
 ```{r setup}
 library(narrator)
+library(dplyr)
+library(knitr)
+```
+
+# Descriptive Narrative
+
+Basic narrative type is descriptive stats, looking into outliers or biggest contributors to the total volumes in the data set. This narratives are quite useful and can help to look deeper into the data set hierarchy.
+
+## Simple Table
+
+Starting with a simplest table that has only one dimension and one measure. Here overall sales volume as well as outlying Territories will be analyzed.
+```{r}
+df_one <- sales %>%
+  group_by(Territory) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales))
+
+kable(df_one)
+```
+
+```{r, results='asis'}
+narrate_descriptive(df_one)
+```
+
+## Multiple Dimensions
+
+```{r}
+df_two <- sales %>%
+  filter(Territory %in% c("NA", "EMEA")) %>%
+  group_by(Territory, Productline) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales))
+
+kable(df_two)
+```
+
+```{r, results='asis'}
+narrate_descriptive(df_two)
+```
+
+## Coverage
+
+Key argument for all narratives is `coverage`. It is used to narrate the most important things and avoid simple looping through all of the dimension levels. <br> <br>
+By default coverage is set to 0.5 and this means that narration will stop as soon as cumulative sum reaches 50 % mark. With increased coverage, additional narrative is returned.
+
+```{r}
+df_three <- sales %>%
+  group_by(Productline) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales))
+
+df_three %>%
+  mutate(Share = round(Sales/sum(Sales)*100, 1),
+         Cumulative = cumsum(Share)) %>%
+  kable()
+```
+
+```{r, results='asis'}
+narrate_descriptive(df_three)
+```
+
+```{r, results='asis'}
+narrate_descriptive(df_three, coverage = 0.7)
+```
+
+## Changing Templates
+
+Template-based systems are based on calculations of individual variables, and combining them together inside of the template. You can return a list of calculated variables and full narrative realization: 
+```{r, results='asis'}
+narrate_descriptive(df_three, coverage = 0.7, return_data = TRUE)
+```
+
+Let's change a template for our narrative function and rework the wording as well as changing 'is' to 'are' since `Sales` is plural:
+```{r, results='asis'}
+narrate_descriptive(
+  df_three,
+  narrative_total = "Overall {measure} for all {pluralize(dimension1)} are equal to {total}. ")
 ```

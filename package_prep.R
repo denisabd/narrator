@@ -2,7 +2,6 @@
 #install.packages("devtools")
 #usethis::create_package("C:/projects/narrator")
 
-
 usethis::use_package("glue")
 usethis::use_package("dplyr")
 usethis::use_package("tidyr")
@@ -16,10 +15,19 @@ usethis::use_pipe()
 devtools::document()
 devtools::install(upgrade = "never", build_vignettes = TRUE)
 
-# devtools checks ---------------------------------------------------------
+# website -----------------------------------------------------------------
+pkgdown::build_site(lazy = FALSE, new_process = TRUE)
+
+# github actions
+# Run once
+usethis::use_github_action("pkgdown")
+usethis::use_github_action("test-coverage")
+
+# devtools checks and test ---------------------------------------------------------
+devtools::test()
+
 devtools::check()
 rhub::check_for_cran()
-
 
 # testing -----------------------------------------------------------------
 #usethis::use_testthat(3)
@@ -59,14 +67,6 @@ sales
 
 # vignettes ---------------------------------------------------------------
 usethis::use_vignette(name = "intro", title = "Introducing narrator")
-
-# website -----------------------------------------------------------------
-pkgdown::build_site(lazy = FALSE, new_process = TRUE)
-
-# github actions
-# Run once
-usethis::use_github_action("pkgdown")
-usethis::use_github_action("test-coverage")
 
 
 # CRAN --------------------------------------------------------------------
