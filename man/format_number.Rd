@@ -28,4 +28,5 @@ Format numeric value
 }
 \examples{
 format_number(27334254)
+format_number(c(27334254, 12332, 23425435534))
 }

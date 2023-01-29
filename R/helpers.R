@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples format_number(27334254)
+#' format_number(c(27334254, 12332, 23425435534))
 format_number <- function(
     num,
     format = "auto",
