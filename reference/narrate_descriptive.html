@@ -44,7 +44,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Create Descriptive Narrative</h1>
-      <small class="dont-index">Source: <a href="https://github.com/denisabd/narrator/blob/HEAD/R/descriptive.R" class="external-link"><code>R/descriptive.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/denisabd/narrator/blob/HEAD/R/narrate_descriptive.R" class="external-link"><code>R/narrate_descriptive.R</code></a></small>
       <div class="d-none name"><code>narrate_descriptive.Rd</code></div>
     </div>
 
@@ -64,23 +64,71 @@
 <span>  narrative_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}. "</span>,</span>
 <span>  narrative_outlier_multiple <span class="op">=</span></span>
 <span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. "</span>,</span>
+<span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>...</dt>
-<dd></dd>
+    <dl><dt>df</dt>
+<dd><p>Data frame of tibble, can be aggregated or raw</p></dd>
+
+
+<dt>measure</dt>
+<dd><p>Numeric measure for function to create calculations with,
+if NULL then it will take the first numeric field available</p></dd>
+
+
+<dt>dimensions</dt>
+<dd><p>Vector of dimensions for analysis, by default all character
+or factor variable will be used</p></dd>
+
+
+<dt>coverage</dt>
+<dd><p>Portion of variability to be covered by narrative, 0 to 1</p></dd>
+
+
+<dt>coverage_limit</dt>
+<dd><p>Maximum number of elements to be narrated, overrides
+coverage to avoid extremely verbose narrative creation</p></dd>
+
+
+<dt>narrative_total</dt>
+<dd><p>glue template for total volumes narrative</p></dd>
+
+
+<dt>narrative_outlier</dt>
+<dd><p>glue template for single outlier narrative</p></dd>
+
+
+<dt>narrative_outlier_multiple</dt>
+<dd><p>glue template for multiple outliers narrative</p></dd>
+
+
+<dt>return_data</dt>
+<dd><p>return a list of variables used in the function's templates</p></dd>
+
+
+<dt>...</dt>
+<dd><p>other arguments passed to glue::glue</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>character vector, glue</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span><span class="fu">narrate_desc</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
+<span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
 <span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Territory"</span>, <span class="st">"State"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in narrate_desc(., measure = "Sales", dimensions = c("Territory",     "State")):</span> could not find function "narrate_desc"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sales across all Territories is 10 M. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Territory by Sales is EMEA (5 M, 49.6 %). </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             Outlying State by Sales is . </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -78,8 +78,272 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="descriptive-narrative">Descriptive Narrative<a class="anchor" aria-label="anchor" href="#descriptive-narrative"></a>
+</h2>
+<p>Basic narrative type is descriptive stats, looking into outliers or
+biggest contributors to the total volumes in the data set. This
+narratives are quite useful and can help to look deeper into the data
+set hierarchy.</p>
+<div class="section level3">
+<h3 id="simple-table">Simple Table<a class="anchor" aria-label="anchor" href="#simple-table"></a>
+</h3>
+<p>Starting with a simplest table that has only one dimension and one
+measure. Here overall sales volume as well as outlying Territories will
+be analyzed.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_one</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Territory</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Territory</th>
+<th align="right">Sales</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">EMEA</td>
+<td align="right">4979272.4</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="right">3852061.4</td>
+</tr>
+<tr class="odd">
+<td align="left">APAC</td>
+<td align="right">746121.8</td>
+</tr>
+<tr class="even">
+<td align="left">Japan</td>
+<td align="right">455173.2</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span></code></pre></div>
+<p>Sales across all Territories is 10 M. Outlying Territories by Sales
+are EMEA (5 M, 49.6 %), NA (3.9 M, 38.4 %).</p>
+</div>
+<div class="section level3">
+<h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_two</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Territory</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"EMEA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Territory</span>, <span class="va">Productline</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Territory</th>
+<th align="left">Productline</th>
+<th align="right">Sales</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">EMEA</td>
+<td align="left">Classic Cars</td>
+<td align="right">2086994.66</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">Classic Cars</td>
+<td align="right">1406261.44</td>
+</tr>
+<tr class="odd">
+<td align="left">EMEA</td>
+<td align="left">Vintage Cars</td>
+<td align="right">848981.46</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">Vintage Cars</td>
+<td align="right">798268.69</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">Motorcycles</td>
+<td align="right">524549.19</td>
+</tr>
+<tr class="even">
+<td align="left">EMEA</td>
+<td align="left">Motorcycles</td>
+<td align="right">503096.70</td>
+</tr>
+<tr class="odd">
+<td align="left">EMEA</td>
+<td align="left">Trucks and Buses</td>
+<td align="right">498305.82</td>
+</tr>
+<tr class="even">
+<td align="left">EMEA</td>
+<td align="left">Planes</td>
+<td align="right">476122.91</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">Trucks and Buses</td>
+<td align="right">449788.40</td>
+</tr>
+<tr class="even">
+<td align="left">EMEA</td>
+<td align="left">Ships</td>
+<td align="right">427264.68</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">Planes</td>
+<td align="right">353942.96</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">Ships</td>
+<td align="right">249997.15</td>
+</tr>
+<tr class="odd">
+<td align="left">EMEA</td>
+<td align="left">Trains</td>
+<td align="right">138506.18</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">Trains</td>
+<td align="right">69253.56</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span></code></pre></div>
+<p>Sales across all Territories is 8.8 M. Outlying Territory by Sales is
+EMEA (5 M, 56.4 %). Outlying Productlines by Sales are Classic Cars (3.5
+M, 39.6 %), Vintage Cars (1.6 M, 18.7 %).</p>
+</div>
+<div class="section level3">
+<h3 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
+</h3>
+<p>Key argument for all narratives is <code>coverage</code>. It is used
+to narrate the most important things and avoid simple looping through
+all of the dimension levels. <br><br> By default coverage is set to 0.5
+and this means that narration will stop as soon as cumulative sum
+reaches 50 % mark. With increased coverage, additional narrative is
+returned.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_three</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Productline</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_three</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Share <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>         Cumulative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">Share</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Productline</th>
+<th align="right">Sales</th>
+<th align="right">Share</th>
+<th align="right">Cumulative</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Classic Cars</td>
+<td align="right">3919615.7</td>
+<td align="right">39.1</td>
+<td align="right">39.1</td>
+</tr>
+<tr class="even">
+<td align="left">Vintage Cars</td>
+<td align="right">1903150.8</td>
+<td align="right">19.0</td>
+<td align="right">58.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Motorcycles</td>
+<td align="right">1166388.3</td>
+<td align="right">11.6</td>
+<td align="right">69.7</td>
+</tr>
+<tr class="even">
+<td align="left">Trucks and Buses</td>
+<td align="right">1127789.8</td>
+<td align="right">11.2</td>
+<td align="right">80.9</td>
+</tr>
+<tr class="odd">
+<td align="left">Planes</td>
+<td align="right">975003.6</td>
+<td align="right">9.7</td>
+<td align="right">90.6</td>
+</tr>
+<tr class="even">
+<td align="left">Ships</td>
+<td align="right">714437.1</td>
+<td align="right">7.1</td>
+<td align="right">97.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Trains</td>
+<td align="right">226243.5</td>
+<td align="right">2.3</td>
+<td align="right">100.0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span></code></pre></div>
+<p>Sales across all Productlines is 10 M. Outlying Productlines by Sales
+are Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %).</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code></pre></div>
+<p>Sales across all Productlines is 10 M. Outlying Productlines by Sales
+are Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %),
+Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M, 11.2 %).</p>
+</div>
+<div class="section level3">
+<h3 id="changing-templates">Changing Templates<a class="anchor" aria-label="anchor" href="#changing-templates"></a>
+</h3>
+<p>Template-based systems are based on calculations of individual
+variables, and combining them together inside of the template. You can
+return a list of calculated variables and full narrative
+realization:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span>, return_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>$narrative_total Sales across all Productlines is 10 M.</p>
+<p>$narrative Sales across all Productlines is 10 M. Outlying
+Productlines by Sales are Classic Cars (3.9 M, 39.1 %), Vintage Cars
+(1.9 M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M,
+11.2 %).</p>
+<p>$narrative_outlier_final Outlying Productlines by Sales are Classic
+Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %), Motorcycles (1.2 M,
+11.6 %), Trucks and Buses (1.1 M, 11.2 %).</p>
+<p>$measure [1] “Sales”</p>
+<p>[[5]] [1] “Productline”</p>
+<p>$total [1] “10 M”</p>
+<p>$outlier_insight [1] “Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9
+M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M, 11.2
+%)”</p>
+<p>Let’s change a template for our narrative function and rework the
+wording as well as changing ‘is’ to ‘are’ since <code>Sales</code> is
+plural:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
+<span>  <span class="va">df_three</span>,</span>
+<span>  narrative_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span></code></pre></div>
+<p>Overall Sales for all Productlines are equal to 10 M. Outlying
+Productlines by Sales are Classic Cars (3.9 M, 39.1 %), Vintage Cars
+(1.9 M, 19 %).</p>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
