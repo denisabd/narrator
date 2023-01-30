@@ -112,4 +112,8 @@ A method that is a little more handy is setting `.Renviron` variable names using
 narrate_descriptive(df_three, use_renviron = TRUE)
 ```
 
-
+You can get all templates currently available in the package with `list_templates()` function:
+```{r}
+list_templates() %>%
+  kable()
+```

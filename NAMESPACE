@@ -2,6 +2,7 @@
 
 export("%>%")
 export(format_number)
+export(list_templates)
 export(narrate_descriptive)
 export(pluralize)
 import(V8)

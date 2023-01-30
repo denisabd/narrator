@@ -25,4 +25,4 @@ sales <- tibble::tibble(
 sales %>%
   readr::write_csv("data-raw/sales.csv")
 
-usethis::use_data(sales, overwrite = TRUE)
+usethis::use_data(sales, overwrite = TRUE, internal = FALSE)

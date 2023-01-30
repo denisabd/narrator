@@ -90,7 +90,6 @@ narrate_descriptive <- function(
     }
   }
 
-
   dimension1 <- dimensions[1]
 
   total <- df %>%
@@ -117,6 +116,9 @@ narrate_descriptive <- function(
       dplyr::mutate(cum_share = cumsum(share)) %>%
       dplyr::filter(cumsum(lag(cum_share >= coverage, default = FALSE)) == 0) %>%
       dplyr::slice(1:coverage_limit)
+
+    # For a single dimension we skip to the next level
+    if (nrow(table) == 1 & table$cum_share[1] == 1) next
 
     n_outliers <- nrow(table)
 
