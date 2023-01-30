@@ -60,10 +60,11 @@
 <span>  dimensions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coverage <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  narrative_total <span class="op">=</span> <span class="st">"{measure} across all {pluralize(dimension1)} is {total}. "</span>,</span>
-<span>  narrative_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}. "</span>,</span>
-<span>  narrative_outlier_multiple <span class="op">=</span></span>
+<span>  template_total <span class="op">=</span> <span class="st">"{measure} across all {pluralize(dimension1)} is {total}. "</span>,</span>
+<span>  template_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}. "</span>,</span>
+<span>  template_outlier_multiple <span class="op">=</span></span>
 <span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. "</span>,</span>
+<span>  use_renviron <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -94,16 +95,20 @@ or factor variable will be used</p></dd>
 coverage to avoid extremely verbose narrative creation</p></dd>
 
 
-<dt>narrative_total</dt>
+<dt>template_total</dt>
 <dd><p>glue template for total volumes narrative</p></dd>
 
 
-<dt>narrative_outlier</dt>
+<dt>template_outlier</dt>
 <dd><p>glue template for single outlier narrative</p></dd>
 
 
-<dt>narrative_outlier_multiple</dt>
+<dt>template_outlier_multiple</dt>
 <dd><p>glue template for multiple outliers narrative</p></dd>
+
+
+<dt>use_renviron</dt>
+<dd><p>Whether to use .Renviron variables in the template</p></dd>
 
 
 <dt>return_data</dt>

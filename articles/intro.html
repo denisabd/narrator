@@ -315,31 +315,61 @@ variables, and combining them together inside of the template. You can
 return a list of calculated variables and full narrative
 realization:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span>, return_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>$narrative_total Sales across all Productlines is 10 M.</p>
-<p>$narrative Sales across all Productlines is 10 M. Outlying
-Productlines by Sales are Classic Cars (3.9 M, 39.1 %), Vintage Cars
-(1.9 M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M,
-11.2 %).</p>
-<p>$narrative_outlier_final Outlying Productlines by Sales are Classic
-Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %), Motorcycles (1.2 M,
-11.6 %), Trucks and Buses (1.1 M, 11.2 %).</p>
-<p>$measure [1] “Sales”</p>
-<p>[[5]] [1] “Productline”</p>
-<p>$total [1] “10 M”</p>
-<p>$outlier_insight [1] “Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9
-M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M, 11.2
-%)”</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span>, return_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $template_total</span></span>
+<span><span class="co">#&gt; Sales across all Productlines is 10 M. </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $narrative</span></span>
+<span><span class="co">#&gt; Sales across all Productlines is 10 M. </span></span>
+<span><span class="co">#&gt; Outlying Productlines by Sales are Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M, 11.2 %). </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $template_outlier_final</span></span>
+<span><span class="co">#&gt; Outlying Productlines by Sales are Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M, 11.2 %). </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $measure</span></span>
+<span><span class="co">#&gt; [1] "Sales"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[5]]</span></span>
+<span><span class="co">#&gt; [1] "Productline"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $total</span></span>
+<span><span class="co">#&gt; [1] "10 M"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $outlier_insight</span></span>
+<span><span class="co">#&gt; [1] "Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %), Motorcycles (1.2 M, 11.6 %), Trucks and Buses (1.1 M, 11.2 %)"</span></span></code></pre></div>
 <p>Let’s change a template for our narrative function and rework the
 wording as well as changing ‘is’ to ‘are’ since <code>Sales</code> is
 plural:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_three</span>,</span>
-<span>  narrative_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span></code></pre></div>
+<span>  template_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span></code></pre></div>
 <p>Overall Sales for all Productlines are equal to 10 M. Outlying
 Productlines by Sales are Classic Cars (3.9 M, 39.1 %), Vintage Cars
 (1.9 M, 19 %).</p>
+<p>We can set the templates using <code>usethis::edit_r_environ()</code>
+or setting up an environment variable using your data science platform
+capabilities.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span></code></pre></div>
+<p>[1] “”</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
+<span>  <span class="va">df_three</span>,template_total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>Outlying Productlines by Sales are Classic Cars (3.9 M, 39.1 %),
+Vintage Cars (1.9 M, 19 %).</p>
+<p>A method that is a little more handy is setting
+<code>.Renviron</code> variable names using a certain convention and
+adding <code>use_renviron = TRUE</code> to the narrate function. For
+example here we created a variable that uses the unique part of the
+function name, underscore, and template name - <code>descriptive</code>
++ <code>-</code> + <code>template_total</code></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, use_renviron <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Sales across all Productlines is 10 M. Outlying Productlines by Sales
+are Classic Cars (3.9 M, 39.1 %), Vintage Cars (1.9 M, 19 %).</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
