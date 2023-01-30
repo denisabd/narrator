@@ -54,5 +54,5 @@ Create Descriptive Narrative
 \examples{
 sales \%>\%
 narrate_descriptive(measure = "Sales",
-            dimensions = c("Territory", "State"))
+            dimensions = c("Territory", "Product"))
 }

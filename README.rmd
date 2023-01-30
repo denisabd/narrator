@@ -47,6 +47,6 @@ library(narrator)
 
 sales %>%
   narrate_descriptive(measure = "Sales",
-               dimensions = c("Territory", "Productline"))
+               dimensions = c("Territory", "Product"))
 ```
 

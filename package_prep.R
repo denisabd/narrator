@@ -40,17 +40,19 @@ usethis::use_test("pluralize")
 
 devtools::test()
 
-# covr::package_coverage()
-# covr::codecov()
-
+# check the whole package
 devtools::check()
+
+# code coverage
+covr::report()
+
 
 # licence -----------------------------------------------------------------
 usethis::use_mit_license("Denis Abdullin")
 
 
 # data --------------------------------------------------------------------
-usethis::use_data(sales, overwrite = TRUE)
+usethis::use_data(sales, overwrite = TRUE, internal = TRUE)
 
 library(narrator)
 library(dplyr)

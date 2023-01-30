@@ -47,7 +47,7 @@ narrate_descriptive(df_one)
 ```{r}
 df_two <- sales %>%
   filter(Territory %in% c("NA", "EMEA")) %>%
-  group_by(Territory, Productline) %>%
+  group_by(Territory, Product) %>%
   summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
   arrange(desc(Sales))
 
@@ -65,7 +65,7 @@ By default coverage is set to 0.5 and this means that narration will stop as soo
 
 ```{r}
 df_three <- sales %>%
-  group_by(Productline) %>%
+  group_by(Product) %>%
   summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
   arrange(desc(Sales))
 

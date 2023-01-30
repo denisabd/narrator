@@ -21,11 +21,9 @@ Imports:
     dplyr,
     glue,
     purrr,
-    lubridate,
     magrittr,
-    readr,
-    tidyr,
-    V8
+    V8,
+    rlang
 Suggests: 
     covr,
     knitr,
