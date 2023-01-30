@@ -130,10 +130,10 @@ coverage to avoid extremely verbose narrative creation</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
-<span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Territory"</span>, <span class="st">"State"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sales across all Territories is 10 M. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Territory by Sales is EMEA (5 M, 49.6 %). </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             Outlying State by Sales is . </span>
+<span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Territory"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sales across all Territories is 2 M. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Territory by Sales is NA (943,899.4, 46.7 %). </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             Outlying Products by Sales are Product E (465,134.6, 23 %), Product B (379,591.4, 18.8 %). </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
