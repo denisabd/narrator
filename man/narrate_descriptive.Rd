@@ -10,10 +10,11 @@ narrate_descriptive(
   dimensions = NULL,
   coverage = 0.5,
   coverage_limit = 5,
-  narrative_total = "{measure} across all {pluralize(dimension1)} is {total}. ",
-  narrative_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
-  narrative_outlier_multiple =
+  template_total = "{measure} across all {pluralize(dimension1)} is {total}. ",
+  template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
+  template_outlier_multiple =
     "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. ",
+  use_renviron = FALSE,
   return_data = FALSE,
   ...
 )
@@ -32,11 +33,13 @@ or factor variable will be used}
 \item{coverage_limit}{Maximum number of elements to be narrated, overrides
 coverage to avoid extremely verbose narrative creation}
 
-\item{narrative_total}{glue template for total volumes narrative}
+\item{template_total}{glue template for total volumes narrative}
 
-\item{narrative_outlier}{glue template for single outlier narrative}
+\item{template_outlier}{glue template for single outlier narrative}
 
-\item{narrative_outlier_multiple}{glue template for multiple outliers narrative}
+\item{template_outlier_multiple}{glue template for multiple outliers narrative}
+
+\item{use_renviron}{Whether to use .Renviron variables in the template}
 
 \item{return_data}{return a list of variables used in the function's templates}
 

@@ -8,9 +8,10 @@
 #' @param coverage Portion of variability to be covered by narrative, 0 to 1
 #' @param coverage_limit Maximum number of elements to be narrated, overrides
 #' coverage to avoid extremely verbose narrative creation
-#' @param narrative_total glue template for total volumes narrative
-#' @param narrative_outlier glue template for single outlier narrative
-#' @param narrative_outlier_multiple glue template for multiple outliers narrative
+#' @param template_total glue template for total volumes narrative
+#' @param template_outlier glue template for single outlier narrative
+#' @param template_outlier_multiple glue template for multiple outliers narrative
+#' @param use_renviron Whether to use .Renviron variables in the template
 #' @param return_data return a list of variables used in the function's templates
 #' @param ... other arguments passed to glue::glue
 #'
@@ -27,13 +28,19 @@ narrate_descriptive <- function(
     dimensions = NULL,
     coverage = 0.5,
     coverage_limit = 5,
-    narrative_total = "{measure} across all {pluralize(dimension1)} is {total}. ",
-    narrative_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
-    narrative_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. ",
+    template_total = "{measure} across all {pluralize(dimension1)} is {total}. ",
+    template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
+    template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. ",
+    use_renviron = FALSE,
     return_data = FALSE,
     ...) {
 
   if (!is.data.frame(df)) stop("'df' must be a data frame or tibble")
+
+  if (coverage_limit < 1) stop("'coverage_limit' must be higher or equal to 1")
+  if (coverage_limit%%1!=0) stop("'coverage_limit' must be an interger, no decimals allowed")
+
+  if (coverage <= 0 | coverage > 1) stop("'coverage' must be more than 0 and less or equal to 1")
 
   # Calculating dimensions from a data.frame
   if (is.null(dimensions)) {
@@ -67,6 +74,23 @@ narrate_descriptive <- function(
     stop(glue::glue("{measure} must be a numeric column, but is {class(df[[measure]])}"))
   }
 
+  # Getting Environment Variables if available
+  # Candidate for a helper function
+  if (use_renviron == TRUE) {
+    if (Sys.getenv("descriptive_template_total") != "") {
+      template_total <- Sys.getenv("descriptive_template_total")
+    }
+
+    if (Sys.getenv("descriptive_template_outlier") != "") {
+      template_outlier = Sys.getenv("descriptive_template_outlier")
+    }
+
+    if (Sys.getenv("descriptive_template_outlier_multiple") != "") {
+      template_outlier_multiple = Sys.getenv("descriptive_template_outlier_multiple")
+    }
+  }
+
+
   dimension1 <- dimensions[1]
 
   total <- df %>%
@@ -76,9 +100,9 @@ narrate_descriptive <- function(
     as.numeric() %>%
     format_number()
 
-  narrative <- glue::glue(narrative_total, ...)
+  narrative <- glue::glue(template_total, ...)
 
-  variables <- list(narrative_total = narrative,
+  variables <- list(template_total = narrative,
                     measure = measure,
                     dimension1 <- dimension1,
                     total = total)
@@ -91,7 +115,8 @@ narrate_descriptive <- function(
       dplyr::arrange(dplyr::desc(base::get(measure))) %>%
       dplyr::mutate(share = base::get(measure)/sum(base::get(measure))) %>%
       dplyr::mutate(cum_share = cumsum(share)) %>%
-      dplyr::filter(cumsum(lag(cum_share >= coverage, default = FALSE)) == 0)
+      dplyr::filter(cumsum(lag(cum_share >= coverage, default = FALSE)) == 0) %>%
+      dplyr::slice(1:coverage_limit)
 
     n_outliers <- nrow(table)
 
@@ -118,18 +143,18 @@ narrate_descriptive <- function(
       toString()
 
     if (n_outliers > 1) {
-      narrative_outlier_final <- narrative_outlier_multiple
+      template_outlier_final <- template_outlier_multiple
     } else {
-      narrative_outlier_final <- narrative_outlier
+      template_outlier_final <- template_outlier
     }
 
     variables <- append(variables, list(outlier_insight = outlier_insight))
-    variables <- append(variables, list(narrative_outlier_final = glue::glue(narrative_outlier_final, ...)), 1)
+    variables <- append(variables, list(template_outlier_final = glue::glue(template_outlier_final, ...)), 1)
 
     narrative <- glue::glue(narrative,
                             "
                             ",
-                            narrative_outlier_final,
+                            template_outlier_final,
                             ...)
 
     # if (dimension == dimension1 & length(dimensions) > 1) {

@@ -1,7 +1,69 @@
 test_that("narrate_descriptive() works", {
-  expect_no_error(sales %>%
-                    narrate_descriptive(measure = "Sales",
-                                        dimensions = c("Territory", "State")))
+  expect_no_error(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State")))
+})
+
+
+test_that("narrate_descriptive() works", {
+  expect_no_error(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State"),
+                          return_data = TRUE)
+  )
+})
+
+test_that("narrate_descriptive() returns list with return_data = TRUE", {
+  expect_type(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State"),
+                          return_data = TRUE),
+    "list"
+  )
+})
+
+test_that("narrate_descriptive() runs with additional arguments", {
+  expect_no_error(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State"),
+                          coverage = 0.7,
+                          coverage_limit = 3,
+                          use_renviron = TRUE)
+  )
+})
+
+test_that("narrate_descriptive() throws an error when coverage is 0", {
+  expect_error(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State"),
+                          coverage = 0.7,
+                          coverage_limit = 0)
+  )
+})
+
+test_that("narrate_descriptive() throws an error when coverage_limit is less than 0", {
+  expect_error(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State"),
+                          coverage = 0.7,
+                          coverage_limit = 0)
+  )
+})
+
+test_that("narrate_descriptive() throws an error when coverage_limit isn't an integer", {
+  expect_error(
+    sales %>%
+      narrate_descriptive(measure = "Sales",
+                          dimensions = c("Territory", "State"),
+                          coverage = 0.7,
+                          coverage_limit = 5.5)
+  )
 })
 
 test_that("narrate_descriptive() returns character", {
@@ -36,3 +98,4 @@ test_that("narrate_descriptive() returns an error when no dimension columns are 
       narrate_descriptive()
   )
 })
+
