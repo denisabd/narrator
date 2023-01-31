@@ -55,4 +55,10 @@ Create Descriptive Narrative
 sales \%>\%
 narrate_descriptive(measure = "Sales",
             dimensions = c("Territory", "Product"))
+
+sales \%>\%
+filter(Product \%in\% c("Product A", "Product B")) \%>\%
+  group_by(Product, Territory)  \%>\%
+  summarise(Quantity = sum(Quantity)) \%>\%
+  narrate_descriptive()
 }

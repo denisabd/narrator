@@ -13,5 +13,23 @@ test_that("pluralize returns error with numeric", {
   expect_error(pluralize(12))
 })
 
+test_that("is_plural() words", {
+  expect_equal(
+    is_plural("People"),
+    TRUE
+  )
+})
 
+test_that("is_plural() words", {
+  expect_equal(
+    is_plural("Sales"),
+    TRUE
+  )
+})
 
+test_that("is_plural() words", {
+  expect_equal(
+    is_singular("function"),
+    TRUE
+  )
+})

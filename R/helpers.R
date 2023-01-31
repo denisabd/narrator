@@ -46,30 +46,8 @@ format_number <- function(
                                       format == "M" ~ paste(round(num/1e6, decimals), format),
                                       format == "K" ~ paste(round(num/1e3, decimals), format),
                                       TRUE ~ prettyNum(as.numeric(num), big.mark = ",")
-                                      )
+    )
   }
 
   return(num_formatted)
-}
-
-#' Pluralize a word
-#'
-#' @param x character vector of words to make plural
-#' @param n amount of plural (some plurals change by amount and this also impacts
-#'        the \code{prepend} functionality)
-#' @param prepend should we prepend the value of \code{n} to the output? Default: \code{FALSE}
-#' @return character vector of modified pluralized words
-#' @export
-#'
-#' @examples
-#' pluralize('test')
-#' pluralize('test', 5)
-#' pluralize('test', 5, TRUE)
-#' pluralize('regex')
-pluralize <- function(x, n=2, prepend=FALSE) {
-
-  unname(sapply(x, function(y) {
-    ct$call("pluralize", y, n, prepend)
-  }))
-
 }

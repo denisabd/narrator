@@ -117,3 +117,10 @@ You can get all templates currently available in the package with `list_template
 list_templates() %>%
   kable()
 ```
+
+## Correcting Text
+
+You can correct a sentence using, **currently experimental** `correct_text()` function. It requires udpipe installation and will load a model of your choosing into the working directory.
+```{r}
+correct_text("Total Profit across all Regions are 85 M")
+```

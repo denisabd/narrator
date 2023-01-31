@@ -22,10 +22,16 @@
     <loc>https://denisabd.github.io/narrator/index.html</loc>
   </url>
   <url>
+    <loc>https://denisabd.github.io/narrator/reference/correct_text.html</loc>
+  </url>
+  <url>
     <loc>https://denisabd.github.io/narrator/reference/format_number.html</loc>
   </url>
   <url>
     <loc>https://denisabd.github.io/narrator/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/reference/is_plural.html</loc>
   </url>
   <url>
     <loc>https://denisabd.github.io/narrator/reference/list_templates.html</loc>
@@ -44,5 +50,8 @@
   </url>
   <url>
     <loc>https://denisabd.github.io/narrator/reference/sales.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/reference/singularize.html</loc>
   </url>
 </urlset>

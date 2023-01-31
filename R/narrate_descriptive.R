@@ -22,6 +22,12 @@
 #' sales %>%
 #' narrate_descriptive(measure = "Sales",
 #'             dimensions = c("Territory", "Product"))
+#'
+#' sales %>%
+#' filter(Product %in% c("Product A", "Product B")) %>%
+#'   group_by(Product, Territory)  %>%
+#'   summarise(Quantity = sum(Quantity)) %>%
+#'   narrate_descriptive()
 narrate_descriptive <- function(
     df,
     measure = NULL,
@@ -62,7 +68,7 @@ narrate_descriptive <- function(
   if (is.null(measure)) {
     measures <- df %>%
       dplyr::ungroup() %>%
-      dplyr::select_if(is.numeric) %>%
+      dplyr::select(where(is.numeric), where(is.integer)) %>%
       names()
 
     if (length(measures) == 0) stop("Desciptive narrative requires a measure")
@@ -70,7 +76,7 @@ narrate_descriptive <- function(
     measure <- measures[1]
   }
 
-  if (class(df[[measure]]) != "numeric") {
+  if (!class(df[[measure]]) %in% c("numeric", "integer")) {
     stop(glue::glue("{measure} must be a numeric column, but is {class(df[[measure]])}"))
   }
 

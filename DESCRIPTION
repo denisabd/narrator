@@ -23,7 +23,8 @@ Imports:
     purrr,
     magrittr,
     V8,
-    rlang
+    rlang,
+    udpipe
 Suggests: 
     covr,
     knitr,

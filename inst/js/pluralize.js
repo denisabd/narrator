@@ -286,6 +286,10 @@
     ['has', 'have'],
     ['this', 'these'],
     ['that', 'those'],
+    ['my', 'our'],
+    ['its', 'their'],
+    ['his', 'their'],
+    ['her', 'their'],
     // Words ending in with a consonant and `o`.
     ['echo', 'echoes'],
     ['dingo', 'dingoes'],
@@ -320,7 +324,8 @@
     ['thief', 'thieves'],
     ['groove', 'grooves'],
     ['pickaxe', 'pickaxes'],
-    ['passerby', 'passersby']
+    ['passerby', 'passersby'],
+    ['canvas', 'canvases']
   ].forEach(function (rule) {
     return pluralize.addIrregularRule(rule[0], rule[1]);
   });
