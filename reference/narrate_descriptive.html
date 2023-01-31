@@ -60,7 +60,7 @@
 <span>  dimensions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  coverage <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  template_total <span class="op">=</span> <span class="st">"{measure} across all {pluralize(dimension1)} is {total}. "</span>,</span>
+<span>  template_total <span class="op">=</span> <span class="st">"Total {measure} across all {pluralize(dimension1)} is {total}. "</span>,</span>
 <span>  template_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}. "</span>,</span>
 <span>  template_outlier_multiple <span class="op">=</span></span>
 <span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. "</span>,</span>
@@ -128,19 +128,23 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">narrator</span><span class="fu">::</span><span class="va"><a href="sales.html">sales</a></span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
 <span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Territory"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sales across all Territories is 2.2 M. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Territories is 2.2 M. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Territory by Sales is NA (938,914.9, 42.2 %). </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             Outlying Products by Sales are Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %). </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Product</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Product A"</span>, <span class="st">"Product B"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">Product</span>, <span class="va">Territory</span><span class="op">)</span>  <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">summarise</span><span class="op">(</span>Quantity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Quantity</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="fu">narrator</span><span class="fu">::</span><span class="va"><a href="sales.html">sales</a></span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Product</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Product A"</span>, <span class="st">"Product B"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Product</span>, <span class="va">Territory</span><span class="op">)</span>  <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Quantity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Quantity</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">narrate_descriptive</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in summarise(., Quantity = sum(Quantity)):</span> could not find function "summarise"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `summarise()` has grouped output by 'Product'. You can override using the</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `.groups` argument.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products is 3,297. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Product by Quantity is . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             Outlying Territory by Quantity is NA (1,324, 40.2 %). </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
