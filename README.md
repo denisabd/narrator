@@ -11,6 +11,9 @@ Template-based NLG framework for creating text narratives out of data
 status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
 [![Codecov test
 coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
+[![R-CMD-check](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 ## Installation
@@ -33,6 +36,6 @@ sales %>%
                dimensions = c("Territory", "Product"))
 ```
 
-Sales across all Territories is 10 M. Outlying Territory by Sales is
-EMEA (5 M, 49.6 %). Outlying Product by Sales is Classic Cars (3.9
-M, 39.1 %).
+Sales across all Territories is 2.2 M. Outlying Territory by Sales is NA
+(938,914.9, 42.2 %). Outlying Products by Sales are Product E (606,807,
+27.3 %), Product B (415,404.5, 18.7 %).

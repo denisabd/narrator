@@ -16,12 +16,15 @@ devtools::document()
 devtools::install(upgrade = "never", build_vignettes = TRUE)
 
 # website -----------------------------------------------------------------
+devtools::build_readme()
 pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 
 # github actions
 # Run once
 #usethis::use_github_action("pkgdown")
 #usethis::use_github_action("test-coverage")
+#usethis::use_github_action_check_standard()
+#usethis::use_lifecycle_badge(stage = "experimental")
 
 # devtools checks and test ---------------------------------------------------------
 devtools::test()
