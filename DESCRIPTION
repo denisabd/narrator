@@ -20,10 +20,13 @@ RoxygenNote: 7.2.3
 Imports: 
     dplyr,
     glue,
+    stringr,
+    tibble,
     purrr,
     magrittr,
-    V8,
+    tidyselect,
     rlang,
+    V8,
     udpipe
 Suggests: 
     covr,

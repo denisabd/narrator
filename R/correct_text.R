@@ -2,6 +2,7 @@
 #'
 #' @param text Text string for correction
 #' @param language Language for udpipe model, defaults to 'english'
+#' @param download_udpipe Download udpipe to working directory
 #' @param measure Measure for the template
 #'
 #' @return Text string
@@ -9,12 +10,12 @@
 #'
 #' @examples correct_text("In 2020 total Sales across all Regions (EMEA, NA, ASPAC) is equal to 23.5 M")
 #' correct_text("Total Profit across all Regions are 85 M")
-correct_text <- function(text, language = "english", measure = "") {
+correct_text <- function(text, language = "english", download_udpipe = TRUE, measure = "") {
 
   # Split into sentences
   #unlist(strsplit(text, "(?<=[[:punct:]])\\s(?=[A-Z])", perl = TRUE))
 
-  udpipe_available <- require("udpipe")
+  udpipe_available <- requireNamespace("udpipe")
 
   # If packages isn't available
   if (udpipe_available == FALSE) {
@@ -23,16 +24,25 @@ Please install udpipe package using 'install.packages('udpipe')'")
     return(text)
   }
 
-  tryCatch(
+  # Check for .udpipe model in working directory
+  if (length(list.files(pattern = "\\.udpipe$")) > 0) {
     annotation <- udpipe::udpipe(text, language) %>%
-      tibble::as_tibble(),
+      tibble::as_tibble()
+  } else {
 
-    error = function(e) {
-      model_en <- udpipe_download_model(language = language)
-      annotation <- udpipe::udpipe(text, "english") %>%
-        tibble::as_tibble()
+    if (download_udpipe == TRUE) {
+      model <- udpipe::udpipe_download_model(language = language)
+    } else {
+      dir.create(temp <- file.path(tempdir()))
+
+      warning("Using temp directory to get the model")
+
+      model <- udpipe::udpipe_download_model(language = language, temp)
     }
-  )
+
+    annotation <- udpipe::udpipe(text, model) %>%
+      tibble::as_tibble()
+  }
 
   subtable <- annotation %>%
     dplyr::select(token, token_id, upos, feats, head_token_id, dep_rel) %>%

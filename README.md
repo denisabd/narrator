@@ -36,6 +36,6 @@ sales %>%
                dimensions = c("Territory", "Product"))
 ```
 
-Sales across all Territories is 2.2 M. Outlying Territory by Sales is NA
-(938,914.9, 42.2 %). Outlying Products by Sales are Product E (606,807,
-27.3 %), Product B (415,404.5, 18.7 %).
+Total Sales across all Territories is 2.2 M. Outlying Territory by Sales
+is NA (938,914.9, 42.2 %). Outlying Products by Sales are Product E
+(606,807, 27.3 %), Product B (415,404.5, 18.7 %).

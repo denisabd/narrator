@@ -4,12 +4,14 @@
 \alias{correct_text}
 \title{Correct the sentence using udpipe}
 \usage{
-correct_text(text, language = "english", measure = "")
+correct_text(text, language = "english", download_udpipe = TRUE, measure = "")
 }
 \arguments{
 \item{text}{Text string for correction}
 
 \item{language}{Language for udpipe model, defaults to 'english'}
+
+\item{download_udpipe}{Download udpipe to working directory}
 
 \item{measure}{Measure for the template}
 }

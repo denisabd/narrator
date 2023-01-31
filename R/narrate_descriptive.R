@@ -15,18 +15,22 @@
 #' @param return_data return a list of variables used in the function's templates
 #' @param ... other arguments passed to glue::glue
 #'
+#' @importFrom rlang :=
+#' @importFrom tidyselect where
+#' @importFrom stats lag
+#'
 #' @return character vector, glue
 #' @export
 #'
 #' @examples
-#' sales %>%
+#' narrator::sales %>%
 #' narrate_descriptive(measure = "Sales",
 #'             dimensions = c("Territory", "Product"))
 #'
-#' sales %>%
-#' filter(Product %in% c("Product A", "Product B")) %>%
-#'   group_by(Product, Territory)  %>%
-#'   summarise(Quantity = sum(Quantity)) %>%
+#' narrator::sales %>%
+#'   dplyr::filter(Product %in% c("Product A", "Product B")) %>%
+#'   dplyr::group_by(Product, Territory)  %>%
+#'   dplyr::summarise(Quantity = sum(Quantity)) %>%
 #'   narrate_descriptive()
 narrate_descriptive <- function(
     df,
@@ -34,7 +38,7 @@ narrate_descriptive <- function(
     dimensions = NULL,
     coverage = 0.5,
     coverage_limit = 5,
-    template_total = "{measure} across all {pluralize(dimension1)} is {total}. ",
+    template_total = "Total {measure} across all {pluralize(dimension1)} is {total}. ",
     template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
     template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. ",
     use_renviron = FALSE,

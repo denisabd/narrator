@@ -11,3 +11,4 @@
 ^package_prep\.R$
 ^sandbox$
 ^english-ewt-ud-2\.5-191206\.udpipe$
+^tests/testthat/english-ewt-ud-2\.5-191206\.udpipe$
