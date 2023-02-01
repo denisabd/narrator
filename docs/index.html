@@ -86,11 +86,119 @@
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
-<span>               dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Territory"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Territories is 2.2 M. Outlying Territories by Sales: NA (938,914.9, 42.2 %), EMEA (662,430.6, 29.8 %). In NA, significant Product by Sales: Product E (257,960.1, 27.5 %), Product B (181,285.7, 19.3 %), Product F (142,396.1, 15.2 %) In EMEA, significant Product by Sales: Product E (189,312.1, 28.6 %), Product B (110,542.2, 16.7 %), Product F (83,064.26, 12.5 %) Outlying Products by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %).</p>
+<span>               dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 2.1 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`NA by Product`</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`EMEA by Product`</span></span>
+<span><span class="co">#&gt; In EMEA, significant Products by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Region</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Share <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html" class="external-link">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Region</th>
+<th align="right">Sales</th>
+<th align="right">Share</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="right">1011609.9</td>
+<td align="right">0.474</td>
+</tr>
+<tr class="even">
+<td align="left">EMEA</td>
+<td align="right">655361.4</td>
+<td align="right">0.307</td>
+</tr>
+<tr class="odd">
+<td align="left">ASPAC</td>
+<td align="right">286822.2</td>
+<td align="right">0.134</td>
+</tr>
+<tr class="even">
+<td align="left">LATAM</td>
+<td align="right">181072.7</td>
+<td align="right">0.085</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="right">2134866.2</td>
+<td align="right">1.000</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Product</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_totals.html" class="external-link">adorn_totals</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Product</th>
+<th align="right">Sales</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Product E</td>
+<td align="right">546888.88</td>
+</tr>
+<tr class="even">
+<td align="left">Product B</td>
+<td align="right">396713.90</td>
+</tr>
+<tr class="odd">
+<td align="left">Product F</td>
+<td align="right">326244.84</td>
+</tr>
+<tr class="even">
+<td align="left">Product H</td>
+<td align="right">262662.94</td>
+</tr>
+<tr class="odd">
+<td align="left">Product I</td>
+<td align="right">215874.38</td>
+</tr>
+<tr class="even">
+<td align="left">Product C</td>
+<td align="right">196840.76</td>
+</tr>
+<tr class="odd">
+<td align="left">Product A</td>
+<td align="right">100033.10</td>
+</tr>
+<tr class="even">
+<td align="left">Product D</td>
+<td align="right">89607.44</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="right">2134866.24</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

@@ -3,7 +3,7 @@ test_that("format_number works", {
 })
 
 test_that("format_number adds delimeter only for smaller numbers", {
-  expect_equal(format_number(273354), "273,354")
+  expect_equal(format_number(2734), "2,734")
 })
 
 test_that("format_number works with numeric vector", {
@@ -15,8 +15,8 @@ test_that("format_number works with numeric vector", {
 
 test_that("format_number works when using lapply() on numeric vector", {
   expect_equal(
-    as.character(lapply(c(13824, 234234234), format_number)),
-    c("13,824", "234.2 M")
+    as.character(lapply(c(1824, 234234234), format_number)),
+    c("1,824", "234.2 M")
   )
 })
 
@@ -31,3 +31,4 @@ test_that("format_number returs character for smaller numbers", {
 test_that("format_number format override works", {
   expect_type(format_number(2733423254, format = "M"), "character")
 })
+

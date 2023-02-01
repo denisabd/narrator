@@ -11,15 +11,18 @@ narrate_descriptive(
   summarization = "sum",
   coverage = 0.5,
   coverage_limit = 5,
-  narration_depth = 3,
-  template_total = "Total {measure} across all {pluralize(dimension1)} is {total}. ",
-  template_outlier = "Outlying {dimension} by {measure}: {outlier_insight}. ",
+  narration_depth = 2,
+  template_total = "Total {measure} across all {pluralize(dimension1)} is {total}.",
+  template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
   template_outlier_multiple =
-    "Outlying {pluralize(dimension)} by {measure}: {outlier_insight}. ",
+    "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
   template_outlier_l2 =
-    "In {root_outlier_dimension}, significant {dimension_l2} by {measure}: {outlier_insight}",
+    "In {root_outlier_dimension}, significant {dimension_l2} by {measure} is {outlier_insight}.",
+  template_outlier_l2_multiple =
+    "In {root_outlier_dimension}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}.",
   use_renviron = FALSE,
   return_data = FALSE,
+  simplify = FALSE,
   ...
 )
 }
@@ -39,7 +42,7 @@ or factor variable will be used}
 \item{coverage_limit}{Maximum number of elements to be narrated, overrides
 coverage to avoid extremely verbose narrative creation}
 
-\item{narration_depth}{Parameter to control the depth of the analysis}
+\item{narration_depth}{Parameter to control the depth of the analysis 1 for summary and 2 for detailed}
 
 \item{template_total}{glue template for total volumes narrative}
 
@@ -50,6 +53,8 @@ coverage to avoid extremely verbose narrative creation}
 \item{use_renviron}{Whether to use .Renviron variables in the template}
 
 \item{return_data}{return a list of variables used in the function's templates}
+
+\item{simplify}{if TRUE - returns a character vector, if FALSE - named list}
 
 \item{...}{other arguments passed to glue::glue}
 }
@@ -62,11 +67,11 @@ Create Descriptive Narrative
 \examples{
 narrator::sales \%>\%
 narrate_descriptive(measure = "Sales",
-            dimensions = c("Territory", "Product"))
+            dimensions = c("Region", "Product"))
 
 narrator::sales \%>\%
   dplyr::filter(Product \%in\% c("Product A", "Product B")) \%>\%
-  dplyr::group_by(Product, Territory)  \%>\%
+  dplyr::group_by(Product, Region)  \%>\%
   dplyr::summarise(Quantity = sum(Quantity)) \%>\%
   narrate_descriptive()
 }

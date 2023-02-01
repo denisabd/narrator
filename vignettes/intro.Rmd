@@ -31,14 +31,14 @@ Basic narrative type is descriptive stats, looking into outliers or biggest cont
 Starting with a simplest table that has only one dimension and one measure. Here overall sales volume as well as outlying Territories will be analyzed.
 ```{r}
 df_one <- sales %>%
-  group_by(Territory) %>%
+  group_by(Region) %>%
   summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
   arrange(desc(Sales))
 
 kable(df_one)
 ```
 
-```{r, results='asis'}
+```{r}
 narrate_descriptive(df_one)
 ```
 
@@ -46,15 +46,15 @@ narrate_descriptive(df_one)
 
 ```{r}
 df_two <- sales %>%
-  filter(Territory %in% c("NA", "EMEA")) %>%
-  group_by(Territory, Product) %>%
+  filter(Region %in% c("NA", "EMEA")) %>%
+  group_by(Region, Product) %>%
   summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
   arrange(desc(Sales))
 
 kable(df_two)
 ```
 
-```{r, results='asis'}
+```{r}
 narrate_descriptive(df_two)
 ```
 
@@ -75,11 +75,11 @@ df_three %>%
   kable()
 ```
 
-```{r, results='asis'}
+```{r}
 narrate_descriptive(df_three)
 ```
 
-```{r, results='asis'}
+```{r}
 narrate_descriptive(df_three, coverage = 0.7)
 ```
 
@@ -91,7 +91,7 @@ narrate_descriptive(df_three, coverage = 0.7, return_data = TRUE)
 ```
 
 Let's change a template for our narrative function and rework the wording as well as changing 'is' to 'are' since `Sales` is plural:
-```{r, results='asis'}
+```{r}
 narrate_descriptive(
   df_three,
   template_total = "Overall {measure} for all {pluralize(dimension1)} are equal to {total}. ")
@@ -99,7 +99,7 @@ narrate_descriptive(
 
 We can set the templates using `usethis::edit_r_environ()` or setting up an environment variable using your data science platform capabilities.
 
-```{r, results='asis'}
+```{r}
 Sys.getenv("descriptive_template_total")
 
 narrate_descriptive(
@@ -108,7 +108,7 @@ narrate_descriptive(
 ```
 
 A method that is a little more handy is setting `.Renviron` variable names using a certain convention and adding `use_renviron = TRUE` to the narrate function. For example here we created a variable that uses the unique part of the function name, underscore, and template name - `descriptive` + `-` + `template_total`
-```{r, results='asis'}
+```{r}
 narrate_descriptive(df_three, use_renviron = TRUE)
 ```
 

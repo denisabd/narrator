@@ -15,7 +15,7 @@ format_number <- function(
     num,
     format = "auto",
     decimals = 1,
-    threshold = 1000000,
+    threshold = 10000,
     format_list = c("", "K", "M", "B", "T")) {
 
   if (!is.numeric(num)) {

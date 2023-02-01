@@ -30,17 +30,63 @@ devtools::install_github("denisabd/narrator")
 
 ``` r
 library(narrator)
+library(dplyr)
+library(knitr)
 
 sales %>%
   narrate_descriptive(measure = "Sales",
-               dimensions = c("Territory", "Product"))
+               dimensions = c("Region", "Product"))
+#> $`Total Sales`
+#> Total Sales across all Regions is 2.1 M.
+#> 
+#> $`Region by Sales`
+#> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).
+#> 
+#> $`NA by Product`
+#> In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).
+#> 
+#> $`EMEA by Product`
+#> In EMEA, significant Products by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).
+#> 
+#> $`Product by Sales`
+#> Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).
 ```
 
-Total Sales across all Territories is 2.2 M. Outlying Territories by
-Sales: NA (938,914.9, 42.2 %), EMEA (662,430.6, 29.8 %). In NA,
-significant Product by Sales: Product E (257,960.1, 27.5 %), Product B
-(181,285.7, 19.3 %), Product F (142,396.1, 15.2 %) In EMEA, significant
-Product by Sales: Product E (189,312.1, 28.6 %), Product B (110,542.2,
-16.7 %), Product F (83,064.26, 12.5 %) Outlying Products by Sales:
-Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
-(294,399, 13.2 %).
+``` r
+sales %>%
+  group_by(Region) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales)) %>%
+  mutate(Share = round(Sales/sum(Sales), 3)) %>%
+  janitor::adorn_totals() %>%
+  kable()
+```
+
+| Region |     Sales | Share |
+|:-------|----------:|------:|
+| NA     | 1011609.9 | 0.474 |
+| EMEA   |  655361.4 | 0.307 |
+| ASPAC  |  286822.2 | 0.134 |
+| LATAM  |  181072.7 | 0.085 |
+| Total  | 2134866.2 | 1.000 |
+
+``` r
+sales %>%
+  group_by(Product) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales)) %>%
+  janitor::adorn_totals() %>%
+  kable()
+```
+
+| Product   |      Sales |
+|:----------|-----------:|
+| Product E |  546888.88 |
+| Product B |  396713.90 |
+| Product F |  326244.84 |
+| Product H |  262662.94 |
+| Product I |  215874.38 |
+| Product C |  196840.76 |
+| Product A |  100033.10 |
+| Product D |   89607.44 |
+| Total     | 2134866.24 |
