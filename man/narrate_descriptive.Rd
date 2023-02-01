@@ -8,12 +8,16 @@ narrate_descriptive(
   df,
   measure = NULL,
   dimensions = NULL,
+  summarization = "sum",
   coverage = 0.5,
   coverage_limit = 5,
+  narration_depth = 3,
   template_total = "Total {measure} across all {pluralize(dimension1)} is {total}. ",
-  template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
+  template_outlier = "Outlying {dimension} by {measure}: {outlier_insight}. ",
   template_outlier_multiple =
-    "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. ",
+    "Outlying {pluralize(dimension)} by {measure}: {outlier_insight}. ",
+  template_outlier_l2 =
+    "In {root_outlier_dimension}, significant {dimension_l2} by {measure}: {outlier_insight}",
   use_renviron = FALSE,
   return_data = FALSE,
   ...
@@ -28,10 +32,14 @@ if NULL then it will take the first numeric field available}
 \item{dimensions}{Vector of dimensions for analysis, by default all character
 or factor variable will be used}
 
+\item{summarization}{Approach for data summarization/aggregation - 'sum', 'count' or 'mean'}
+
 \item{coverage}{Portion of variability to be covered by narrative, 0 to 1}
 
 \item{coverage_limit}{Maximum number of elements to be narrated, overrides
 coverage to avoid extremely verbose narrative creation}
+
+\item{narration_depth}{Parameter to control the depth of the analysis}
 
 \item{template_total}{glue template for total volumes narrative}
 

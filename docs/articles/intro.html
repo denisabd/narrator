@@ -127,8 +127,8 @@ be analyzed.</p>
 </table>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Territories is 2.2 M. Outlying Territory by
-Sales is NA (938,914.9, 42.2 %).</p>
+<p>Total Sales across all Territories is 2.2 M. Outlying Territories by
+Sales: NA (938,914.9, 42.2 %), EMEA (662,430.6, 29.8 %).</p>
 </div>
 <div class="section level3">
 <h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
@@ -233,8 +233,11 @@ Sales is NA (938,914.9, 42.2 %).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span></code></pre></div>
 <p>Total Sales across all Territories is 1.6 M. Outlying Territory by
-Sales is . Outlying Products by Sales are Product E (447,272.2, 27.9 %),
-Product B (291,827.9, 18.2 %).</p>
+Sales: NA (938,914.9, 58.6 %). In NA, significant Product by Sales:
+Product E (257,960.1, 27.5 %), Product B (181,285.7, 19.3 %), Product F
+(142,396.1, 15.2 %) Outlying Products by Sales: Product E (447,272.2,
+27.9 %), Product B (291,827.9, 18.2 %), Product F (225,460.4, 14.1
+%).</p>
 </div>
 <div class="section level3">
 <h3 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
@@ -315,13 +318,14 @@ returned.</p>
 </table>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales
-are Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %).</p>
+<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales:
+Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
+(294,399, 13.2 %).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales
-are Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product
-F (294,399, 13.2 %).</p>
+<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales:
+Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
+(294,399, 13.2 %), Product I (256,140.4, 11.5 %).</p>
 </div>
 <div class="section level3">
 <h3 id="changing-templates">Changing Templates<a class="anchor" aria-label="anchor" href="#changing-templates"></a>
@@ -337,10 +341,10 @@ realization:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $narrative</span></span>
 <span><span class="co">#&gt; Total Sales across all Products is 2.2 M. </span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %). </span></span>
+<span><span class="co">#&gt; Outlying Products by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %), Product I (256,140.4, 11.5 %). </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $template_outlier_final</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %). </span></span>
+<span><span class="co">#&gt; Outlying Products by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %), Product I (256,140.4, 11.5 %). </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $measure</span></span>
 <span><span class="co">#&gt; [1] "Sales"</span></span>
@@ -352,7 +356,7 @@ realization:</p>
 <span><span class="co">#&gt; [1] "2.2 M"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $outlier_insight</span></span>
-<span><span class="co">#&gt; [1] "Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %), Product I (256,140.4, 11.5 %)"</span></span></code></pre></div>
 <p>Let’s change a template for our narrative function and rework the
 wording as well as changing ‘is’ to ‘are’ since <code>Sales</code> is
 plural:</p>
@@ -361,8 +365,8 @@ plural:</p>
 <span>  <span class="va">df_three</span>,</span>
 <span>  template_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span></code></pre></div>
 <p>Overall Sales for all Products are equal to 2.2 M. Outlying Products
-by Sales are Product E (606,807, 27.3 %), Product B (415,404.5, 18.7
-%).</p>
+by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %),
+Product F (294,399, 13.2 %).</p>
 <p>We can set the templates using <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code>
 or setting up an environment variable using your data science platform
 capabilities.</p>
@@ -374,8 +378,9 @@ capabilities.</p>
 <span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_three</span>,template_total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Total Sales is equal to 2.2 M. Outlying Products by Sales are Product
-E (606,807, 27.3 %), Product B (415,404.5, 18.7 %).</p>
+<p>Total Sales is equal to 2.2 M. Outlying Products by Sales: Product E
+(606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399,
+13.2 %).</p>
 <p>A method that is a little more handy is setting
 <code>.Renviron</code> variable names using a certain convention and
 adding <code>use_renviron = TRUE</code> to the narrate function. For
@@ -384,8 +389,9 @@ function name, underscore, and template name - <code>descriptive</code>
 + <code>-</code> + <code>template_total</code></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, use_renviron <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales is equal to 2.2 M. Outlying Products by Sales are Product
-E (606,807, 27.3 %), Product B (415,404.5, 18.7 %).</p>
+<p>Total Sales is equal to 2.2 M. Outlying Products by Sales: Product E
+(606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399,
+13.2 %).</p>
 <p>You can get all templates currently available in the package with
 <code><a href="../reference/list_templates.html">list_templates()</a></code> function:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -393,10 +399,10 @@ E (606,807, 27.3 %), Product B (415,404.5, 18.7 %).</p>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="15%">
-<col width="9%">
-<col width="20%">
-<col width="53%">
+<col width="13%">
+<col width="8%">
+<col width="17%">
+<col width="60%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">fun</th>
@@ -416,15 +422,22 @@ E (606,807, 27.3 %), Product B (415,404.5, 18.7 %).</p>
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier</td>
-<td align="left">Outlying {dimension} by {measure} is
+<td align="left">Outlying {dimension} by {measure}:
 {outlier_insight}.</td>
 </tr>
 <tr class="odd">
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier_multiple</td>
-<td align="left">Outlying {pluralize(dimension)} by {measure} are
+<td align="left">Outlying {pluralize(dimension)} by {measure}:
 {outlier_insight}.</td>
+</tr>
+<tr class="even">
+<td align="left">narrate_descriptive</td>
+<td align="left">descriptive</td>
+<td align="left">template_outlier_l2</td>
+<td align="left">In {root_outlier_dimension}, significant {dimension_l2}
+by {measure}: {outlier_insight}</td>
 </tr>
 </tbody>
 </table>
@@ -437,7 +450,7 @@ experimental</strong> <code><a href="../reference/correct_text.html">correct_tex
 udpipe installation and will load a model of your choosing into the
 working directory.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/correct_text.html">correct_text</a></span><span class="op">(</span><span class="st">"Total Profit across all Regions are 85 M"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/correct_text.html">correct_text</a></span><span class="op">(</span><span class="st">"Total Profit across all Regions are 85 M"</span>, download_udpipe <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Total Profit across all Regions is 85 M"</span></span></code></pre></div>
 </div>
 </div>

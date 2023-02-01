@@ -36,6 +36,11 @@ sales %>%
                dimensions = c("Territory", "Product"))
 ```
 
-Total Sales across all Territories is 2.2 M. Outlying Territory by Sales
-is NA (938,914.9, 42.2 %). Outlying Products by Sales are Product E
-(606,807, 27.3 %), Product B (415,404.5, 18.7 %).
+Total Sales across all Territories is 2.2 M. Outlying Territories by
+Sales: NA (938,914.9, 42.2 %), EMEA (662,430.6, 29.8 %). In NA,
+significant Product by Sales: Product E (257,960.1, 27.5 %), Product B
+(181,285.7, 19.3 %), Product F (142,396.1, 15.2 %) In EMEA, significant
+Product by Sales: Product E (189,312.1, 28.6 %), Product B (110,542.2,
+16.7 %), Product F (83,064.26, 12.5 %) Outlying Products by Sales:
+Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
+(294,399, 13.2 %).

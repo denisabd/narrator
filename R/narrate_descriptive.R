@@ -5,9 +5,11 @@
 #' if NULL then it will take the first numeric field available
 #' @param dimensions Vector of dimensions for analysis, by default all character
 #' or factor variable will be used
+#' @param summarization Approach for data summarization/aggregation - 'sum', 'count' or 'mean'
 #' @param coverage Portion of variability to be covered by narrative, 0 to 1
 #' @param coverage_limit Maximum number of elements to be narrated, overrides
 #' coverage to avoid extremely verbose narrative creation
+#' @param narration_depth Parameter to control the depth of the analysis
 #' @param template_total glue template for total volumes narrative
 #' @param template_outlier glue template for single outlier narrative
 #' @param template_outlier_multiple glue template for multiple outliers narrative
@@ -17,7 +19,6 @@
 #'
 #' @importFrom rlang :=
 #' @importFrom tidyselect where
-#' @importFrom stats lag
 #'
 #' @return character vector, glue
 #' @export
@@ -36,11 +37,14 @@ narrate_descriptive <- function(
     df,
     measure = NULL,
     dimensions = NULL,
+    summarization = "sum",
     coverage = 0.5,
     coverage_limit = 5,
+    narration_depth = 3,
     template_total = "Total {measure} across all {pluralize(dimension1)} is {total}. ",
-    template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}. ",
-    template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}. ",
+    template_outlier = "Outlying {dimension} by {measure}: {outlier_insight}. ",
+    template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure}: {outlier_insight}. ",
+    template_outlier_l2 = "In {root_outlier_dimension}, significant {dimension_l2} by {measure}: {outlier_insight}. ",
     use_renviron = FALSE,
     return_data = FALSE,
     ...) {
@@ -118,38 +122,16 @@ narrate_descriptive <- function(
 
   for (dimension in dimensions) {
 
-    table <- df %>%
-      dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
-      dplyr::summarise(!!measure := sum(base::get(measure), na.rm = TRUE)) %>%
-      dplyr::arrange(dplyr::desc(base::get(measure))) %>%
-      dplyr::mutate(share = base::get(measure)/sum(base::get(measure))) %>%
-      dplyr::mutate(cum_share = cumsum(share)) %>%
-      dplyr::filter(cumsum(lag(cum_share >= coverage, default = FALSE)) == 0) %>%
-      dplyr::slice(1:coverage_limit)
+    output <- df %>%
+      get_descriptive_outliers(
+        dimension = dimension,
+        measure = measure,
+        coverage = coverage,
+        coverage_limit = coverage_limit)
 
-    # For a single dimension we skip to the next level
-    if (nrow(table) == 1 & table$cum_share[1] == 1) next
+    base::list2env(output, globalenv())
 
-    n_outliers <- nrow(table)
-
-    outlier_dimension <- table %>%
-      dplyr::select(dplyr::all_of(dimension)) %>%
-      as.matrix() %>%
-      as.character()
-
-    outlier_value <- table %>%
-      dplyr::select(dplyr::all_of(measure)) %>%
-      as.matrix() %>%
-      as.numeric()
-
-    outlier_value_p <- table %>%
-      dplyr::mutate(share = round(share * 100, 1)) %>%
-      dplyr::select(share) %>%
-      as.matrix() %>%
-      as.numeric() %>%
-      paste("%")
-
-    outlier_insight <- list(outlier_dimension, " (", format_number(outlier_value), ", ", outlier_value_p, ")") %>%
+    outlier_insight <- list(outlier_dimensions, " (", format_number(outliers_value), ", ", outliers_value_p, ")") %>%
       purrr::pmap(paste0) %>%
       unlist() %>%
       toString()
@@ -169,12 +151,40 @@ narrate_descriptive <- function(
                             template_outlier_final,
                             ...)
 
-    # if (dimension == dimension1 & length(dimensions) > 1) {
+    # Getting one level deeper into the outlying dimension
+    if (dimension == dimension1 & length(dimensions) > 1) {
 
-    #   df %>%
-    #     dplyr::filter()
-    # }
+      root_outlier_dimensions <- outlier_dimensions
 
+      for (i in seq_along(root_outlier_dimensions)) {
+
+        root_outlier_dimension <- root_outlier_dimensions[i]
+        dimension_l2 <- dimensions[which(dimensions == dimension) + 1]
+
+        output <- df %>%
+          dplyr::ungroup() %>%
+          dplyr::filter(base::get(dimension) %in% root_outlier_dimensions[i]) %>%
+          dplyr::select(-dplyr::all_of(dimension)) %>%
+          get_descriptive_outliers(
+            dimension = dimension_l2,
+            measure = measure,
+            coverage = coverage,
+            coverage_limit = coverage_limit)
+
+        base::list2env(output, globalenv())
+
+        outlier_insight <- list(outlier_dimensions, " (", format_number(outliers_value), ", ", outliers_value_p, ")") %>%
+          purrr::pmap(paste0) %>%
+          unlist() %>%
+          toString()
+
+        narrative <- glue::glue(narrative,
+                                "
+                                ",
+                                template_outlier_l2,
+                                ...)
+      }
+    }
   }
 
   variables <- append(variables, list(narrative = narrative), 1)
@@ -185,4 +195,72 @@ narrate_descriptive <- function(
 
   return(narrative)
 
+}
+
+
+#' Create a list with descriptive outliers
+#'
+#' @param df Data frame of tibble, can be aggregated or raw
+#' @param measure Numeric measure column
+#' @param dimension Dimension within which the outlying patterns should be found
+#' @param depth Current depth level in the hierarchy
+#' @param coverage Portion of variability to be covered by narrative, 0 to 1
+#' @param coverage_limit Maximum number of elements to be narrated, overrides
+#' coverage to avoid extremely verbose narrative creation
+#'
+#' @noRd
+get_descriptive_outliers <- function(
+    df,
+    dimension,
+    measure,
+    depth = "",
+    coverage = 0.5,
+    coverage_limit = 5) {
+
+  table <- df %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
+    dplyr::summarise(!!measure := sum(base::get(measure), na.rm = TRUE)) %>%
+    dplyr::arrange(dplyr::desc(base::get(measure))) %>%
+    dplyr::mutate(share = base::get(measure)/sum(base::get(measure))) %>%
+    dplyr::mutate(cum_share = cumsum(share)) %>%
+    dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage, default = FALSE)) == 0) %>%
+    dplyr::slice(1:coverage_limit)
+
+  # For a single dimension we skip to the next level
+  if (nrow(table) == 1 & table$cum_share[1] == 1) next
+
+  n_outliers <- nrow(table)
+
+  outlier_dimensions <- table %>%
+    dplyr::select(dplyr::all_of(dimension)) %>%
+    as.matrix() %>%
+    as.character()
+
+  outliers_value <- table %>%
+    dplyr::select(dplyr::all_of(measure)) %>%
+    as.matrix() %>%
+    as.numeric()
+
+  outliers_value_p <- table %>%
+    dplyr::mutate(share = round(share * 100, 1)) %>%
+    dplyr::select(share) %>%
+    as.matrix() %>%
+    as.numeric() %>%
+    paste("%")
+
+  output <- list(
+    n_outliers,
+    outlier_dimensions,
+    outliers_value,
+    outliers_value_p
+  )
+
+  names(output) <- c(
+    paste0("n_outliers", depth),
+    paste0("outlier_dimensions", depth),
+    paste0("outliers_value", depth),
+    paste0("outliers_value_p", depth)
+  )
+
+  return(output)
 }
