@@ -62,7 +62,7 @@
 <span>  coverage <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  template_total <span class="op">=</span> <span class="st">"Total {measure} across all {pluralize(dimension1)} is {total}."</span>,</span>
+<span>  template_total <span class="op">=</span> <span class="st">"Total {measure} across all {pluralize(dimension1)}: {total}."</span>,</span>
 <span>  template_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}."</span>,</span>
 <span>  template_outlier_multiple <span class="op">=</span></span>
 <span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}."</span>,</span>
@@ -73,6 +73,7 @@
 <span>  use_renviron <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  format_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -122,6 +123,14 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <dd><p>glue template for multiple outliers narrative</p></dd>
 
 
+<dt>template_outlier_l2</dt>
+<dd><p>glue template for deeper hierarchical single outlier narrative</p></dd>
+
+
+<dt>template_outlier_l2_multiple</dt>
+<dd><p>glue template for deeper hierarchical multiple outliers narrative</p></dd>
+
+
 <dt>use_renviron</dt>
 <dd><p>Whether to use .Renviron variables in the template</p></dd>
 
@@ -132,6 +141,10 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
 <dt>simplify</dt>
 <dd><p>if TRUE - returns a character vector, if FALSE - named list</p></dd>
+
+
+<dt>format_numbers</dt>
+<dd><p>Whether to format big numbers to K/M/B using format_number function</p></dd>
 
 
 <dt>...</dt>
@@ -151,7 +164,7 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
 <span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions is 2.1 M.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions: 2.1 M.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Sales`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).</span>
@@ -174,7 +187,7 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `summarise()` has grouped output by 'Product'. You can override using the</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `.groups` argument.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products is 3,622.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products: 3,622.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Quantity`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Product by Quantity is Product B (2,862, 79 %).</span>
