@@ -96,54 +96,57 @@ measure. Here overall sales volume as well as outlying Territories will
 be analyzed.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_one</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Territory</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Region</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">Territory</th>
+<th align="left">Region</th>
 <th align="right">Sales</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">NA</td>
-<td align="right">938914.9</td>
+<td align="right">1011609.9</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
-<td align="right">662430.6</td>
+<td align="right">655361.4</td>
 </tr>
 <tr class="odd">
 <td align="left">ASPAC</td>
-<td align="right">406603.0</td>
+<td align="right">286822.2</td>
 </tr>
 <tr class="even">
 <td align="left">LATAM</td>
-<td align="right">218040.2</td>
+<td align="right">181072.7</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Territories is 2.2 M. Outlying Territories by
-Sales: NA (938,914.9, 42.2 %), EMEA (662,430.6, 29.8 %).</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 2.1 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_two</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Territory</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"EMEA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Territory</span>, <span class="va">Product</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Region</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"EMEA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Region</span>, <span class="va">Product</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Sales</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">Territory</th>
+<th align="left">Region</th>
 <th align="left">Product</th>
 <th align="right">Sales</th>
 </tr></thead>
@@ -151,93 +154,98 @@ Sales: NA (938,914.9, 42.2 %), EMEA (662,430.6, 29.8 %).</p>
 <tr class="odd">
 <td align="left">NA</td>
 <td align="left">Product E</td>
-<td align="right">257960.10</td>
+<td align="right">241563.28</td>
 </tr>
 <tr class="even">
+<td align="left">NA</td>
+<td align="left">Product B</td>
+<td align="right">201925.24</td>
+</tr>
+<tr class="odd">
 <td align="left">EMEA</td>
 <td align="left">Product E</td>
-<td align="right">189312.08</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="left">Product B</td>
-<td align="right">181285.72</td>
+<td align="right">198620.44</td>
 </tr>
 <tr class="even">
 <td align="left">NA</td>
 <td align="left">Product F</td>
-<td align="right">142396.12</td>
+<td align="right">154115.24</td>
 </tr>
 <tr class="odd">
+<td align="left">NA</td>
+<td align="left">Product H</td>
+<td align="right">123695.16</td>
+</tr>
+<tr class="even">
 <td align="left">EMEA</td>
 <td align="left">Product B</td>
-<td align="right">110542.16</td>
-</tr>
-<tr class="even">
-<td align="left">NA</td>
-<td align="left">Product I</td>
-<td align="right">94270.80</td>
+<td align="right">95869.62</td>
 </tr>
 <tr class="odd">
-<td align="left">NA</td>
-<td align="left">Product C</td>
-<td align="right">93339.02</td>
-</tr>
-<tr class="even">
 <td align="left">EMEA</td>
 <td align="left">Product F</td>
-<td align="right">83064.26</td>
-</tr>
-<tr class="odd">
-<td align="left">EMEA</td>
-<td align="left">Product C</td>
-<td align="right">80357.72</td>
+<td align="right">92931.12</td>
 </tr>
 <tr class="even">
 <td align="left">NA</td>
+<td align="left">Product I</td>
+<td align="right">92738.76</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">Product C</td>
+<td align="right">84339.34</td>
+</tr>
+<tr class="even">
+<td align="left">EMEA</td>
 <td align="left">Product H</td>
-<td align="right">79392.54</td>
+<td align="right">77261.02</td>
 </tr>
 <tr class="odd">
 <td align="left">EMEA</td>
 <td align="left">Product I</td>
-<td align="right">77894.16</td>
+<td align="right">76812.68</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
-<td align="left">Product H</td>
-<td align="right">65251.66</td>
+<td align="left">Product C</td>
+<td align="right">73731.70</td>
 </tr>
 <tr class="odd">
 <td align="left">NA</td>
 <td align="left">Product D</td>
-<td align="right">56328.76</td>
+<td align="right">56915.32</td>
 </tr>
 <tr class="even">
 <td align="left">NA</td>
 <td align="left">Product A</td>
-<td align="right">33941.86</td>
+<td align="right">56317.58</td>
 </tr>
 <tr class="odd">
 <td align="left">EMEA</td>
-<td align="left">Product A</td>
-<td align="right">29102.84</td>
+<td align="left">Product D</td>
+<td align="right">22169.80</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
-<td align="left">Product D</td>
-<td align="right">26905.76</td>
+<td align="left">Product A</td>
+<td align="right">17965.06</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Territories is 1.6 M. Outlying Territory by
-Sales: NA (938,914.9, 58.6 %). In NA, significant Product by Sales:
-Product E (257,960.1, 27.5 %), Product B (181,285.7, 19.3 %), Product F
-(142,396.1, 15.2 %). Outlying Products by Sales: Product E (447,272.2,
-27.9 %), Product B (291,827.9, 18.2 %), Product F (225,460.4, 14.1
-%).</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 1.7 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Region by Sales is NA (1 M, 60.7 %).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`NA by Product`</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (440.2 K, 26.4 %), Product B (297.8 K, 17.9 %), Product F (247 K, 14.8 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
@@ -268,64 +276,68 @@ returned.</p>
 <tbody>
 <tr class="odd">
 <td align="left">Product E</td>
-<td align="right">606807.02</td>
-<td align="right">27.3</td>
-<td align="right">27.3</td>
+<td align="right">546888.88</td>
+<td align="right">25.6</td>
+<td align="right">25.6</td>
 </tr>
 <tr class="even">
 <td align="left">Product B</td>
-<td align="right">415404.48</td>
-<td align="right">18.7</td>
-<td align="right">46.0</td>
+<td align="right">396713.90</td>
+<td align="right">18.6</td>
+<td align="right">44.2</td>
 </tr>
 <tr class="odd">
 <td align="left">Product F</td>
-<td align="right">294399.02</td>
-<td align="right">13.2</td>
-<td align="right">59.2</td>
-</tr>
-<tr class="even">
-<td align="left">Product I</td>
-<td align="right">256140.36</td>
-<td align="right">11.5</td>
-<td align="right">70.7</td>
-</tr>
-<tr class="odd">
-<td align="left">Product C</td>
-<td align="right">235396.32</td>
-<td align="right">10.6</td>
-<td align="right">81.3</td>
+<td align="right">326244.84</td>
+<td align="right">15.3</td>
+<td align="right">59.5</td>
 </tr>
 <tr class="even">
 <td align="left">Product H</td>
-<td align="right">225752.58</td>
-<td align="right">10.1</td>
-<td align="right">91.4</td>
+<td align="right">262662.94</td>
+<td align="right">12.3</td>
+<td align="right">71.8</td>
 </tr>
 <tr class="odd">
-<td align="left">Product D</td>
-<td align="right">104137.80</td>
-<td align="right">4.7</td>
-<td align="right">96.1</td>
+<td align="left">Product I</td>
+<td align="right">215874.38</td>
+<td align="right">10.1</td>
+<td align="right">81.9</td>
 </tr>
 <tr class="even">
+<td align="left">Product C</td>
+<td align="right">196840.76</td>
+<td align="right">9.2</td>
+<td align="right">91.1</td>
+</tr>
+<tr class="odd">
 <td align="left">Product A</td>
-<td align="right">87951.18</td>
-<td align="right">4.0</td>
-<td align="right">100.1</td>
+<td align="right">100033.10</td>
+<td align="right">4.7</td>
+<td align="right">95.8</td>
+</tr>
+<tr class="even">
+<td align="left">Product D</td>
+<td align="right">89607.44</td>
+<td align="right">4.2</td>
+<td align="right">100.0</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales:
-Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
-(294,399, 13.2 %).</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 2.1 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales:
-Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
-(294,399, 13.2 %), Product I (256,140.4, 11.5 %).</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 2.1 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %), Product H (262.7 K, 12.3 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="changing-templates">Changing Templates<a class="anchor" aria-label="anchor" href="#changing-templates"></a>
@@ -337,14 +349,18 @@ realization:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span>, return_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $template_total</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 2.2 M. </span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 2.1 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $narrative</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 2.2 M. </span></span>
-<span><span class="co">#&gt; Outlying Products by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %), Product I (256,140.4, 11.5 %). </span></span>
+<span><span class="co">#&gt; $narrative$`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 2.1 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $narrative$`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %), Product H (262.7 K, 12.3 %).</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $template_outlier_final</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %), Product I (256,140.4, 11.5 %). </span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %), Product H (262.7 K, 12.3 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $measure</span></span>
 <span><span class="co">#&gt; [1] "Sales"</span></span>
@@ -353,55 +369,61 @@ realization:</p>
 <span><span class="co">#&gt; [1] "Product"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $total</span></span>
-<span><span class="co">#&gt; [1] "2.2 M"</span></span>
+<span><span class="co">#&gt; [1] "2.1 M"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $outlier_insight</span></span>
-<span><span class="co">#&gt; [1] "Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F (294,399, 13.2 %), Product I (256,140.4, 11.5 %)"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %), Product H (262.7 K, 12.3 %)"</span></span></code></pre></div>
 <p>Let’s change a template for our narrative function and rework the
 wording as well as changing ‘is’ to ‘are’ since <code>Sales</code> is
 plural:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_three</span>,</span>
-<span>  template_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span></code></pre></div>
-<p>Overall Sales for all Products are equal to 2.2 M. Outlying Products
-by Sales: Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %),
-Product F (294,399, 13.2 %).</p>
+<span>  template_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Overall Sales for all Products are equal to 2.1 M. </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
 <p>We can set the templates using <code>usethis::edit_r_environ()</code>
 or setting up an environment variable using your data science platform
 capabilities.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span></code></pre></div>
-<p>[1] “”</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] ""</span></span>
+<span></span>
 <span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_three</span>,template_total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<p>Outlying Products by Sales: Product E (606,807, 27.3 %), Product B
-(415,404.5, 18.7 %), Product F (294,399, 13.2 %).</p>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
 <p>A method that is a little more handy is setting
 <code>.Renviron</code> variable names using a certain convention and
 adding <code>use_renviron = TRUE</code> to the narrate function. For
 example here we created a variable that uses the unique part of the
 function name, underscore, and template name - <code>descriptive</code>
 + <code>-</code> + <code>template_total</code></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, use_renviron <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Products is 2.2 M. Outlying Products by Sales:
-Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
-(294,399, 13.2 %).</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, use_renviron <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 2.1 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
 <p>You can get all templates currently available in the package with
 <code><a href="../reference/list_templates.html">list_templates()</a></code> function:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/list_templates.html">list_templates</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="13%">
-<col width="8%">
+<col width="12%">
+<col width="7%">
 <col width="17%">
-<col width="60%">
+<col width="62%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">fun</th>
@@ -421,14 +443,14 @@ Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier</td>
-<td align="left">Outlying {dimension} by {measure}:
+<td align="left">Outlying {dimension} by {measure} is
 {outlier_insight}.</td>
 </tr>
 <tr class="odd">
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier_multiple</td>
-<td align="left">Outlying {pluralize(dimension)} by {measure}:
+<td align="left">Outlying {pluralize(dimension)} by {measure} are
 {outlier_insight}.</td>
 </tr>
 <tr class="even">
@@ -436,7 +458,14 @@ Product E (606,807, 27.3 %), Product B (415,404.5, 18.7 %), Product F
 <td align="left">descriptive</td>
 <td align="left">template_outlier_l2</td>
 <td align="left">In {root_outlier_dimension}, significant {dimension_l2}
-by {measure}: {outlier_insight}.</td>
+by {measure} is {outlier_insight}.</td>
+</tr>
+<tr class="odd">
+<td align="left">narrate_descriptive</td>
+<td align="left">descriptive</td>
+<td align="left">template_outlier_l2_multiple</td>
+<td align="left">In {root_outlier_dimension}, significant
+{pluralize(dimension_l2)} by {measure} are {outlier_insight}.</td>
 </tr>
 </tbody>
 </table>
@@ -448,7 +477,7 @@ by {measure}: {outlier_insight}.</td>
 experimental</strong> <code><a href="../reference/correct_text.html">correct_text()</a></code> function. It requires
 udpipe installation and will load a model of your choosing into the
 working directory.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/correct_text.html">correct_text</a></span><span class="op">(</span><span class="st">"Total Profit across all Regions are 85 M"</span>, download_udpipe <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Total Profit across all Regions is 85 M"</span></span></code></pre></div>
 </div>

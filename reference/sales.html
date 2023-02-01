@@ -68,8 +68,8 @@ to reflect additional research into gender and sex determinations of characters.
 <dt>Date</dt>
 <dd><p>Date of Order creation</p></dd>
 
-<dt>Territory</dt>
-<dd><p>Territory/Region of shipment</p></dd>
+<dt>Region</dt>
+<dd><p>Region/Region of shipment</p></dd>
 
 <dt>Product</dt>
 <dd><p>Product Name</p></dd>
@@ -93,18 +93,18 @@ to reflect additional research into gender and sex determinations of characters.
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sales</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,000 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    `Order ID` Date       Territory Product   Promotion Price Quantity Sales</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> QR10001    2019-01-01 NA        Product E         0 105.        24 <span style="text-decoration: underline;">2</span>515.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> QR10002    2019-01-02 EMEA      Product B         1 136.         1  109.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> QR10003    2019-01-02 EMEA      Product F         1 190         17 <span style="text-decoration: underline;">2</span>584 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> QR10004    2019-01-02 NA        Product E         0 162.        27 <span style="text-decoration: underline;">4</span>363.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> QR10005    2019-01-02 LATAM     Product F         0  18.4        9  166.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> QR10006    2019-01-04 LATAM     Product B         0 101.         7  705.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> QR10007    2019-01-06 EMEA      Product I         0 155.         7 <span style="text-decoration: underline;">1</span>083.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> QR10008    2019-01-06 EMEA      Product E         0 225.        27 <span style="text-decoration: underline;">6</span>086.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> QR10009    2019-01-08 NA        Product B         0 249.         6 <span style="text-decoration: underline;">1</span>493.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> QR10010    2019-01-11 EMEA      Product E         0 226.        29 <span style="text-decoration: underline;">6</span>557.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    `Order ID` Date       Region Product   Promotion Price Quantity Sales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> QR10001    2019-01-01 NA     Product E         0 156.        26 <span style="text-decoration: underline;">4</span>048.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> QR10002    2019-01-03 NA     Product F         0  83.7        8  670.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> QR10003    2019-01-05 NA     Product B         0 182.         7 <span style="text-decoration: underline;">1</span>273.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> QR10004    2019-01-06 EMEA   Product B         0 158.        20 <span style="text-decoration: underline;">3</span>152 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> QR10005    2019-01-08 NA     Product B         0 237.        29 <span style="text-decoration: underline;">6</span>879.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> QR10006    2019-01-08 NA     Product D         1 182.        13 <span style="text-decoration: underline;">1</span>889.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> QR10007    2019-01-09 EMEA   Product B         0 240.        22 <span style="text-decoration: underline;">5</span>282.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> QR10008    2019-01-09 ASPAC  Product B         0 275.        24 <span style="text-decoration: underline;">6</span>590.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> QR10009    2019-01-09 NA     Product C         0  38.5       22  847 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> QR10010    2019-01-10 NA     Product I         0 217.        21 <span style="text-decoration: underline;">4</span>561.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 990 more rows</span></span>
 </code></pre></div>
     </div>
