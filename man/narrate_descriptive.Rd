@@ -12,7 +12,7 @@ narrate_descriptive(
   coverage = 0.5,
   coverage_limit = 5,
   narration_depth = 2,
-  template_total = "Total {measure} across all {pluralize(dimension1)} is {total}.",
+  template_total = "Total {measure} across all {pluralize(dimension1)}: {total}.",
   template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
   template_outlier_multiple =
     "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
@@ -23,6 +23,7 @@ narrate_descriptive(
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,
+  format_numbers = TRUE,
   ...
 )
 }
@@ -50,11 +51,17 @@ coverage to avoid extremely verbose narrative creation}
 
 \item{template_outlier_multiple}{glue template for multiple outliers narrative}
 
+\item{template_outlier_l2}{glue template for deeper hierarchical single outlier narrative}
+
+\item{template_outlier_l2_multiple}{glue template for deeper hierarchical multiple outliers narrative}
+
 \item{use_renviron}{Whether to use .Renviron variables in the template}
 
 \item{return_data}{return a list of variables used in the function's templates}
 
 \item{simplify}{if TRUE - returns a character vector, if FALSE - named list}
+
+\item{format_numbers}{Whether to format big numbers to K/M/B using format_number function}
 
 \item{...}{other arguments passed to glue::glue}
 }

@@ -37,7 +37,7 @@ sales %>%
   narrate_descriptive(measure = "Sales",
                dimensions = c("Region", "Product"))
 #> $`Total Sales`
-#> Total Sales across all Regions is 2.1 M.
+#> Total Sales across all Regions: 2.1 M.
 #> 
 #> $`Region by Sales`
 #> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).
