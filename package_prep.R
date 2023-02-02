@@ -39,7 +39,8 @@ covr::report()
 usethis::use_mit_license("Denis Abdullin")
 
 # vignettes ---------------------------------------------------------------
-usethis::use_vignette(name = "intro", title = "Introducing narrator")
+usethis::use_vignette(name = "formatting", title = "Formatting Output")
+usethis::use_vignette(name = "echarts", title = "Narrate Echarts Plots")
 
 # CRAN --------------------------------------------------------------------
 usethis::use_cran_badge()

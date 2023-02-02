@@ -61,7 +61,7 @@ coverage to avoid extremely verbose narrative creation}
 
 \item{simplify}{if TRUE - returns a character vector, if FALSE - named list}
 
-\item{format_numbers}{Whether to format big numbers to K/M/B using format_number function}
+\item{format_numbers}{Whether to format big numbers to K/M/B using format_num function}
 
 \item{...}{other arguments passed to glue::glue}
 }

@@ -1,0 +1,55 @@
+---
+title: "Formatting Output"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Formatting Output}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(narrator)
+library(dplyr)
+library(htmltools)
+```
+
+```{r}
+narrative <- sales %>%
+  group_by(Region, Product) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales)) %>%
+  narrate_descriptive() %>%
+  format_pct()
+
+names(narrative) <- add_tag(names(narrative), "h2")
+
+narrative %>%
+  unlist() %>%
+  paste("<br>") %>%
+  HTML()
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```

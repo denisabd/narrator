@@ -9,9 +9,9 @@
 #' @return vector of numerics
 #' @export
 #'
-#' @examples format_number(27334254)
-#' format_number(c(27334254, 12332, 23425435534))
-format_number <- function(
+#' @examples format_num(27334254)
+#' format_num(c(27334254, 12332, 23425435534))
+format_num <- function(
     num,
     format = "auto",
     decimals = 1,

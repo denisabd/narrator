@@ -10,6 +10,15 @@
     <loc>https://denisabd.github.io/narrator/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://denisabd.github.io/narrator/articles/descriptive.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/articles/echarts.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/articles/formatting.html</loc>
+  </url>
+  <url>
     <loc>https://denisabd.github.io/narrator/articles/index.html</loc>
   </url>
   <url>
@@ -22,10 +31,28 @@
     <loc>https://denisabd.github.io/narrator/index.html</loc>
   </url>
   <url>
+    <loc>https://denisabd.github.io/narrator/reference/add_tag.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/reference/clean_tags.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/reference/clean_text.html</loc>
+  </url>
+  <url>
     <loc>https://denisabd.github.io/narrator/reference/correct_text.html</loc>
   </url>
   <url>
+    <loc>https://denisabd.github.io/narrator/reference/format_num.html</loc>
+  </url>
+  <url>
     <loc>https://denisabd.github.io/narrator/reference/format_number.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/reference/format_pct.html</loc>
+  </url>
+  <url>
+    <loc>https://denisabd.github.io/narrator/reference/format_text.html</loc>
   </url>
   <url>
     <loc>https://denisabd.github.io/narrator/reference/index.html</loc>

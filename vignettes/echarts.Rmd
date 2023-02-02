@@ -1,0 +1,104 @@
+---
+title: "Narrate Echarts Plots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Narrate Echarts Plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(narrator)
+library(dplyr)
+library(purrr)
+library(echarts4r)
+```
+
+
+
+```{r}
+barplot <- sales %>%
+  group_by(Region) %>%
+  summarise(Sales = sum(Sales)) %>%
+  e_chart(Region) %>%
+  e_bar(Sales) %>%
+  e_tooltip()
+
+barplot
+```
+
+
+```{r}
+bar_narrative <- barplot %>%
+  e_get_data() %>%
+  map_df(bind_rows) %>%
+  narrate_descriptive()
+
+bar_narrative
+```
+
+```{r}
+bar_narrative <- bar_narrative %>%
+  unlist(use.names = FALSE) %>%
+  paste("\n", collapse = "") 
+
+barplot %>%
+  echarts4r::e_text_g(
+    style = list(
+      text = bar_narrative,
+      fontSize = 16
+    ),
+    left = "2%",
+    top = "3%",
+    rotation = 0
+  )
+```
+
+
+```{r}
+scatterplot <- sales %>%
+  group_by(Region, Product) %>%
+  summarise(Sales = sum(Sales),
+            Quantity = sum(Quantity),
+            Price = mean(Price), .groups = "keep") %>%
+  e_chart(Sales) %>%
+  e_scatter(Quantity, Price) %>%
+  e_tooltip()
+
+scatterplot
+```
+
+```{r}
+scatterplot %>%
+  e_get_data() %>%
+  map_df(bind_rows) %>%
+  narrate_descriptive()
+```
+
+
+```{r}
+piechart <- sales %>%
+  group_by(Product) %>%
+  summarise(Sales = sum(Sales)) %>%
+  e_chart(Product) %>%
+  e_pie(Sales) %>%
+  e_tooltip()
+
+piechart
+```
+
+```{r}
+piechart %>%
+  e_get_data() %>%
+  map_df(bind_rows) %>%
+  narrate_descriptive()
+```

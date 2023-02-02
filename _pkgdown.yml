@@ -1,4 +1,42 @@
 url: https://denisabd.github.io/narrator/
 template:
   bootstrap: 5
+  bslib:
+    pkgdown-nav-height: 100px
+    base_font: {google: "Roboto"}
+    heading_font: {google: "Roboto Slab"}
+    code_font: {google: "JetBrains Mono"}
+navbar:
+  structure:
+    left:  [intro, reference, articles, tutorials, news]
+    right: [search, github]
+
+reference:
+
+- title: Narratives
+  desc: Functions to create text out of data
+  contents:
+  - starts_with("narrate")
+  - list_templates
+
+- title: Formatting Helpers
+  desc: Helper functions to change the output of the narratives
+  contents:
+  - add_tag
+  - starts_with("clean")
+  - starts_with("format")
+  - correct_text
+
+- title: Pluralization
+  desc: Helper functions pluralize/singularize words in English
+  contents:
+  - pluralize
+  - singularize
+  - is_plural
+  - is_singular
+
+- title: Data
+  desc: Embedded Data
+  contents:
+  - sales
 

@@ -18,7 +18,7 @@
 #' @param use_renviron Whether to use .Renviron variables in the template
 #' @param return_data return a list of variables used in the function's templates
 #' @param simplify if TRUE - returns a character vector, if FALSE - named list
-#' @param format_numbers Whether to format big numbers to K/M/B using format_number function
+#' @param format_numbers Whether to format big numbers to K/M/B using format_num function
 #' @param ... other arguments passed to glue::glue
 #'
 #' @importFrom rlang :=
@@ -123,7 +123,7 @@ narrate_descriptive <- function(
     as.matrix() %>%
     as.numeric()
 
-  if (format_numbers == TRUE) total <- format_number(total)
+  if (format_numbers == TRUE) total <- format_num(total)
 
   narrative_total <- glue::glue(template_total)
 
@@ -153,7 +153,7 @@ narrate_descriptive <- function(
     outlier_values_p <- output$outlier_values_p
 
     if (format_numbers == TRUE) {
-      outlier_values <- format_number(outlier_values)
+      outlier_values <- format_num(outlier_values)
     }
 
     outlier_insight <- list(
@@ -206,7 +206,7 @@ narrate_descriptive <- function(
         outlier_values_p <- output$outlier_values_p
 
         if (format_numbers == TRUE) {
-          outlier_values <- format_number(outlier_values)
+          outlier_values <- format_num(outlier_values)
         }
 
         outlier_insight <- list(outlier_dimensions, " (", outlier_values, ", ", outlier_values_p, ")") %>%
