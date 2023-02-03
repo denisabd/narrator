@@ -35,7 +35,7 @@ names(narrative) <- add_tag(names(narrative), "h2")
 narrative %>%
   unlist() %>%
   paste("<br>") %>%
-  HTML()
+  htmltools::HTML()
 
 ```
 
