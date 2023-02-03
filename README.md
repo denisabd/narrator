@@ -1,9 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Narrator
-
-Template-based NLG framework for creating text narratives out of data
+# narrator <img src="man/figures/hex.png" align="right" alt="" width="200" />
 
 <!-- badges: start -->
 
@@ -15,6 +13,10 @@ coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
+
+# Narrator
+
+Template-based NLG framework for creating text narratives out of data
 
 ## Installation
 

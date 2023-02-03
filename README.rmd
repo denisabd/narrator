@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -13,9 +13,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Narrator
-
-Template-based NLG framework for creating text narratives out of data
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+# narrator <img src="man/figures/hex.png" align="right" alt="" width="200" />
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
@@ -24,6 +23,9 @@ Template-based NLG framework for creating text narratives out of data
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
+# Narrator
+
+Template-based NLG framework for creating text narratives out of data
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
