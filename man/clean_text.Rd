@@ -14,6 +14,8 @@ clean_text(
 \item{txt}{Text string for cleaning. Can contain multiple sentences.}
 
 \item{upper}{Vector of words that need to be changed to uppercase in text}
+
+\item{lower}{Vector of words that need to be changed to lowercase in text}
 }
 \value{
 Text string

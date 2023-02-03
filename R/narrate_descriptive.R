@@ -46,20 +46,18 @@ narrate_descriptive <- function(
     coverage_limit = 5,
     narration_depth = 2,
     template_total = "Total {measure} across all {pluralize(dimension1)}: {total}.",
-    template_outlier =
-      "Outlying {dimension} by {measure} is {outlier_insight}.",
-    template_outlier_multiple =
-      "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
-    template_outlier_l2 =
-      "In {root_outlier_dimension}, significant {dimension_l2} by {measure} is {outlier_insight}.",
-    template_outlier_l2_multiple =
-      "In {root_outlier_dimension}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}.",
+    template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
+    template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
+    template_outlier_l2 = "In {root_outlier_dimension}, significant {dimension_l2} by {measure} is {outlier_insight}.",
+    template_outlier_l2_multiple = "In {root_outlier_dimension}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}.",
     use_renviron = FALSE,
     return_data = FALSE,
     simplify = FALSE,
     format_numbers = TRUE,
     ...) {
 
+
+  # Assertion ---------------------------------------------------------------
   if (!is.data.frame(df)) stop("'df' must be a data frame or tibble")
 
   if (coverage_limit < 1) stop("'coverage_limit' must be higher or equal to 1")
@@ -99,6 +97,7 @@ narrate_descriptive <- function(
     stop(glue::glue("{measure} must be a numeric column, but is {class(df[[measure]])}"))
   }
 
+  # Renviron ----------------------------------------------------------------
   # Getting Environment Variables if available
   # Candidate for a helper function
   if (use_renviron == TRUE) {
@@ -115,6 +114,8 @@ narrate_descriptive <- function(
     }
   }
 
+
+  # Total Narrative ---------------------------------------------------------
   dimension1 <- dimensions[1]
 
   total <- df %>%

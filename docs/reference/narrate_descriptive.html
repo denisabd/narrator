@@ -69,9 +69,9 @@
 <span>  template_outlier_multiple <span class="op">=</span></span>
 <span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}."</span>,</span>
 <span>  template_outlier_l2 <span class="op">=</span></span>
-<span>    <span class="st">"In {root_outlier_dimension}, significant {dimension_l2} by {measure} is {outlier_insight}."</span>,</span>
+<span>    <span class="st">"In {root_outlier_dimension}, significant {dimension_l2}\n    by {measure} is {outlier_insight}."</span>,</span>
 <span>  template_outlier_l2_multiple <span class="op">=</span></span>
-<span>    <span class="st">"In {root_outlier_dimension}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}."</span>,</span>
+<span>    <span class="st">"In {root_outlier_dimension}, significant {pluralize(dimension_l2)}\n    by {measure} are {outlier_insight}."</span>,</span>
 <span>  use_renviron <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -172,10 +172,12 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`NA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`EMEA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Sales`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span>
@@ -195,7 +197,8 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Product by Quantity is Product B (2,862, 79 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product B by Region`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In Product B, significant Regions by Quantity are NA (1,377, 48.1 %), EMEA (765, 26.7 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In Product B, significant Regions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> by Quantity are NA (1,377, 48.1 %), EMEA (765, 26.7 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Quantity`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Quantity are NA (1,781, 49.2 %), EMEA (893, 24.7 %).</span>

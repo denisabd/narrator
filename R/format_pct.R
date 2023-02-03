@@ -22,24 +22,9 @@ format_pct <- function(text,
 
   # Replace excessive punctuation
   text <- lapply(text, stringr::str_replace_all, " %", "%")
+  text <- lapply(text, stringr::str_replace_all, "\\(", " \\(")
+  text <- lapply(text, stringr::str_replace_all, "\\)", " \\)")
   text <- lapply(text, stringr::str_replace_all, "(?![.%-//)//://(])[[:punct:]]", "")
-
-  # helper function to replace percentage correctly
-  add_color_tags <- function(string, pattern, positive, negative) {
-    string <- stringr::str_replace_all(
-      string,
-      pattern,
-      format_text(
-        pattern,
-        color = ifelse(
-          readr::parse_number(pattern) > 0,
-          positive,
-          negative)
-      )
-    )
-
-    return(string)
-  }
 
   # looping through the vector/list of narrations
   for (n in seq_along(text)) {
@@ -47,7 +32,7 @@ format_pct <- function(text,
     text[n] <- text[n] %>%
       stringr::str_split(" ") %>%
       magrittr::extract2(1) %>%
-      tidyr::as_tibble() %>%
+      tibble::as_tibble() %>%
       dplyr::mutate(
         num_value = ifelse(stringr::str_detect(value, "%"), readr::parse_number(value), NA),
         value = dplyr::case_when(

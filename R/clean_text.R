@@ -3,6 +3,7 @@
 #' @description Function cleans up the text string improving narration, removing excessive white spaces
 #' @param txt Text string for cleaning. Can contain multiple sentences.
 #' @param upper Vector of words that need to be changed to uppercase in text
+#' @param lower Vector of words that need to be changed to lowercase in text
 #'
 #' @return Text string
 #' @export

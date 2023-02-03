@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# narrator <img src="man/figures/hex.png" align="right" alt="" width="200" />
+# Narrator <img src="man/figures/hex.png" align="right" alt="" width="160" />
 
 <!-- badges: start -->
 
@@ -13,8 +13,6 @@ coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
-
-# Narrator
 
 Template-based NLG framework for creating text narratives out of data
 
@@ -45,10 +43,12 @@ sales %>%
 #> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).
 #> 
 #> $`NA by Product`
-#> In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).
+#> In NA, significant Products
+#> by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).
 #> 
 #> $`EMEA by Product`
-#> In EMEA, significant Products by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).
+#> In EMEA, significant Products
+#> by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).
 #> 
 #> $`Product by Sales`
 #> Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).

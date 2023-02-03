@@ -13,4 +13,4 @@ ct <- NULL
 
 utils::globalVariables(c("cum_share", "dep_rel", "feats", "head_token_id", "lag",
                          "plural", "share", "token", "token_fixed", "token_id",
-                         "upos"))
+                         "upos", "value"))

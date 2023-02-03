@@ -16,5 +16,6 @@ Text string without tags
 Clean html tags from the text
 }
 \examples{
-clean_tags("<b class = ttip>Total increase is equal to 14.5 \% <span class='tooltiptext'> from 1300 to 1670</span> </b>")
+clean_tags("<b>Total increase is equal to 14.5 \% </b>")
+clean_tags("<h2>Sales by Region</h3>")
 }
