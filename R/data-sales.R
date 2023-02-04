@@ -1,8 +1,5 @@
 #' Synthetic Sales Data
 #'
-#' The original data, from SWAPI, the Star Wars API, <https://swapi.dev/>, has been revised
-#' to reflect additional research into gender and sex determinations of characters.
-#'
 #' @format A tibble with 1000 rows and 8 variables:
 #' \describe{
 #' \item{Order ID}{Unique ID for the order}

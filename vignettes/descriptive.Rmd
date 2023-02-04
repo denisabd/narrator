@@ -119,7 +119,7 @@ narrate_descriptive(
 
 We can set the templates using `usethis::edit_r_environ()` or setting up an environment variable using your data science platform capabilities.
 
-```{r}
+```{r eval=FALSE}
 Sys.getenv("descriptive_template_total")
 
 narrate_descriptive(

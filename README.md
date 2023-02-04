@@ -14,7 +14,9 @@ coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-Template-based NLG framework for creating text narratives out of data
+Template-based NLG framework for creating text narratives out of data.
+Demo [shiny application](https://deny.shinyapps.io/narrator_app/)
+showing core package capabilities is deployed on shinyapps.io.
 
 ## Installation
 
@@ -90,8 +92,3 @@ sales %>%
 | Product A |  100033.10 |
 | Product D |   89607.44 |
 | Total     | 2134866.24 |
-
-## Demo
-
-Shiny app showing core narrator capabilities is deployed on
-[shinyapps.io](https://deny.shinyapps.io/narrator_app/)

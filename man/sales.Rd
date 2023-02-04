@@ -21,8 +21,7 @@ A tibble with 1000 rows and 8 variables:
 sales
 }
 \description{
-The original data, from SWAPI, the Star Wars API, \url{https://swapi.dev/}, has been revised
-to reflect additional research into gender and sex determinations of characters.
+Synthetic Sales Data
 }
 \examples{
 sales
