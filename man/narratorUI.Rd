@@ -15,6 +15,17 @@ narratorUI(
 }
 \arguments{
 \item{id}{Namespace specification}
+
+\item{narration_depth}{Parameter to control the depth of the analysis 1 for summary and 2 for detailed}
+
+\item{coverage}{Numeric portion of variability to be covered by narrative, 0 to 1}
+
+\item{coverage_limit}{Integer maximum number of elements to be narrated, overrides
+coverage to avoid extremely verbose narrative creation}
+
+\item{format}{If \code{TRUE} - format text with HTML tags}
+
+\item{...}{other arguments passed to \code{\link[glue]{glue}}}
 }
 \value{
 UI

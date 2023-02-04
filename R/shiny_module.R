@@ -2,13 +2,15 @@
 #' @description UI for the shiny module to work together with \link{narratorServer}
 #'
 #' @param id Namespace specification
+#' @param format If `TRUE` - format text with HTML tags
+#' @inheritParams narrate_descriptive
 #'
 #' @importFrom shiny NS fluidRow column selectizeInput sliderInput checkboxInput uiOutput
 #'
 #' @return UI
 #' @export
 #'
-#' @example examples/app.R
+#' @example inst/shiny/app.R
 narratorUI <- function(
     id,
     narration_depth = 2,
@@ -65,7 +67,7 @@ narratorUI <- function(
 #'
 #' @param id Namespace specification
 #' @param df Reactive data frame
-#' @param format If `TRUE` - format text with HTML tags
+#' @param summarization Summarization/aggregation for the data - 'sum', 'count' or 'mean'
 #' @param ... Additional arguments for `narrate_*` functions
 #'
 #' @importFrom shiny NS moduleServer reactiveValues observeEvent renderUI req
@@ -74,12 +76,11 @@ narratorUI <- function(
 #' @return Narrative output
 #' @export
 #'
-#' @example examples/app.R
+#' @example inst/shiny/app.R
 narratorServer <- function(
     id,
     df,
     summarization = "sum",
-    format = TRUE,
     ...
 ) {
 

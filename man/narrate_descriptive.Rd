@@ -17,9 +17,9 @@ narrate_descriptive(
   template_outlier_multiple =
     "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
   template_outlier_l2 =
-    "In {dimension_l1}, significant {dimension_l2} by {measure} is {outlier_insight}.",
+    "In {dim_l1}, significant {dim_l2} by {measure} is {outlier_insight}.",
   template_outlier_l2_multiple =
-    "In {dimension_l1}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}.",
+    "In {dim_l1}, significant {pluralize(dim_l2)} by {measure} are {outlier_insight}.",
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,

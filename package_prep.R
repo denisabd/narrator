@@ -30,7 +30,7 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 devtools::test()
 
 devtools::check()
-rhub::check_for_cran()
+#rhub::check_for_cran()
 
 # code coverage
 covr::report()

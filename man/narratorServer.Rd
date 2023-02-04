@@ -4,14 +4,14 @@
 \alias{narratorServer}
 \title{Server Logic for Narrator}
 \usage{
-narratorServer(id, df, summarization = "sum", format = TRUE, ...)
+narratorServer(id, df, summarization = "sum", ...)
 }
 \arguments{
 \item{id}{Namespace specification}
 
 \item{df}{Reactive data frame}
 
-\item{format}{If \code{TRUE} - format text with HTML tags}
+\item{summarization}{Summarization/aggregation for the data - 'sum', 'count' or 'mean'}
 
 \item{...}{Additional arguments for \verb{narrate_*} functions}
 }

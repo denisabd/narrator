@@ -56,8 +56,8 @@ narrate_descriptive <- function(
     template_total = "Total {measure} across all {pluralize(dimension1)}: {total}.",
     template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
     template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
-    template_outlier_l2 = "In {dimension_l1}, significant {dimension_l2} by {measure} is {outlier_insight}.",
-    template_outlier_l2_multiple = "In {dimension_l1}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}.",
+    template_outlier_l2 = "In {dim_l1}, significant {dim_l2} by {measure} is {outlier_insight}.",
+    template_outlier_l2_multiple = "In {dim_l1}, significant {pluralize(dim_l2)} by {measure} are {outlier_insight}.",
     use_renviron = FALSE,
     return_data = FALSE,
     simplify = FALSE,
@@ -202,15 +202,15 @@ narrate_descriptive <- function(
 
       for (i in seq_along(dimensions_l1)) {
 
-        dimension_l1 <- dimensions_l1[i]
-        dimension_l2 <- dimensions[which(dimensions == dimension) + 1]
+        dim_l1 <- dimensions_l1[i]
+        dim_l2 <- dimensions[which(dimensions == dimension) + 1]
 
         output <- df %>%
           dplyr::ungroup() %>%
           dplyr::filter(base::get(dimension) %in% dimensions_l1[i]) %>%
           dplyr::select(-dplyr::all_of(dimension)) %>%
           get_descriptive_outliers(
-            dimension = dimension_l2,
+            dimension = dim_l2,
             measure = measure,
             summarization = summarization,
             coverage = coverage,
@@ -241,7 +241,7 @@ narrate_descriptive <- function(
         narrative_outlier_l2 <- glue::glue(template_outlier_l2_final)
 
         narrative <- list(narrative_outlier_l2) %>%
-          rlang::set_names(glue::glue("{dimension_l1} by {dimension_l2}")) %>%
+          rlang::set_names(glue::glue("{dim_l1} by {dim_l2}")) %>%
           append(narrative, after = 0)
 
       }

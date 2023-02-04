@@ -28,13 +28,13 @@ Imports:
     tidyselect,
     rlang,
     V8,
-    shiny
+    shiny,
+    htmltools
 Suggests: 
     covr,
     knitr,
     rmarkdown,
     echarts4r,
-    htmltools,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 
