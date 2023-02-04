@@ -49,6 +49,9 @@
     <a class="dropdown-item" href="../articles/formatting.html">Formatting Output</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -86,6 +89,12 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a></span><span class="op">)</span></span></code></pre></div>
+<p>You can use the output of <code>narrator</code> in HTML reports or
+shiny with additional formatting that can be added using
+<code><a href="../reference/format_pct.html">format_pct()</a></code> and <code><a href="../reference/add_tag.html">add_tag()</a></code> functions. If the
+output is a named list, which is a default behaviour of the
+<code>narrate_*</code> functions, names can be used as headers and
+narratives rendered below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">narrative</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Region</span>, <span class="va">Product</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -94,13 +103,16 @@
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/format_pct.html">format_pct</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_tag.html">add_tag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span>, <span class="st">"h2"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_tag.html">add_tag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span>, <span class="st">"h3"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">narrative</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"&lt;br&gt;"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">narrative</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">narrative</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/HTML.html" class="external-link">HTML</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-Total Sales across all Regions: 2.1 M. <br> Outlying Regions by Sales are NA (1 M, <b> <span style="color: green;">47.4 %</span> </b>), EMEA (655.4 K, <b> <span style="color: green;">30.7 %</span> </b>). <br> In NA, significant Products by Sales are Product E (241.6 K, <b> <span style="color: green;">23.9 %</span> </b>), Product b (201.9 K, <b> <span style="color: green;">20 %</span> </b>), Product F (154.1 K, <b> <span style="color: green;">15.2 %</span> </b>). <br> In EMEA, significant Products by Sales are Product E (198.6 K, <b> <span style="color: green;">30.3 %</span> </b>), Product b (95.9 K, <b> <span style="color: green;">14.6 %</span> </b>), Product F (92.9 K, <b> <span style="color: green;">14.2 %</span> </b>). <br> Outlying Products by Sales are Product E (546.9 K, <b> <span style="color: green;">25.6 %</span> </b>), Product b (396.7 K, <b> <span style="color: green;">18.6 %</span> </b>), Product F (326.2 K, <b> <span style="color: green;">15.3 %</span> </b>). <br></main>
+<h3> Total Sales </h3> Total Sales across all Regions: 2.1 M. <h3> Region by Sales </h3> Outlying Regions by Sales are NA (1 M, <b> <span style="color: green;">47.4 %</span> </b>), EMEA (655.4 K, <b> <span style="color: green;">30.7 %</span> </b>). <h3> NA by Product </h3> In NA, significant Products by Sales are Product E (241.6 K, <b> <span style="color: green;">23.9 %</span> </b>), Product b (201.9 K, <b> <span style="color: green;">20 %</span> </b>), Product F (154.1 K, <b> <span style="color: green;">15.2 %</span> </b>). <h3> EMEA by Product </h3> In EMEA, significant Products by Sales are Product E (198.6 K, <b> <span style="color: green;">30.3 %</span> </b>), Product b (95.9 K, <b> <span style="color: green;">14.6 %</span> </b>), Product F (92.9 K, <b> <span style="color: green;">14.2 %</span> </b>). <h3> Product by Sales </h3> Outlying Products by Sales are Product E (546.9 K, <b> <span style="color: green;">25.6 %</span> </b>), Product b (396.7 K, <b> <span style="color: green;">18.6 %</span> </b>), Product F (326.2 K, <b> <span style="color: green;">15.3 %</span> </b>).
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
