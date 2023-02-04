@@ -42,6 +42,19 @@ kable(df_one)
 narrate_descriptive(df_one)
 ```
 
+## Summarization
+
+There are multiple summarization/aggregation options for the data frame, controlled by `summarization` argument that can be `sum`, `count` or `mean`
+
+```{r}
+sales %>%
+  narrate_descriptive(measure = "Sales", dimensions = "Region", summarization = "count")
+```
+```{r}
+sales %>%
+  narrate_descriptive(measure = "Sales", dimensions = "Region", summarization = "mean")
+```
+
 ## Multiple Dimensions
 
 ```{r}
@@ -56,6 +69,13 @@ kable(df_two)
 
 ```{r}
 narrate_descriptive(df_two)
+```
+
+## Depth
+
+Narration depth can be controlled with `narration_depth` argument. To get summary narratives only set `narration_depth = 1`
+```{r}
+narrate_descriptive(df_two, narration_depth = 1)
 ```
 
 ## Coverage

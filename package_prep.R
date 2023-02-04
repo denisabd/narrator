@@ -17,7 +17,7 @@ devtools::install(upgrade = "never", build_vignettes = TRUE)
 
 # website -----------------------------------------------------------------
 devtools::build_readme()
-pkgdown::build_site(lazy = FALSE, new_process = FALSE)
+pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 
 # github actions
 # Run once
@@ -34,7 +34,6 @@ rhub::check_for_cran()
 
 # code coverage
 covr::report()
-
 
 # release -----------------------------------------------------------------
 usethis::use_release_issue()

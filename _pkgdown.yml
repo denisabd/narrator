@@ -34,6 +34,12 @@ reference:
   - is_plural
   - is_singular
 
+- title: Shiny Module
+  desc: Module for use of narrator in shiny
+  contents:
+  - narratorUI
+  - narratorServer
+
 - title: Data
   desc: Embedded Data
   contents:

@@ -27,7 +27,8 @@ Imports:
     magrittr,
     tidyselect,
     rlang,
-    V8
+    V8,
+    shiny
 Suggests: 
     covr,
     knitr,
