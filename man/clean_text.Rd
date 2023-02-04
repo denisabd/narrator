@@ -2,16 +2,16 @@
 % Please edit documentation in R/clean_text.R
 \name{clean_text}
 \alias{clean_text}
-\title{Clean text string}
+\title{Clean Text String}
 \usage{
 clean_text(
-  txt,
+  text,
   upper = c("YTD", "PYTD"),
   lower = c("vs", "br", "h1", "h2", "h3", "h4", "h5", "h6", "b")
 )
 }
 \arguments{
-\item{txt}{Text string for cleaning. Can contain multiple sentences.}
+\item{text}{Text string for cleaning. Can contain multiple sentences.}
 
 \item{upper}{Vector of words that need to be changed to uppercase in text}
 
@@ -24,12 +24,7 @@ Text string
 Function cleans up the text string improving narration, removing excessive white spaces
 }
 \examples{
-txt <- "Similarly in 2020 the sum of spend increased by 15.4\%  ( 4.3 \% higher  than averag)."
-clean_text(txt)
-clean_text(" Total count of   po_order_id is 12300  ")
-clean_text("  Sum of Spend  is equal to 15.4 M")
-clean_text("  sum of invoice_amt_usd  is equal to 15.4 M")
-clean_text("Similarly in 2020 the sum of spend increased by 15.4\%  ( 4.3 \% higher  than averag).")
-clean_text(" Mean cycle_time is equal to 3.4  days")
-clean_text(" count of req_requisition_id is equal to 2400.")
+text <- "Similarly in 2020 the sum of spend increased by 15.4\%  ( 4.3 \% higher  than average)."
+clean_text(text)
+clean_text(" Total  is 12,300 Orders ( 23.5 \% for East  ) ")
 }

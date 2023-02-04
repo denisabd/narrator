@@ -1,4 +1,4 @@
-#' Pluralize a word
+#' Pluralize a Word in English
 #'
 #' @param x character vector of words to make plural
 #' @param n number of plural (some plurals change by amount and this also impacts
@@ -21,7 +21,7 @@ pluralize <- function(x, n=2, prepend=FALSE) {
   )
 }
 
-#' Singularize a word
+#' Singularize a Word in English
 #'
 #'
 #' @param x vector of words to make singular
@@ -44,7 +44,7 @@ singularize <- function(x) {
   ))
 }
 
-#' Test plural state of a word
+#' Test Plural State of an English Word
 #'
 #' @param x vector of words to test
 #' @return logical vector

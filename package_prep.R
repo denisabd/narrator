@@ -17,7 +17,7 @@ devtools::install(upgrade = "never", build_vignettes = TRUE)
 
 # website -----------------------------------------------------------------
 devtools::build_readme()
-pkgdown::build_site(lazy = TRUE, new_process = TRUE)
+pkgdown::build_site(lazy = FALSE, new_process = FALSE)
 
 # github actions
 # Run once
@@ -34,6 +34,10 @@ rhub::check_for_cran()
 
 # code coverage
 covr::report()
+
+
+# release -----------------------------------------------------------------
+usethis::use_release_issue()
 
 # licence -----------------------------------------------------------------
 usethis::use_mit_license("Denis Abdullin")

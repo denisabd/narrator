@@ -3,7 +3,7 @@
 \name{is_plural}
 \alias{is_plural}
 \alias{is_singular}
-\title{Test plural state of a word}
+\title{Test Plural State of an English Word}
 \usage{
 is_plural(x)
 
@@ -16,7 +16,7 @@ is_singular(x)
 logical vector
 }
 \description{
-Test plural state of a word
+Test Plural State of an English Word
 }
 \examples{
 is_singular(c("boats", "house", "cats", "river"))

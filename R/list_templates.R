@@ -1,4 +1,4 @@
-#' Return a table of all templates currently available in the package
+#' Return a Table of all Templates Currently Available in the Package
 #'
 #' @return a tibble with all templates and functions in the packages
 #' @export

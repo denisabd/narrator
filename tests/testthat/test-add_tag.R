@@ -1,14 +1,14 @@
 test_that("add_tag works", {
   expect_equal(
     add_tag("Sales by Region", tag = "h2"),
-    "<h2> Sales by Region <h2>"
+    "<h2> Sales by Region </h2>"
   )
 })
 
 test_that("add_tag works", {
   expect_equal(
     add_tag("Sales by Region", tag = "b"),
-    "<b> Sales by Region <b>"
+    "<b> Sales by Region </b>"
   )
 })
 

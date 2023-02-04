@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_text.R
 \name{format_text}
 \alias{format_text}
-\title{Add HTML tags to colorize and bold the string of text}
+\title{Add HTML Tags to Add Color and Boldness}
 \usage{
 format_text(text, color = "auto", bold = TRUE)
 }

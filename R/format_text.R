@@ -1,4 +1,4 @@
-#' Add HTML tags to colorize and bold the string of text
+#' Add HTML Tags to Add Color and Boldness
 #'
 #' @description Function adds html code around the selected string adding options for colorized and/or bold display in HTML documents.
 #' @param text Text string that you want to format

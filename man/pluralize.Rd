@@ -2,7 +2,7 @@
 % Please edit documentation in R/pluralize.R
 \name{pluralize}
 \alias{pluralize}
-\title{Pluralize a word}
+\title{Pluralize a Word in English}
 \usage{
 pluralize(x, n = 2, prepend = FALSE)
 }
@@ -18,7 +18,7 @@ the \code{prepend} functionality)}
 character vector of modified pluralized words
 }
 \description{
-Pluralize a word
+Pluralize a Word in English
 }
 \examples{
 pluralize('test')

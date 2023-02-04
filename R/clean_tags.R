@@ -1,9 +1,11 @@
-#' Clean html tags from the text
+#' Clean HTML Tags from the Text
 #'
 #' @param html_string Text with html tags
 #'
-#' @return Text string without tags
+#' @return [character()] vector with text strings without tags
 #' @export
+#'
+#' @seealso You can add tags to text using [add_tag()] function
 #'
 #' @examples
 #' clean_tags("<b>Total increase is equal to 14.5 % </b>")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/pluralize.R
 \name{singularize}
 \alias{singularize}
-\title{Singularize a word}
+\title{Singularize a Word in English}
 \usage{
 singularize(x)
 }
@@ -13,7 +13,7 @@ singularize(x)
 modified character vector of singularized words
 }
 \description{
-Singularize a word
+Singularize a Word in English
 }
 \examples{
 singularize('test')

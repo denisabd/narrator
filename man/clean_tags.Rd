@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean_tags.R
 \name{clean_tags}
 \alias{clean_tags}
-\title{Clean html tags from the text}
+\title{Clean HTML Tags from the Text}
 \usage{
 clean_tags(html_string)
 }
@@ -10,12 +10,15 @@ clean_tags(html_string)
 \item{html_string}{Text with html tags}
 }
 \value{
-Text string without tags
+\code{\link[=character]{character()}} vector with text strings without tags
 }
 \description{
-Clean html tags from the text
+Clean HTML Tags from the Text
 }
 \examples{
 clean_tags("<b>Total increase is equal to 14.5 \% </b>")
 clean_tags("<h2>Sales by Region</h3>")
+}
+\seealso{
+You can add tags to text using \code{\link[=add_tag]{add_tag()}} function
 }

@@ -22,6 +22,8 @@ library(dplyr)
 library(htmltools)
 ```
 
+You can use the output of `narrator` in HTML reports or shiny with additional formatting that can be added using `format_pct()` and `add_tag()` functions. If the output is a named list, which is a default behaviour of the `narrate_*` functions, names can be used as headers and narratives rendered below.
+
 ```{r}
 narrative <- sales %>%
   group_by(Region, Product) %>%
@@ -30,13 +32,13 @@ narrative <- sales %>%
   narrate_descriptive() %>%
   format_pct()
 
-names(narrative) <- add_tag(names(narrative), "h2")
+names(narrative) <- add_tag(names(narrative), "h3")
 
-narrative %>%
-  unlist() %>%
-  paste("<br>") %>%
+narrative <- unlist(narrative)
+
+mapply(c, names(narrative), as.character(narrative)) %>%
+  as.character() %>%
   htmltools::HTML()
-
 ```
 
 

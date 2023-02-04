@@ -25,7 +25,6 @@ reference:
   - add_tag
   - starts_with("clean")
   - starts_with("format")
-  - correct_text
 
 - title: Pluralization
   desc: Helper functions pluralize/singularize words in English

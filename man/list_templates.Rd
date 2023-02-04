@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_templates.R
 \name{list_templates}
 \alias{list_templates}
-\title{Return a table of all templates currently available in the package}
+\title{Return a Table of all Templates Currently Available in the Package}
 \usage{
 list_templates()
 }
@@ -10,7 +10,7 @@ list_templates()
 a tibble with all templates and functions in the packages
 }
 \description{
-Return a table of all templates currently available in the package
+Return a Table of all Templates Currently Available in the Package
 }
 \examples{
 list_templates()

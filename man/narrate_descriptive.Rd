@@ -2,7 +2,7 @@
 % Please edit documentation in R/narrate_descriptive.R
 \name{narrate_descriptive}
 \alias{narrate_descriptive}
-\title{Create Descriptive Narrative}
+\title{Create Descriptive Text Narratives from Data}
 \usage{
 narrate_descriptive(
   df,
@@ -17,9 +17,9 @@ narrate_descriptive(
   template_outlier_multiple =
     "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
   template_outlier_l2 =
-    "In {root_outlier_dimension}, significant {dimension_l2}\\n    by {measure} is {outlier_insight}.",
+    "In {dimension_l1}, significant {dimension_l2} by {measure} is {outlier_insight}.",
   template_outlier_l2_multiple =
-    "In {root_outlier_dimension}, significant {pluralize(dimension_l2)}\\n    by {measure} are {outlier_insight}.",
+    "In {dimension_l1}, significant {pluralize(dimension_l2)} by {measure} are {outlier_insight}.",
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,
@@ -28,7 +28,7 @@ narrate_descriptive(
 )
 }
 \arguments{
-\item{df}{Data frame of tibble, can be aggregated or raw}
+\item{df}{\code{\link[=data.frame]{data.frame()}} or \code{\link[=tibble]{tibble()}} Data frame of tibble, can be aggregated or raw}
 
 \item{measure}{Numeric measure for function to create calculations with,
 if NULL then it will take the first numeric field available}
@@ -38,47 +38,53 @@ or factor variable will be used}
 
 \item{summarization}{Approach for data summarization/aggregation - 'sum', 'count' or 'mean'}
 
-\item{coverage}{Portion of variability to be covered by narrative, 0 to 1}
+\item{coverage}{Numeric portion of variability to be covered by narrative, 0 to 1}
 
-\item{coverage_limit}{Maximum number of elements to be narrated, overrides
+\item{coverage_limit}{Integer maximum number of elements to be narrated, overrides
 coverage to avoid extremely verbose narrative creation}
 
 \item{narration_depth}{Parameter to control the depth of the analysis 1 for summary and 2 for detailed}
 
-\item{template_total}{glue template for total volumes narrative}
+\item{template_total}{\code{\link[glue]{glue}} template for total volumes narrative}
 
-\item{template_outlier}{glue template for single outlier narrative}
+\item{template_outlier}{\code{\link[glue]{glue}} template for single outlier narrative}
 
-\item{template_outlier_multiple}{glue template for multiple outliers narrative}
+\item{template_outlier_multiple}{\code{\link[glue]{glue}} template for multiple outliers narrative}
 
-\item{template_outlier_l2}{glue template for deeper hierarchical single outlier narrative}
+\item{template_outlier_l2}{\code{\link[glue]{glue}} template for deeper hierarchical single outlier narrative}
 
-\item{template_outlier_l2_multiple}{glue template for deeper hierarchical multiple outliers narrative}
+\item{template_outlier_l2_multiple}{\code{\link[glue]{glue}} template for deeper hierarchical multiple outliers narrative}
 
-\item{use_renviron}{Whether to use .Renviron variables in the template}
+\item{use_renviron}{If \link{TRUE} use .Renviron variables in the template}
 
-\item{return_data}{return a list of variables used in the function's templates}
+\item{return_data}{If \link{TRUE} - return a list of variables used in the function's templates}
 
-\item{simplify}{if TRUE - returns a character vector, if FALSE - named list}
+\item{simplify}{If \link{TRUE} - return a character vector, if \link{FALSE} - named list}
 
-\item{format_numbers}{Whether to format big numbers to K/M/B using format_num function}
+\item{format_numbers}{If \link{TRUE} - format big numbers to K/M/B using \code{\link[=format_num]{format_num()}} function}
 
-\item{...}{other arguments passed to glue::glue}
+\item{...}{other arguments passed to \code{\link[glue]{glue}}}
 }
 \value{
-character vector, glue
+A \code{\link[=tibble]{tibble()}} by default and \code{\link[=character]{character()}} if \code{simplify = TRUE}
 }
 \description{
-Create Descriptive Narrative
+\code{narrate_descriptive()} creates text narratives from a data frame containing one numeric and one or more character or factor text columns
+using \code{\link[glue]{glue}} syntax. Function can work with raw or aggregated data frame.
+It will automatically use the first numeric column as \code{measure}
+and all character or factor columns as \code{dimensions}
 }
 \examples{
-narrator::sales \%>\%
+sales \%>\%
 narrate_descriptive(measure = "Sales",
             dimensions = c("Region", "Product"))
 
-narrator::sales \%>\%
+sales \%>\%
   dplyr::filter(Product \%in\% c("Product A", "Product B")) \%>\%
   dplyr::group_by(Product, Region)  \%>\%
   dplyr::summarise(Quantity = sum(Quantity)) \%>\%
   narrate_descriptive()
+
+sales \%>\%
+narrate_descriptive(measure = "Order ID", dimensions = "Region", summarization = "count")
 }

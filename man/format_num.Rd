@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_num.R
 \name{format_num}
 \alias{format_num}
-\title{Format numeric value}
+\title{Format Numeric Values}
 \usage{
 format_num(
   num,
@@ -24,10 +24,10 @@ format_num(
 \item{format_list}{List of formats to use for automated}
 }
 \value{
-vector of numerics
+\code{\link[=character]{character()}} vector
 }
 \description{
-Format numeric value
+Format Numeric Values
 }
 \examples{
 format_num(27334254)

@@ -1,10 +1,10 @@
-#' Add html tags with colors to percentage values inside of text string to highlight growth/decline.
+#' Add HTML Tags with Colors to Percentage Values in Text
 #'
-#' @param text Text string or vector/list of text strings
+#' @param text Text string or character vector/list of text strings
 #' @param positive Color to highlight percentage increase
 #' @param negative Color to highlight percentage decline
 #'
-#' @return Text string
+#' @return [list()] of text strings
 #' @export
 #'
 #' @examples

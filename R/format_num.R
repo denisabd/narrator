@@ -1,4 +1,4 @@
-#' Format numeric value
+#' Format Numeric Values
 #'
 #' @param num Number or numeric vector
 #' @param format Format for numeric output - "auto", "K", "M", "B" or "T"
@@ -6,7 +6,7 @@
 #' @param threshold Threshold for converting to a specific format, below threshold only thousand delimiters will be added
 #' @param format_list List of formats to use for automated
 #'
-#' @return vector of numerics
+#' @return [character()] vector
 #' @export
 #'
 #' @examples format_num(27334254)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_tag.R
 \name{add_tag}
 \alias{add_tag}
-\title{Add HTML tags to text}
+\title{Add HTML Tags to Text}
 \usage{
 add_tag(text, tag = "h3")
 }
@@ -12,12 +12,15 @@ add_tag(text, tag = "h3")
 \item{tag}{HTML tag like p, b, h1 or other}
 }
 \value{
-Text string with HTML tags
+\code{glue} \code{character} with HTML tags
 }
 \description{
-Add HTML tags to text
+Add HTML Tags to Text
 }
 \examples{
 add_tag("Title Text", tag = "h2")
 add_tag("bold text", tag = "b")
+}
+\seealso{
+You can add tags to text using \code{\link[=clean_tags]{clean_tags()}} function
 }
