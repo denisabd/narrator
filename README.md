@@ -90,3 +90,8 @@ sales %>%
 | Product A |  100033.10 |
 | Product D |   89607.44 |
 | Total     | 2134866.24 |
+
+## Demo
+
+Shiny app showing core narrator capabilities is deployed on
+[shinyapps.io](https://deny.shinyapps.io/narrator_app/)

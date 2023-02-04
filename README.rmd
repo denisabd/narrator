@@ -74,3 +74,7 @@ sales %>%
   janitor::adorn_totals() %>%
   kable()
 ```
+
+## Demo
+
+Shiny app showing core narrator capabilities is deployed on [shinyapps.io](https://deny.shinyapps.io/narrator_app/)
