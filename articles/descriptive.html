@@ -142,9 +142,32 @@ be analyzed.</p>
 <span><span class="co">#&gt; Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
+<h3 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
+</h3>
+<p>There are multiple summarization/aggregation options for the data
+frame, controlled by <code>summarization</code> argument that can be
+<code>sum</code>, <code>count</code> or <code>mean</code></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>, dimensions <span class="op">=</span> <span class="st">"Region"</span>, summarization <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions: 985.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (459, 46.2 %), EMEA (301, 30.3 %).</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>, dimensions <span class="op">=</span> <span class="st">"Region"</span>, summarization <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions: 2,134.866.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are LATAM (2,208.203, 26.1 %), NA (2,180.194, 25.8 %).</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_two</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Region</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"EMEA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Region</span>, <span class="va">Product</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -241,7 +264,7 @@ be analyzed.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
 <span><span class="co">#&gt; Total Sales across all Regions: 1.7 M.</span></span>
@@ -256,6 +279,23 @@ be analyzed.</p>
 <span><span class="co">#&gt; Outlying Products by Sales are Product E (440.2 K, 26.4 %), Product B (297.8 K, 17.9 %), Product F (247 K, 14.8 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
+<h3 id="depth">Depth<a class="anchor" aria-label="anchor" href="#depth"></a>
+</h3>
+<p>Narration depth can be controlled with <code>narration_depth</code>
+argument. To get summary narratives only set
+<code>narration_depth = 1</code></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span>, narration_depth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions: 1.7 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Region by Sales is NA (1 M, 60.7 %).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Product by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Product E (440.2 K, 26.4 %), Product B (297.8 K, 17.9 %), Product F (247 K, 14.8 %).</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
 </h3>
 <p>Key argument for all narratives is <code>coverage</code>. It is used
@@ -264,7 +304,7 @@ all of the dimension levels. <br><br> By default coverage is set to 0.5
 and this means that narration will stop as soon as cumulative sum
 reaches 50 % mark. With increased coverage, additional narrative is
 returned.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_three</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Product</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -332,14 +372,14 @@ returned.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
 <span><span class="co">#&gt; Total Sales across all Products: 2.1 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
 <span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
 <span><span class="co">#&gt; Total Sales across all Products: 2.1 M.</span></span>
@@ -354,7 +394,7 @@ returned.</p>
 variables, and combining them together inside of the template. You can
 return a list of calculated variables and full narrative
 realization:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span>, return_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $template_total</span></span>
 <span><span class="co">#&gt; Total Sales across all Products: 2.1 M.</span></span>
@@ -384,7 +424,7 @@ realization:</p>
 <p>Let’s change a template for our narrative function and rework the
 wording as well as changing ‘is’ to ‘are’ since <code>Sales</code> is
 plural:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>  <span class="va">df_three</span>,</span>
 <span>  template_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension1)} are equal to {total}. "</span><span class="op">)</span></span>
@@ -396,7 +436,7 @@ plural:</p>
 <p>We can set the templates using <code>usethis::edit_r_environ()</code>
 or setting up an environment variable using your data science platform
 capabilities.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"descriptive_template_total"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] ""</span></span>
 <span></span>
@@ -414,7 +454,7 @@ adding <code>use_renviron = TRUE</code> to the narrate function. For
 example here we created a variable that uses the unique part of the
 function name, underscore, and template name - <code>descriptive</code>
 + <code>-</code> + <code>template_total</code></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, use_renviron <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
 <span><span class="co">#&gt; Total Sales across all Products: 2.1 M.</span></span>
@@ -423,7 +463,7 @@ function name, underscore, and template name - <code>descriptive</code>
 <span><span class="co">#&gt; Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span></span></code></pre></div>
 <p>You can get all templates currently available in the package with
 <code><a href="../reference/list_templates.html">list_templates()</a></code> function:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/list_templates.html">list_templates</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
