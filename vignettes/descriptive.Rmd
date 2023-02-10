@@ -48,11 +48,20 @@ There are multiple summarization/aggregation options for the data frame, control
 
 ```{r}
 sales %>%
-  narrate_descriptive(measure = "Sales", dimensions = "Region", summarization = "count")
+  narrate_descriptive(
+    measure = "Sales", 
+    dimensions = "Region",
+    summarization = "count"
+  )
 ```
-```{r}
+
+```{r eval=FALSE}
 sales %>%
-  narrate_descriptive(measure = "Sales", dimensions = "Region", summarization = "mean")
+  narrate_descriptive(
+    measure = "Sales", 
+    dimensions = "Region", 
+    summarization = "mean"
+  )
 ```
 
 ## Multiple Dimensions
@@ -75,7 +84,10 @@ narrate_descriptive(df_two)
 
 Narration depth can be controlled with `narration_depth` argument. To get summary narratives only set `narration_depth = 1`
 ```{r}
-narrate_descriptive(df_two, narration_depth = 1)
+narrate_descriptive(
+  df_two, 
+  narration_depth = 1
+)
 ```
 
 ## Coverage
@@ -90,8 +102,9 @@ df_three <- sales %>%
   arrange(desc(Sales))
 
 df_three %>%
-  mutate(Share = round(Sales/sum(Sales)*100, 1),
-         Cumulative = cumsum(Share)) %>%
+  mutate(
+    Share = round(Sales/sum(Sales)*100, 1),
+    Cumulative = cumsum(Share)) %>%
   kable()
 ```
 
@@ -114,7 +127,7 @@ Let's change a template for our narrative function and rework the wording as wel
 ```{r}
 narrate_descriptive(
   df_three,
-  template_total = "Overall {measure} for all {pluralize(dimension1)} are equal to {total}. ")
+  template_total = "Overall {measure} for all {pluralize(dimension_one)} are equal to {total}. ")
 ```
 
 We can set the templates using `usethis::edit_r_environ()` or setting up an environment variable using your data science platform capabilities.
@@ -123,13 +136,17 @@ We can set the templates using `usethis::edit_r_environ()` or setting up an envi
 Sys.getenv("descriptive_template_total")
 
 narrate_descriptive(
-  df_three,template_total = Sys.getenv("descriptive_template_total")
-  )
+  df_three,
+  template_total = Sys.getenv("descriptive_template_total")
+)
 ```
 
 A method that is a little more handy is setting `.Renviron` variable names using a certain convention and adding `use_renviron = TRUE` to the narrate function. For example here we created a variable that uses the unique part of the function name, underscore, and template name - `descriptive` + `-` + `template_total`
 ```{r}
-narrate_descriptive(df_three, use_renviron = TRUE)
+narrate_descriptive(
+  df_three, 
+  use_renviron = TRUE
+)
 ```
 
 You can get all templates currently available in the package with `list_templates()` function:

@@ -117,3 +117,22 @@ test_that("narrate_descriptive() returns an error when no dimension columns are 
       narrate_descriptive()
   )
 })
+
+
+test_that("narrate_descriptive() returns an error when no dimension columns are available", {
+  expect_equal(
+    sales %>%
+      dplyr::filter(Product %in% c("Product A", "Product B")) %>%
+      dplyr::group_by(Region, Product)  %>%
+      dplyr::summarise(Sales = sum(Sales)) %>%
+      narrate_descriptive() %>%
+      suppressMessages(),
+    sales %>%
+      dplyr::filter(Product %in% c("Product A", "Product B")) %>%
+      dplyr::group_by(Region, Product)  %>%
+      dplyr::summarise(Sales = sum(Sales)) %>%
+      narrate_descriptive(return_data = TRUE) %>%
+      magrittr::extract2(1) %>%
+      suppressMessages()
+  )
+})
