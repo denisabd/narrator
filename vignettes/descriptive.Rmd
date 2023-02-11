@@ -55,12 +55,12 @@ sales %>%
   )
 ```
 
-```{r eval=FALSE}
+```{r}
 sales %>%
   narrate_descriptive(
     measure = "Sales", 
     dimensions = "Region", 
-    summarization = "mean"
+    summarization = "average"
   )
 ```
 

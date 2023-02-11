@@ -11,7 +11,7 @@ narratorServer(id, df, summarization = "sum", ...)
 
 \item{df}{Reactive data frame}
 
-\item{summarization}{Summarization/aggregation for the data - 'sum', 'count' or 'mean'}
+\item{summarization}{Summarization/aggregation for the data - 'sum', 'count' or 'average'}
 
 \item{...}{Additional arguments for \verb{narrate_*} functions}
 }

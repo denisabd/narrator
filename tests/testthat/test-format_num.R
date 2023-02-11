@@ -21,14 +21,29 @@ test_that("format_num works when using lapply() on numeric vector", {
 })
 
 test_that("format_num returns character for bigger numbers", {
-  expect_type(format_num(27334254), "character")
+  expect_type(
+    format_num(27334254),
+    "character"
+  )
 })
 
 test_that("format_num returns character for smaller numbers", {
-  expect_type(format_num(273254), "character")
+  expect_type(
+    format_num(273254),
+    "character"
+  )
 })
 
 test_that("format_num format override works", {
-  expect_type(format_num(2733423254, format = "M"), "character")
+  expect_type(
+    format_num(2733423254, format = "M"),
+    "character"
+  )
 })
 
+
+test_that("format_num return an error for non-numeric", {
+  expect_error(
+    format_num("Text without numbers")
+  )
+})

@@ -13,6 +13,7 @@ narrate_descriptive(
   coverage_limit = 5,
   narration_depth = 2,
   template_total = "Total {measure} across all {pluralize(dimension_one)}: {total}.",
+  template_average = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
   template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
   template_outlier_multiple =
     "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
@@ -20,7 +21,6 @@ narrate_descriptive(
     "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
   template_outlier_l2_multiple =
     "In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}.",
-  template_mean = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,
@@ -37,7 +37,7 @@ if NULL then it will take the first numeric field available}
 \item{dimensions}{Vector of dimensions for analysis, by default all character
 or factor variable will be used}
 
-\item{summarization}{Approach for data summarization/aggregation - 'sum', 'count' or 'mean'}
+\item{summarization}{Approach for data summarization/aggregation - 'sum', 'count' or 'average'}
 
 \item{coverage}{Numeric portion of variability to be covered by narrative, 0 to 1}
 
@@ -47,6 +47,8 @@ coverage to avoid extremely verbose narrative creation}
 \item{narration_depth}{Parameter to control the depth of the analysis 1 for summary and 2 for detailed}
 
 \item{template_total}{\code{\link[glue]{glue}} template for total volumes narrative}
+
+\item{template_average}{\code{\link[glue]{glue}} template for average volumes narrative}
 
 \item{template_outlier}{\code{\link[glue]{glue}} template for single outlier narrative}
 

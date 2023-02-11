@@ -10,12 +10,13 @@
 #' if NULL then it will take the first numeric field available
 #' @param dimensions Vector of dimensions for analysis, by default all character
 #' or factor variable will be used
-#' @param summarization Approach for data summarization/aggregation - 'sum', 'count' or 'mean'
+#' @param summarization Approach for data summarization/aggregation - 'sum', 'count' or 'average'
 #' @param coverage Numeric portion of variability to be covered by narrative, 0 to 1
 #' @param coverage_limit Integer maximum number of elements to be narrated, overrides
 #' coverage to avoid extremely verbose narrative creation
 #' @param narration_depth Parameter to control the depth of the analysis 1 for summary and 2 for detailed
 #' @param template_total \code{\link[glue]{glue}} template for total volumes narrative
+#' @param template_average \code{\link[glue]{glue}} template for average volumes narrative
 #' @param template_outlier \code{\link[glue]{glue}} template for single outlier narrative
 #' @param template_outlier_multiple \code{\link[glue]{glue}} template for multiple outliers narrative
 #' @param template_outlier_l2 \code{\link[glue]{glue}} template for deeper hierarchical single outlier narrative
@@ -28,6 +29,7 @@
 #'
 #' @importFrom rlang :=
 #' @importFrom tidyselect where
+#' @importFrom utils head
 #'
 #' @return A [tibble()] by default and [character()] if `simplify = TRUE`
 #' @export
@@ -54,11 +56,11 @@ narrate_descriptive <- function(
     coverage_limit = 5,
     narration_depth = 2,
     template_total = "Total {measure} across all {pluralize(dimension_one)}: {total}.",
+    template_average = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
     template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
     template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
     template_outlier_l2 = "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
     template_outlier_l2_multiple = "In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}.",
-    template_mean = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
     use_renviron = FALSE,
     return_data = FALSE,
     simplify = FALSE,
@@ -135,7 +137,7 @@ narrate_descriptive <- function(
     dplyr::ungroup() %>%
     dplyr::summarise(!!measure := switch(
       summarization,
-      "mean" = mean(base::get(measure), na.rm = TRUE),
+      "average" = mean(base::get(measure), na.rm = TRUE),
       "sum" = sum(base::get(measure), na.rm = TRUE),
       "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE)
     )
@@ -163,154 +165,164 @@ narrate_descriptive <- function(
     ) %>%
       rlang::set_names(glue::glue("Total {measure}"))
 
-    # High-Level Narrative ---------------------------------------------------------
-    for (dimension in dimensions) {
+    # Average ------------------------------------------------------------
+  } else if (summarization == "average") {
+    narrative_average <- glue::glue(template_average)
 
-      output <- df %>%
-        get_descriptive_outliers(
-          dimension = dimension,
-          measure = measure,
-          summarization = summarization,
-          coverage = coverage,
-          coverage_limit = coverage_limit)
-
-      if (is.null(output)) next
-
-      # Outputting all to the global env
-      n_outliers <- output$n_outliers
-      outlier_levels <- output$outlier_levels
-      outlier_values <- output$outlier_values
-      outlier_values_p <- output$outlier_values_p
-
-      if (format_numbers == TRUE) {
-        outlier_values <- format_num(outlier_values)
-      }
-
-      outlier_insight <- list(
-        outlier_levels, " (", outlier_values, ", ", outlier_values_p, ")"
-      ) %>%
-        purrr::pmap(paste0) %>%
-        unlist() %>%
-        toString()
-
-      if (n_outliers > 1) {
-        template_outlier_final <- template_outlier_multiple
-      } else {
-        template_outlier_final <- template_outlier
-      }
-
-      narrative_outlier_final <- glue::glue(template_outlier_final)
-
-      variables_l1 <- list(
-        list(
-          narrative_outlier_final = narrative_outlier_final,
-          template_outlier_final = template_outlier_final,
-          dimension = dimension,
-          measure = measure,
-          outlier_insight = outlier_insight,
-          n_outliers = n_outliers,
-          outlier_levels = outlier_levels,
-          outlier_values = outlier_values,
-          outlier_values_p = outlier_values_p
-        )
-      ) %>%
-        rlang::set_names(glue::glue("{dimension} by {measure}"))
-
-      variables <- append(variables, variables_l1)
-
-      narrative <- list(narrative_outlier_final) %>%
-        rlang::set_names(glue::glue("{dimension} by {measure}")) %>%
-        append(narrative, after = 0)
-
-      # Detailed Narrative ------------------------------------------------------
-      # Getting one level deeper into the outlying dimension
-      if (narration_depth > 1 & dimension == dimension_one & length(dimensions) > 1) {
-
-        levels_l1 <- outlier_levels
-
-        for (i in seq_along(levels_l1)) {
-
-          level_l1 <- levels_l1[i]
-          level_l2 <- dimensions[which(dimensions == dimension) + 1]
-
-          output <- df %>%
-            dplyr::ungroup() %>%
-            dplyr::filter(base::get(dimension) %in% levels_l1[i]) %>%
-            dplyr::select(-dplyr::all_of(dimension)) %>%
-            get_descriptive_outliers(
-              dimension = level_l2,
-              measure = measure,
-              summarization = summarization,
-              coverage = coverage,
-              coverage_limit = coverage_limit)
-
-          if (is.null(output)) next
-
-          n_outliers <- output$n_outliers
-          outlier_levels <- output$outlier_levels
-          outlier_values <- output$outlier_values
-          outlier_values_p <- output$outlier_values_p
-
-          if (format_numbers == TRUE) {
-            outlier_values <- format_num(outlier_values)
-          }
-
-          outlier_insight <- list(outlier_levels, " (", outlier_values, ", ", outlier_values_p, ")") %>%
-            purrr::pmap(paste0) %>%
-            unlist() %>%
-            toString()
-
-          if (n_outliers > 1) {
-            template_outlier_l2_final <- template_outlier_l2_multiple
-          } else {
-            template_outlier_l2_final <- template_outlier_l2
-          }
-
-          narrative_outlier_l2 <- glue::glue(template_outlier_l2_final)
-
-          variables_l2 <- list(
-            list(
-              narrative_outlier_l2_final = narrative_outlier_l2,
-              template_outlier_l2_final = template_outlier_l2,
-              level_l1 = level_l1,
-              level_l2 = level_l2,
-              measure = measure,
-              outlier_insight = outlier_insight,
-              n_outliers = n_outliers,
-              outlier_levels = outlier_levels,
-              outlier_values = outlier_values,
-              outlier_values_p = outlier_values_p
-            )
-          ) %>%
-            rlang::set_names(dimension)
-
-          variables <- append(variables, variables_l2)
-
-          narrative <- list(narrative_outlier_l2) %>%
-            rlang::set_names(glue::glue("{level_l1} by {level_l2}")) %>%
-            append(narrative, after = 0)
-        }
-      }
-    }
-
-    # Mean/Average ------------------------------------------------------------
-  } else if (summarization %in% c("mean", "average")) {
-    narrative_mean <- glue::glue(template_mean)
-
-    narrative <- list(narrative_mean) %>%
+    narrative <- list(narrative_average) %>%
       rlang::set_names(glue::glue("Average {measure}"))
 
     variables <- list(
       list(
-        narrative_mean = narrative_mean,
-        template_mean = template_mean,
+        narrative_average = narrative_average,
+        template_average = template_average,
         measure = measure,
         dimension_one = dimension_one,
         total = total)
     ) %>%
       rlang::set_names(glue::glue("Average {measure}"))
+  }
 
+  # High-Level Narrative ---------------------------------------------------------
+  for (dimension in dimensions) {
 
+    output <- df %>%
+      get_descriptive_outliers(
+        dimension = dimension,
+        measure = measure,
+        summarization = summarization,
+        coverage = coverage,
+        coverage_limit = coverage_limit)
+
+    if (is.null(output)) next
+
+    # Outputting all to the global env
+    n_outliers <- output$n_outliers
+    outlier_levels <- output$outlier_levels
+    outlier_values <- output$outlier_values
+    outlier_values_p <- output$outlier_values_p
+
+    if (format_numbers == TRUE) {
+      outlier_values <- format_num(outlier_values)
+    }
+
+    outlier_insight <- list(
+      outlier_levels, " (", outlier_values, ", ", outlier_values_p,
+      ifelse(
+        summarization == "average",
+        glue::glue(" vs average {measure})"),
+        ")"
+      )
+    ) %>%
+      purrr::pmap(paste0) %>%
+      unlist() %>%
+      toString()
+
+    if (n_outliers > 1) {
+      template_outlier_final <- template_outlier_multiple
+    } else {
+      template_outlier_final <- template_outlier
+    }
+
+    narrative_outlier_final <- glue::glue(template_outlier_final)
+
+    variables_l1 <- list(
+      list(
+        narrative_outlier_final = narrative_outlier_final,
+        template_outlier_final = template_outlier_final,
+        dimension = dimension,
+        measure = measure,
+        outlier_insight = outlier_insight,
+        n_outliers = n_outliers,
+        outlier_levels = outlier_levels,
+        outlier_values = outlier_values,
+        outlier_values_p = outlier_values_p
+      )
+    ) %>%
+      rlang::set_names(glue::glue("{dimension} by {measure}"))
+
+    variables <- append(variables, variables_l1)
+
+    narrative <- list(narrative_outlier_final) %>%
+      rlang::set_names(glue::glue("{dimension} by {measure}")) %>%
+      append(narrative, after = 0)
+
+    # Detailed Narrative ------------------------------------------------------
+    # Getting one level deeper into the outlying dimension
+    if (narration_depth > 1 & dimension == dimension_one & length(dimensions) > 1) {
+
+      levels_l1 <- outlier_levels
+
+      for (i in seq_along(levels_l1)) {
+
+        level_l1 <- levels_l1[i]
+        level_l2 <- dimensions[which(dimensions == dimension) + 1]
+
+        output <- df %>%
+          dplyr::ungroup() %>%
+          dplyr::filter(base::get(dimension) %in% levels_l1[i]) %>%
+          dplyr::select(-dplyr::all_of(dimension)) %>%
+          get_descriptive_outliers(
+            dimension = level_l2,
+            measure = measure,
+            summarization = summarization,
+            coverage = coverage,
+            coverage_limit = coverage_limit)
+
+        if (is.null(output)) next
+
+        n_outliers <- output$n_outliers
+        outlier_levels <- output$outlier_levels
+        outlier_values <- output$outlier_values
+        outlier_values_p <- output$outlier_values_p
+
+        if (format_numbers == TRUE) {
+          outlier_values <- format_num(outlier_values)
+        }
+
+        outlier_insight <- list(
+          outlier_levels, " (", outlier_values, ", ", outlier_values_p,
+          ifelse(
+            summarization == "average",
+            glue::glue(" vs average {measure})"),
+            ")"
+          )
+        ) %>%
+          purrr::pmap(paste0) %>%
+          unlist() %>%
+          toString()
+
+        if (n_outliers > 1) {
+          template_outlier_l2_final <- template_outlier_l2_multiple
+        } else {
+          template_outlier_l2_final <- template_outlier_l2
+        }
+
+        narrative_outlier_l2 <- glue::glue(template_outlier_l2_final)
+
+        variables_l2 <- list(
+          list(
+            narrative_outlier_l2_final = narrative_outlier_l2,
+            template_outlier_l2_final = template_outlier_l2,
+            level_l1 = level_l1,
+            level_l2 = level_l2,
+            measure = measure,
+            outlier_insight = outlier_insight,
+            n_outliers = n_outliers,
+            outlier_levels = outlier_levels,
+            outlier_values = outlier_values,
+            outlier_values_p = outlier_values_p
+          )
+        ) %>%
+          rlang::set_names(level_l1)
+
+        variables <- append(variables, variables_l2)
+
+        narrative <- list(narrative_outlier_l2) %>%
+          rlang::set_names(glue::glue("{level_l1} by {level_l2}")) %>%
+          append(narrative, after = 0)
+      }
+    }
   }
 
   variables <- append(variables, list(narrative = narrative), 0)
@@ -352,7 +364,6 @@ get_descriptive_outliers <- function(
       summarization,
       "sum" = sum(base::get(measure), na.rm = TRUE),
       "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE),
-      "mean" = mean(base::get(measure), na.rm = TRUE),
       "average" = mean(base::get(measure), na.rm = TRUE)
     )
     ) %>%
@@ -369,7 +380,7 @@ get_descriptive_outliers <- function(
     # For a single dimension we skip to the next level
     if (nrow(table) == 1 & table$cum_share[1] == 1) return(NULL)
 
-  } else if (summarization %in% c("mean", "average")) {
+  } else if (summarization %in% c("average")) {
 
     table <- table %>%
       dplyr::mutate(share = base::get(measure)/mean(base::get(measure)) - 1) %>%
@@ -389,7 +400,8 @@ get_descriptive_outliers <- function(
   outlier_values <- table %>%
     dplyr::select(dplyr::all_of(measure)) %>%
     as.matrix() %>%
-    as.numeric()
+    as.numeric() %>%
+    round(1)
 
   outlier_values_p <- table %>%
     dplyr::mutate(share = round(share * 100, 1)) %>%

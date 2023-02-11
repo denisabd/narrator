@@ -67,7 +67,7 @@ narratorUI <- function(
 #'
 #' @param id Namespace specification
 #' @param df Reactive data frame
-#' @param summarization Summarization/aggregation for the data - 'sum', 'count' or 'mean'
+#' @param summarization Summarization/aggregation for the data - 'sum', 'count' or 'average'
 #' @param ... Additional arguments for `narrate_*` functions
 #'
 #' @importFrom shiny NS moduleServer reactiveValues observeEvent renderUI req

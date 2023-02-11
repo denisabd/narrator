@@ -33,3 +33,9 @@ test_that("format_pct returns correct length", {
   )
 })
 
+
+test_that("format_pct returns an error with non-text or non-list input", {
+  expect_error(
+    format_pct(sales)
+  )
+})

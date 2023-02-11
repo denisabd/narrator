@@ -7,6 +7,25 @@ test_that("narrate_descriptive() works", {
   )
 })
 
+test_that("narrate_descriptive() works with average summarization", {
+  expect_no_error(
+    narrator::sales %>%
+      narrate_descriptive(
+        measure = "Sales",
+        dimensions = c("Region", "Product"),
+        summarization = "average")
+  )
+})
+
+test_that("narrate_descriptive() works with count summarization", {
+  expect_no_error(
+    narrator::sales %>%
+      narrate_descriptive(
+        measure = "Order ID",
+        dimensions = c("Region", "Product"),
+        summarization = "count")
+  )
+})
 
 test_that("narrate_descriptive() works", {
   expect_no_error(
