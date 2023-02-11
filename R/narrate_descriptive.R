@@ -58,6 +58,7 @@ narrate_descriptive <- function(
     template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
     template_outlier_l2 = "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
     template_outlier_l2_multiple = "In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}.",
+    template_mean = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
     use_renviron = FALSE,
     return_data = FALSE,
     simplify = FALSE,
@@ -128,24 +129,25 @@ narrate_descriptive <- function(
   }
 
   # Total Narrative ---------------------------------------------------------
+  dimension_one <- dimensions[1]
+
+  total <- df %>%
+    dplyr::ungroup() %>%
+    dplyr::summarise(!!measure := switch(
+      summarization,
+      "mean" = mean(base::get(measure), na.rm = TRUE),
+      "sum" = sum(base::get(measure), na.rm = TRUE),
+      "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE)
+    )
+    ) %>%
+    as.matrix() %>%
+    as.numeric() %>%
+    round(1)
+
+  if (format_numbers == TRUE) total <- format_num(total)
+
+  # Sum/Count ---------------------------------------------------------------
   if (summarization %in% c("sum", "count")) {
-
-    dimension_one <- dimensions[1]
-
-    total <- df %>%
-      dplyr::ungroup() %>%
-      dplyr::summarise(!!measure := switch(
-        summarization,
-        "mean" = mean(base::get(measure), na.rm = TRUE),
-        "sum" = sum(base::get(measure), na.rm = TRUE),
-        "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE)
-      )
-      ) %>%
-      as.matrix() %>%
-      as.numeric()
-
-    if (format_numbers == TRUE) total <- format_num(total)
-
     narrative_total <- glue::glue(template_total)
 
     narrative <- list(narrative_total) %>%
@@ -290,7 +292,24 @@ narrate_descriptive <- function(
         }
       }
     }
+
+    # Mean/Average ------------------------------------------------------------
   } else if (summarization %in% c("mean", "average")) {
+    narrative_mean <- glue::glue(template_mean)
+
+    narrative <- list(narrative_mean) %>%
+      rlang::set_names(glue::glue("Average {measure}"))
+
+    variables <- list(
+      list(
+        narrative_mean = narrative_mean,
+        template_mean = template_mean,
+        measure = measure,
+        dimension_one = dimension_one,
+        total = total)
+    ) %>%
+      rlang::set_names(glue::glue("Average {measure}"))
+
 
   }
 
@@ -327,17 +346,21 @@ get_descriptive_outliers <- function(
     coverage = 0.5,
     coverage_limit = 5) {
 
+  table <- df %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
+    dplyr::summarise(!!measure := switch(
+      summarization,
+      "sum" = sum(base::get(measure), na.rm = TRUE),
+      "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE),
+      "mean" = mean(base::get(measure), na.rm = TRUE),
+      "average" = mean(base::get(measure), na.rm = TRUE)
+    )
+    ) %>%
+    dplyr::arrange(dplyr::desc(base::get(measure)))
+
   if (summarization %in% c("sum", "count")) {
 
-    table <- df %>%
-      dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
-      dplyr::summarise(!!measure := switch(
-        summarization,
-        "sum" = sum(base::get(measure), na.rm = TRUE),
-        "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE)
-      )
-      ) %>%
-      dplyr::arrange(dplyr::desc(base::get(measure))) %>%
+    table <- table %>%
       dplyr::mutate(share = base::get(measure)/sum(base::get(measure))) %>%
       dplyr::mutate(cum_share = cumsum(share)) %>%
       dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage, default = FALSE)) == 0) %>%
@@ -346,31 +369,34 @@ get_descriptive_outliers <- function(
     # For a single dimension we skip to the next level
     if (nrow(table) == 1 & table$cum_share[1] == 1) return(NULL)
 
-    n_outliers <- nrow(table)
-
-    outlier_levels <- table %>%
-      dplyr::select(dplyr::all_of(dimension)) %>%
-      as.matrix() %>%
-      as.character()
-
-    outlier_values <- table %>%
-      dplyr::select(dplyr::all_of(measure)) %>%
-      as.matrix() %>%
-      as.numeric()
-
-    outlier_values_p <- table %>%
-      dplyr::mutate(share = round(share * 100, 1)) %>%
-      dplyr::select(share) %>%
-      as.matrix() %>%
-      as.numeric() %>%
-      paste("%")
-
   } else if (summarization %in% c("mean", "average")) {
-    table <- df %>%
-      dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
-      dplyr::summarise(!!measure := mean(base::get(measure), na.rm = TRUE)) %>%
-      dplyr::arrange(dplyr::desc(base::get(measure)))
+
+    table <- table %>%
+      dplyr::mutate(share = base::get(measure)/mean(base::get(measure)) - 1) %>%
+      dplyr::arrange(dplyr::desc(abs(share))) %>%
+      dplyr::mutate(cum_share = cumsum(abs(share))/(max(share) - min(share))) %>%
+      dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage*2, default = FALSE)) == 0) %>%
+      dplyr::slice(1:coverage_limit)
   }
+
+  n_outliers <- nrow(table)
+
+  outlier_levels <- table %>%
+    dplyr::select(dplyr::all_of(dimension)) %>%
+    as.matrix() %>%
+    as.character()
+
+  outlier_values <- table %>%
+    dplyr::select(dplyr::all_of(measure)) %>%
+    as.matrix() %>%
+    as.numeric()
+
+  outlier_values_p <- table %>%
+    dplyr::mutate(share = round(share * 100, 1)) %>%
+    dplyr::select(share) %>%
+    as.matrix() %>%
+    as.numeric() %>%
+    paste("%")
 
   output <- list(
     n_outliers = n_outliers,

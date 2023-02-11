@@ -20,6 +20,7 @@ narrate_descriptive(
     "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
   template_outlier_l2_multiple =
     "In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}.",
+  template_mean = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,
