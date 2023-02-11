@@ -164,8 +164,13 @@ frame, controlled by <code>summarization</code> argument that can be
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>    measure <span class="op">=</span> <span class="st">"Sales"</span>, </span>
 <span>    dimensions <span class="op">=</span> <span class="st">"Region"</span>, </span>
-<span>    summarization <span class="op">=</span> <span class="st">"mean"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>    summarization <span class="op">=</span> <span class="st">"average"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; $`Average Sales`</span></span>
+<span><span class="co">#&gt; Average Sales across all Regions: 2,134.9.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are ASPAC (1,899.5, -10.1 % vs average Sales), LATAM (2,208.2, 4.5 % vs average Sales).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
@@ -522,37 +527,37 @@ function name, underscore, and template name - <code>descriptive</code>
 <tr class="even">
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
+<td align="left">template_average</td>
+<td align="left">Average {measure} across all
+{pluralize(dimension_one)}: {total}.</td>
+</tr>
+<tr class="odd">
+<td align="left">narrate_descriptive</td>
+<td align="left">descriptive</td>
 <td align="left">template_outlier</td>
 <td align="left">Outlying {dimension} by {measure} is
 {outlier_insight}.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier_multiple</td>
 <td align="left">Outlying {pluralize(dimension)} by {measure} are
 {outlier_insight}.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier_l2</td>
 <td align="left">In {level_l1}, significant {level_l2} by {measure} is
 {outlier_insight}.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">narrate_descriptive</td>
 <td align="left">descriptive</td>
 <td align="left">template_outlier_l2_multiple</td>
 <td align="left">In {level_l1}, significant {pluralize(level_l2)} by
 {measure} are {outlier_insight}.</td>
-</tr>
-<tr class="even">
-<td align="left">narrate_descriptive</td>
-<td align="left">descriptive</td>
-<td align="left">template_mean</td>
-<td align="left">Average {measure} across all
-{pluralize(dimension_one)}: {total}.</td>
 </tr>
 </tbody>
 </table>
