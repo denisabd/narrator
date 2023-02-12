@@ -117,36 +117,36 @@ be analyzed.</p>
 <tbody>
 <tr class="odd">
 <td align="left">NA</td>
-<td align="right">16359589</td>
+<td align="right">16915195</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
-<td align="right">12376976</td>
+<td align="right">12450534</td>
 </tr>
 <tr class="odd">
 <td align="left">ASPAC</td>
-<td align="right">3575921</td>
+<td align="right">3242657</td>
 </tr>
 <tr class="even">
 <td align="left">LATAM</td>
-<td align="right">3080286</td>
+<td align="right">3121094</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are NA (16.4 M, 46.2 %), EMEA (12.4 M, 35 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (16.9 M, 47.3 %), EMEA (12.5 M, 34.8 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
 </h3>
 <p>There are multiple summarization/aggregation options for the data
 frame, controlled by <code>summarization</code> argument that can be
-<code>sum</code>, <code>count</code> or <code>mean</code></p>
+<code>sum</code>, <code>count</code> or <code>average</code></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
@@ -155,10 +155,10 @@ frame, controlled by <code>summarization</code> argument that can be
 <span>    summarization <span class="op">=</span> <span class="st">"count"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 8,860.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 8,819.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are NA (3,698, 38.4 %), EMEA (2,922, 30.4 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (3,735, 39 %), EMEA (2,885, 30.1 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
@@ -167,10 +167,10 @@ frame, controlled by <code>summarization</code> argument that can be
 <span>    summarization <span class="op">=</span> <span class="st">"average"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $`Average Sales`</span></span>
-<span><span class="co">#&gt; Average Sales across all Regions is 3,539.3.</span></span>
+<span><span class="co">#&gt; Average Sales across all Regions is 3,572.9.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are LATAM (2,130.2, -39.8 % vs average Sales), ASPAC (2,191.1, -38.1 % vs average Sales).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Regions by Sales are ASPAC (2,086.7, -41.6 % vs average Sales), LATAM (2,118.9, -40.7 % vs average Sales).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
@@ -192,79 +192,79 @@ frame, controlled by <code>summarization</code> argument that can be
 <tbody>
 <tr class="odd">
 <td align="left">NA</td>
-<td align="left">Food and Beverage</td>
-<td align="right">5616827.2</td>
+<td align="left">Food &amp; Beverage</td>
+<td align="right">6072624.7</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
-<td align="left">Food and Beverage</td>
-<td align="right">4425502.2</td>
+<td align="left">Food &amp; Beverage</td>
+<td align="right">4349697.7</td>
 </tr>
 <tr class="odd">
 <td align="left">NA</td>
 <td align="left">Electronics</td>
-<td align="right">3080551.3</td>
+<td align="right">3251213.1</td>
 </tr>
 <tr class="even">
 <td align="left">NA</td>
 <td align="left">Tools</td>
-<td align="right">2610997.5</td>
+<td align="right">2609448.5</td>
 </tr>
 <tr class="odd">
-<td align="left">NA</td>
-<td align="left">Home</td>
-<td align="right">2445533.0</td>
-</tr>
-<tr class="even">
 <td align="left">EMEA</td>
 <td align="left">Electronics</td>
-<td align="right">2324551.8</td>
+<td align="right">2590648.9</td>
+</tr>
+<tr class="even">
+<td align="left">NA</td>
+<td align="left">Home</td>
+<td align="right">2470245.8</td>
 </tr>
 <tr class="odd">
 <td align="left">EMEA</td>
 <td align="left">Home</td>
-<td align="right">1895536.9</td>
+<td align="right">1857681.6</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
 <td align="left">Tools</td>
-<td align="right">1843936.7</td>
+<td align="right">1784073.6</td>
 </tr>
 <tr class="odd">
 <td align="left">NA</td>
 <td align="left">Baby</td>
-<td align="right">1527378.6</td>
+<td align="right">1375647.8</td>
 </tr>
 <tr class="even">
 <td align="left">NA</td>
 <td align="left">Clothing</td>
-<td align="right">1078301.1</td>
+<td align="right">1136015.1</td>
 </tr>
 <tr class="odd">
 <td align="left">EMEA</td>
 <td align="left">Baby</td>
-<td align="right">1016613.4</td>
+<td align="right">949868.9</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
 <td align="left">Clothing</td>
-<td align="right">870834.7</td>
+<td align="right">918563.0</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 28.7 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 29.4 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Region by Sales is NA (16.4 M, 56.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Region by Sales is NA (16.9 M, 57.6 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`NA by Product`</span></span>
-<span><span class="co">#&gt; In NA, significant Products by Sales are Food and Beverage (5.6 M, 34.3 %), Electronics (3.1 M, 18.8 %).</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (6.1 M, 35.9 %), Electronics (3.3 M, 19.2 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (10 M, 34.9 %), Electronics (5.4 M, 18.8 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (10.4 M, 35.5 %), Electronics (5.8 M, 19.9 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="depth">Depth<a class="anchor" aria-label="anchor" href="#depth"></a>
@@ -278,13 +278,13 @@ argument. To get summary narratives only set
 <span>  narration_depth <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 28.7 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 29.4 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Region by Sales is NA (16.4 M, 56.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Region by Sales is NA (16.9 M, 57.6 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (10 M, 34.9 %), Electronics (5.4 M, 18.8 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (10.4 M, 35.5 %), Electronics (5.8 M, 19.9 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
@@ -315,57 +315,57 @@ returned.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Food and Beverage</td>
-<td align="right">12411093</td>
-<td align="right">35.1</td>
-<td align="right">35.1</td>
+<td align="left">Food &amp; Beverage</td>
+<td align="right">12669874</td>
+<td align="right">35.5</td>
+<td align="right">35.5</td>
 </tr>
 <tr class="even">
 <td align="left">Electronics</td>
-<td align="right">6639429</td>
-<td align="right">18.8</td>
-<td align="right">53.9</td>
+<td align="right">7193458</td>
+<td align="right">20.1</td>
+<td align="right">55.6</td>
 </tr>
 <tr class="odd">
-<td align="left">Tools</td>
-<td align="right">5534432</td>
-<td align="right">15.6</td>
-<td align="right">69.5</td>
+<td align="left">Home</td>
+<td align="right">5313994</td>
+<td align="right">14.9</td>
+<td align="right">70.5</td>
 </tr>
 <tr class="even">
-<td align="left">Home</td>
-<td align="right">5266162</td>
-<td align="right">14.9</td>
-<td align="right">84.4</td>
+<td align="left">Tools</td>
+<td align="right">5275770</td>
+<td align="right">14.8</td>
+<td align="right">85.3</td>
 </tr>
 <tr class="odd">
 <td align="left">Baby</td>
-<td align="right">3109344</td>
-<td align="right">8.8</td>
+<td align="right">2836899</td>
+<td align="right">7.9</td>
 <td align="right">93.2</td>
 </tr>
 <tr class="even">
 <td align="left">Clothing</td>
-<td align="right">2432313</td>
-<td align="right">6.9</td>
-<td align="right">100.1</td>
+<td align="right">2439485</td>
+<td align="right">6.8</td>
+<td align="right">100.0</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %), Tools (5.5 M, 15.6 %), Home (5.3 M, 14.9 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %), Home (5.3 M, 14.9 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="changing-templates">Changing Templates<a class="anchor" aria-label="anchor" href="#changing-templates"></a>
@@ -378,15 +378,15 @@ realization:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span>, return_data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $narrative</span></span>
 <span><span class="co">#&gt; $narrative$`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $narrative$`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %), Tools (5.5 M, 15.6 %), Home (5.3 M, 14.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %), Home (5.3 M, 14.9 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
 <span><span class="co">#&gt; $`Total Sales`$narrative_total</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Total Sales`$template_total</span></span>
 <span><span class="co">#&gt; [1] "Total {measure} across all {pluralize(dimension_one)} is {total}."</span></span>
@@ -398,12 +398,12 @@ realization:</p>
 <span><span class="co">#&gt; [1] "Product"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Total Sales`$total</span></span>
-<span><span class="co">#&gt; [1] "35.4 M"</span></span>
+<span><span class="co">#&gt; [1] "35.7 M"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
 <span><span class="co">#&gt; $`Product by Sales`$narrative_outlier_final</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %), Tools (5.5 M, 15.6 %), Home (5.3 M, 14.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %), Home (5.3 M, 14.9 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$template_outlier_final</span></span>
 <span><span class="co">#&gt; [1] "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}."</span></span>
@@ -415,20 +415,19 @@ realization:</p>
 <span><span class="co">#&gt; [1] "Sales"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$outlier_insight</span></span>
-<span><span class="co">#&gt; [1] "Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %), Tools (5.5 M, 15.6 %), Home (5.3 M, 14.9 %)"</span></span>
+<span><span class="co">#&gt; [1] "Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %), Home (5.3 M, 14.9 %)"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$n_outliers</span></span>
-<span><span class="co">#&gt; [1] 4</span></span>
+<span><span class="co">#&gt; [1] 3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$outlier_levels</span></span>
-<span><span class="co">#&gt; [1] "Food and Beverage" "Electronics"       "Tools"            </span></span>
-<span><span class="co">#&gt; [4] "Home"             </span></span>
+<span><span class="co">#&gt; [1] "Food &amp; Beverage" "Electronics"     "Home"           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$outlier_values</span></span>
-<span><span class="co">#&gt; [1] "12.4 M" "6.6 M"  "5.5 M"  "5.3 M" </span></span>
+<span><span class="co">#&gt; [1] "12.7 M" "7.2 M"  "5.3 M" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$outlier_values_p</span></span>
-<span><span class="co">#&gt; [1] "35.1 %" "18.8 %" "15.6 %" "14.9 %"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "35.5 %" "20.1 %" "14.9 %"</span></span></code></pre></div>
 <p>Let’s change a template for our narrative function and rework the
 wording as well as changing ‘is’ to ‘are’ since <code>Sales</code> is
 plural:</p>
@@ -437,30 +436,32 @@ plural:</p>
 <span>  <span class="va">df_three</span>,</span>
 <span>  template_total <span class="op">=</span> <span class="st">"Overall {measure} for all {pluralize(dimension_one)} are equal to {total}. "</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Overall Sales for all Products are equal to 35.4 M. </span></span>
+<span><span class="co">#&gt; Overall Sales for all Products are equal to 35.7 M. </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>    template_outlier <span class="op">=</span> <span class="st">"Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total."</span>,</span>
-<span>    template_outlier_multiple <span class="op">=</span> <span class="st">"{outlier_levels} are the biggest {dimension} by {measure} with {outlier_values}"</span>,</span>
+<span>    template_outlier_multiple <span class="op">=</span> <span class="st">"{outlier_levels} are the biggest {dimension} by {measure} with {outlier_values} or {outlier_values_p} share of total {measure} respectively."</span>,</span>
 <span>    measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
 <span>    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span>,</span>
-<span>    coverage <span class="op">=</span> <span class="fl">0.4</span>,</span>
-<span>    return_data <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    coverage <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Among Regions NA is an outlier, with Sales of 16.4 M, making it 46.2 % of total.</span></span>
+<span><span class="co">#&gt; Among Regions NA is an outlier, with Sales of 16.9 M, making it 47.3 % of total.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`NA by Product`</span></span>
-<span><span class="co">#&gt; In NA, significant Products by Sales are Food and Beverage (5.6 M, 34.3 %), Electronics (3.1 M, 18.8 %).</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (6.1 M, 35.9 %), Electronics (3.3 M, 19.2 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Food and Beverage, Electronics are the biggest Product by Sales with 12.4 M, 6.6 M</span></span></code></pre></div>
+<span><span class="co">#&gt; Food &amp; Beverage and Electronics are the biggest Product by Sales with 12.7 M and 7.2 M or 35.5 % and 20.1 % share of total Sales respectively.</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="r-environment">R Environment<a class="anchor" aria-label="anchor" href="#r-environment"></a>
+</h4>
 <p>We can set the templates using <code>usethis::edit_r_environ()</code>
 or setting up an environment variable using your data science platform
 capabilities.</p>
@@ -483,10 +484,14 @@ function name, underscore, and template name - <code>descriptive</code>
 <span>  use_renviron <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 35.4 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 35.7 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %).</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="list-templates">List Templates<a class="anchor" aria-label="anchor" href="#list-templates"></a>
+</h4>
 <p>You can get all templates currently available in the package with
 <code><a href="../reference/list_templates.html">list_templates()</a></code> function:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -550,6 +555,64 @@ is {total}.</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level4">
+<h4 id="average-vs-others">Average vs Others<a class="anchor" aria-label="anchor" href="#average-vs-others"></a>
+</h4>
+<p>When <code>summarization</code> is set to <code>average</code> the
+way of output calculation is significantly different. Generally better
+way of using it in your outputs is using different templates for
+different summarization types.</p>
+<p>Giving users control over template creation and avoiding strict
+ruling for how they should look does introduce some additional
+complexity.</p>
+<p>For example, if we use a <code>template_outlier</code> for default
+<code>summarization = "sum"</code> we get a great descriptive
+narrative:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
+<span>    template_outlier <span class="op">=</span> <span class="st">"Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total."</span>,</span>
+<span>    measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
+<span>    dimensions <span class="op">=</span> <span class="st">"Region"</span>,</span>
+<span>    coverage <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Total Sales`</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 35.7 M.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Among Regions NA is an outlier, with Sales of 16.9 M, making it 47.3 % of total.</span></span></code></pre></div>
+<p>But when trying the same for <code>summarization = "average"</code>
+we get into trouble, because for this case we compare the values for
+every level to the overall average Sales. Default templates handle that
+using logic in the <code>{outlier_insight}</code> calculation.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
+<span>    template_outlier <span class="op">=</span> <span class="st">"Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total."</span>,</span>
+<span>    measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
+<span>    dimensions <span class="op">=</span> <span class="st">"Region"</span>,</span>
+<span>    summarization <span class="op">=</span> <span class="st">"average"</span>,</span>
+<span>    coverage <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Average Sales`</span></span>
+<span><span class="co">#&gt; Average Sales across all Regions is 3,572.9.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Among Regions ASPAC is an outlier, with Sales of 2,086.7, making it -41.6 % of total.</span></span></code></pre></div>
+<p>So here we can using something like this:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
+<span>    template_outlier <span class="op">=</span> <span class="st">"Among {pluralize(dimension)} {outlier_levels} is an outlier, with average {measure} of {outlier_values}, {outlier_values_p} lower than average {measure} across all records."</span>,</span>
+<span>    measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
+<span>    dimensions <span class="op">=</span> <span class="st">"Region"</span>,</span>
+<span>    summarization <span class="op">=</span> <span class="st">"average"</span>,</span>
+<span>    coverage <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $`Average Sales`</span></span>
+<span><span class="co">#&gt; Average Sales across all Regions is 3,572.9.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Region by Sales`</span></span>
+<span><span class="co">#&gt; Among Regions ASPAC is an outlier, with average Sales of 2,086.7, -41.6 % lower than average Sales across all records.</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
