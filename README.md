@@ -39,19 +39,19 @@ sales %>%
   narrate_descriptive(measure = "Sales",
                dimensions = c("Region", "Product"))
 #> $`Total Sales`
-#> Total Sales across all Regions: 2.1 M.
+#> Total Sales across all Regions is 35.4 M.
 #> 
 #> $`Region by Sales`
-#> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).
+#> Outlying Regions by Sales are NA (16.4 M, 46.2 %), EMEA (12.4 M, 35 %).
 #> 
 #> $`NA by Product`
-#> In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).
+#> In NA, significant Products by Sales are Food and Beverage (5.6 M, 34.3 %), Electronics (3.1 M, 18.8 %).
 #> 
 #> $`EMEA by Product`
-#> In EMEA, significant Products by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).
+#> In EMEA, significant Products by Sales are Food and Beverage (4.4 M, 35.8 %), Electronics (2.3 M, 18.8 %).
 #> 
 #> $`Product by Sales`
-#> Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).
+#> Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %).
 ```
 
 ``` r
@@ -64,13 +64,13 @@ sales %>%
   kable()
 ```
 
-| Region |     Sales | Share |
-|:-------|----------:|------:|
-| NA     | 1011609.9 | 0.474 |
-| EMEA   |  655361.4 | 0.307 |
-| ASPAC  |  286822.2 | 0.134 |
-| LATAM  |  181072.7 | 0.085 |
-| Total  | 2134866.2 | 1.000 |
+| Region |    Sales | Share |
+|:-------|---------:|------:|
+| NA     | 16359589 | 0.462 |
+| EMEA   | 12376976 | 0.350 |
+| ASPAC  |  3575921 | 0.101 |
+| LATAM  |  3080286 | 0.087 |
+| Total  | 35392772 | 1.000 |
 
 ``` r
 sales %>%
@@ -81,14 +81,12 @@ sales %>%
   kable()
 ```
 
-| Product   |      Sales |
-|:----------|-----------:|
-| Product E |  546888.88 |
-| Product B |  396713.90 |
-| Product F |  326244.84 |
-| Product H |  262662.94 |
-| Product I |  215874.38 |
-| Product C |  196840.76 |
-| Product A |  100033.10 |
-| Product D |   89607.44 |
-| Total     | 2134866.24 |
+| Product           |    Sales |
+|:------------------|---------:|
+| Food and Beverage | 12411093 |
+| Electronics       |  6639429 |
+| Tools             |  5534432 |
+| Home              |  5266162 |
+| Baby              |  3109344 |
+| Clothing          |  2432313 |
+| Total             | 35392772 |

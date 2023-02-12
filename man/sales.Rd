@@ -5,12 +5,13 @@
 \alias{sales}
 \title{Synthetic Sales Data}
 \format{
-A tibble with 1000 rows and 8 variables:
+A tibble with 10000 rows and 9 variables:
 \describe{
 \item{Order ID}{Unique ID for the order}
 \item{Date}{Date of Order creation}
 \item{Region}{Region/Region of shipment}
 \item{Product}{Product Name}
+\item{Store}{Store size - Big, Medium or Small}
 \item{Promotion}{Was Promotion present}
 \item{Price}{Raw unit price for quantity}
 \item{Quantity}{Number of units sold}

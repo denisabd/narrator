@@ -130,6 +130,17 @@ narrate_descriptive(
   template_total = "Overall {measure} for all {pluralize(dimension_one)} are equal to {total}. ")
 ```
 
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
+    template_outlier_multiple = "{outlier_levels} are the biggest {dimension} by {measure} with {outlier_values}",
+    measure = "Sales",
+    dimensions = c("Region", "Product"),
+    coverage = 0.4,
+    return_data = FALSE)
+```
+
 We can set the templates using `usethis::edit_r_environ()` or setting up an environment variable using your data science platform capabilities.
 
 ```{r eval=FALSE}

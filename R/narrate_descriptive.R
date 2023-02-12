@@ -25,6 +25,7 @@
 #' @param return_data If [TRUE] - return a list of variables used in the function's templates
 #' @param simplify If [TRUE] - return a character vector, if [FALSE] - named list
 #' @param format_numbers If [TRUE] - format big numbers to K/M/B using [format_num()] function
+#' @param collapse_sep Separator for \code{\link[glue]{glue_collapse}} in cases with multiple values in single variable
 #' @param ... other arguments passed to \code{\link[glue]{glue}}
 #'
 #' @importFrom rlang :=
@@ -55,8 +56,8 @@ narrate_descriptive <- function(
     coverage = 0.5,
     coverage_limit = 5,
     narration_depth = 2,
-    template_total = "Total {measure} across all {pluralize(dimension_one)}: {total}.",
-    template_average = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
+    template_total = "Total {measure} across all {pluralize(dimension_one)} is {total}.",
+    template_average = "Average {measure} across all {pluralize(dimension_one)} is {total}.",
     template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
     template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
     template_outlier_l2 = "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
@@ -65,6 +66,7 @@ narrate_descriptive <- function(
     return_data = FALSE,
     simplify = FALSE,
     format_numbers = TRUE,
+    collapse_sep = ", ",
     ...) {
 
 
@@ -82,6 +84,10 @@ narrate_descriptive <- function(
       dplyr::ungroup() %>%
       dplyr::select(where(is.character), where(is.factor)) %>%
       names()
+  } else {
+    if (!all(dimensions %in% names(df))) {
+      stop("all dimensions must be columns the data frame (df)")
+    }
   }
 
   if (length(dimensions) < 1) stop("Desciptive narrative requires at least one dimension")
@@ -133,7 +139,7 @@ narrate_descriptive <- function(
   # Total Narrative ---------------------------------------------------------
   dimension_one <- dimensions[1]
 
-  total <- df %>%
+  total_raw <- df %>%
     dplyr::ungroup() %>%
     dplyr::summarise(!!measure := switch(
       summarization,
@@ -146,11 +152,18 @@ narrate_descriptive <- function(
     as.numeric() %>%
     round(1)
 
-  if (format_numbers == TRUE) total <- format_num(total)
+  if (format_numbers == TRUE) {
+    total <- format_num(total_raw)
+  } else {
+    total <- total_raw
+  }
 
   # Sum/Count ---------------------------------------------------------------
   if (summarization %in% c("sum", "count")) {
-    narrative_total <- glue::glue(template_total)
+    narrative_total <- glue::glue(
+      template_total,
+      .transformer = collapse_transformer(sep = collapse_sep)
+    )
 
     narrative <- list(narrative_total) %>%
       rlang::set_names(glue::glue("Total {measure}"))
@@ -167,7 +180,10 @@ narrate_descriptive <- function(
 
     # Average ------------------------------------------------------------
   } else if (summarization == "average") {
-    narrative_average <- glue::glue(template_average)
+    narrative_average <- glue::glue(
+      template_average,
+      .transformer = collapse_transformer(sep = collapse_sep)
+    )
 
     narrative <- list(narrative_average) %>%
       rlang::set_names(glue::glue("Average {measure}"))
@@ -190,6 +206,11 @@ narrate_descriptive <- function(
       get_descriptive_outliers(
         dimension = dimension,
         measure = measure,
+        # we need overall total for average only, in other cases it leads to incorrect output
+        total = switch(summarization,
+                       "average" = total_raw,
+                       "sum" = NULL,
+                       "count" = NULL),
         summarization = summarization,
         coverage = coverage,
         coverage_limit = coverage_limit)
@@ -224,7 +245,10 @@ narrate_descriptive <- function(
       template_outlier_final <- template_outlier
     }
 
-    narrative_outlier_final <- glue::glue(template_outlier_final)
+    narrative_outlier_final <- glue::glue(
+      template_outlier_final,
+      .transformer = collapse_transformer(sep = collapse_sep)
+    )
 
     variables_l1 <- list(
       list(
@@ -265,6 +289,11 @@ narrate_descriptive <- function(
           get_descriptive_outliers(
             dimension = level_l2,
             measure = measure,
+            # we need overall total for average only, in other cases it leads to incorrect output
+            total = switch(summarization,
+                           "average" = total_raw,
+                           "sum" = NULL,
+                           "count" = NULL),
             summarization = summarization,
             coverage = coverage,
             coverage_limit = coverage_limit)
@@ -354,6 +383,7 @@ get_descriptive_outliers <- function(
     df,
     dimension,
     measure,
+    total = NULL,
     summarization = "sum",
     coverage = 0.5,
     coverage_limit = 5) {
@@ -371,8 +401,14 @@ get_descriptive_outliers <- function(
 
   if (summarization %in% c("sum", "count")) {
 
+    if (is.null(total)) {
+      total <- table %>%
+        dplyr::summarise(total = sum(base::get(measure), na.rm = TRUE)) %>%
+        as.numeric()
+    }
+
     table <- table %>%
-      dplyr::mutate(share = base::get(measure)/sum(base::get(measure))) %>%
+      dplyr::mutate(share = base::get(measure)/total) %>%
       dplyr::mutate(cum_share = cumsum(share)) %>%
       dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage, default = FALSE)) == 0) %>%
       dplyr::slice(1:coverage_limit)
@@ -382,8 +418,14 @@ get_descriptive_outliers <- function(
 
   } else if (summarization %in% c("average")) {
 
+    if (is.null(total)) {
+      total <- table %>%
+        dplyr::summarise(total = mean(base::get(measure), na.rm = TRUE)) %>%
+        as.numeric()
+    }
+
     table <- table %>%
-      dplyr::mutate(share = base::get(measure)/mean(base::get(measure)) - 1) %>%
+      dplyr::mutate(share = base::get(measure)/total - 1) %>%
       dplyr::arrange(dplyr::desc(abs(share))) %>%
       dplyr::mutate(cum_share = cumsum(abs(share))/(max(share) - min(share))) %>%
       dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage*2, default = FALSE)) == 0) %>%
@@ -418,4 +460,25 @@ get_descriptive_outliers <- function(
   )
 
   return(output)
+}
+
+#' Transformer to collapse variables of length 2 or more
+#'
+#' @param regex Expression to find in the template text
+#' @param ...
+#'
+#' @noRd
+collapse_transformer <- function(regex = "$", ...) {
+  function(text, envir) {
+    collapse <- grepl(regex, text)
+    if (collapse) {
+      text <- sub(regex, "", text)
+    }
+    res <- glue::identity_transformer(text, envir)
+    if (collapse) {
+      return(glue::glue_collapse(res, ...))
+    } else {
+      return(res)
+    }
+  }
 }

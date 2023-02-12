@@ -14,7 +14,7 @@
 #' clean_text(" Total  is 12,300 Orders ( 23.5 % for East  ) ")
 clean_text <- function(text,
                        upper = c("YTD", "PYTD"),
-                       lower = c("vs", "br", "h1", "h2", "h3", "h4", "h5", "h6", "b")
+                       lower = c("vs", "br>", "h1>", "h2>", "h3>", "h4>", "h5>", "h6>", "b>")
 ) {
 
   #assertion

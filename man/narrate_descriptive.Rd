@@ -12,8 +12,9 @@ narrate_descriptive(
   coverage = 0.5,
   coverage_limit = 5,
   narration_depth = 2,
-  template_total = "Total {measure} across all {pluralize(dimension_one)}: {total}.",
-  template_average = "Average {measure} across all {pluralize(dimension_one)}: {total}.",
+  template_total = "Total {measure} across all {pluralize(dimension_one)} is {total}.",
+  template_average =
+    "Average {measure} across all {pluralize(dimension_one)} is {total}.",
   template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
   template_outlier_multiple =
     "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
@@ -25,6 +26,7 @@ narrate_descriptive(
   return_data = FALSE,
   simplify = FALSE,
   format_numbers = TRUE,
+  collapse_sep = ", ",
   ...
 )
 }
@@ -65,6 +67,8 @@ coverage to avoid extremely verbose narrative creation}
 \item{simplify}{If \link{TRUE} - return a character vector, if \link{FALSE} - named list}
 
 \item{format_numbers}{If \link{TRUE} - format big numbers to K/M/B using \code{\link[=format_num]{format_num()}} function}
+
+\item{collapse_sep}{Separator for \code{\link[glue]{glue_collapse}} in cases with multiple values in single variable}
 
 \item{...}{other arguments passed to \code{\link[glue]{glue}}}
 }

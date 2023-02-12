@@ -76,8 +76,9 @@ and all character or factor columns as <code>dimensions</code></p>
 <span>  coverage <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  template_total <span class="op">=</span> <span class="st">"Total {measure} across all {pluralize(dimension_one)}: {total}."</span>,</span>
-<span>  template_average <span class="op">=</span> <span class="st">"Average {measure} across all {pluralize(dimension_one)}: {total}."</span>,</span>
+<span>  template_total <span class="op">=</span> <span class="st">"Total {measure} across all {pluralize(dimension_one)} is {total}."</span>,</span>
+<span>  template_average <span class="op">=</span></span>
+<span>    <span class="st">"Average {measure} across all {pluralize(dimension_one)} is {total}."</span>,</span>
 <span>  template_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}."</span>,</span>
 <span>  template_outlier_multiple <span class="op">=</span></span>
 <span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}."</span>,</span>
@@ -89,6 +90,7 @@ and all character or factor columns as <code>dimensions</code></p>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  format_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  collapse_sep <span class="op">=</span> <span class="st">", "</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -166,6 +168,10 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <dd><p>If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> - format big numbers to K/M/B using <code><a href="format_num.html">format_num()</a></code> function</p></dd>
 
 
+<dt>collapse_sep</dt>
+<dd><p>Separator for <code><a href="https://glue.tidyverse.org/reference/glue_collapse.html" class="external-link">glue_collapse</a></code> in cases with multiple values in single variable</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other arguments passed to <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code></p></dd>
 
@@ -185,19 +191,19 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
 <span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions: 2.1 M.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions is 35.4 M.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (1 M, 47.4 %), EMEA (655.4 K, 30.7 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (16.4 M, 46.2 %), EMEA (12.4 M, 35 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`NA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Product E (241.6 K, 23.9 %), Product B (201.9 K, 20 %), Product F (154.1 K, 15.2 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Food and Beverage (5.6 M, 34.3 %), Electronics (3.1 M, 18.8 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`EMEA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Product E (198.6 K, 30.3 %), Product B (95.9 K, 14.6 %), Product F (92.9 K, 14.2 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Food and Beverage (4.4 M, 35.8 %), Electronics (2.3 M, 18.8 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Product E (546.9 K, 25.6 %), Product B (396.7 K, 18.6 %), Product F (326.2 K, 15.3 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
@@ -208,25 +214,22 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `summarise()` has grouped output by 'Product'. You can override using the</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `.groups` argument.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products: 3,622.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products is 0.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Product by Quantity is Product B (2,862, 79 %).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`Product B by Region`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In Product B, significant Regions by Quantity are NA (1,377, 48.1 %), EMEA (765, 26.7 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Product by Quantity is .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Quantity are NA (1,781, 49.2 %), EMEA (893, 24.7 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Region by Quantity is .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Order ID"</span>, dimensions <span class="op">=</span> <span class="st">"Region"</span>, summarization <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Order ID`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Order ID across all Regions: 1,000.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Order ID across all Regions is 10 K.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Order ID`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Order ID are NA (464, 46.4 %), EMEA (303, 30.3 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Order ID are NA (3,889, 38.9 %), EMEA (3,033, 30.3 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
