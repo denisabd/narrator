@@ -26,6 +26,7 @@
 #' @param simplify If [TRUE] - return a character vector, if [FALSE] - named list
 #' @param format_numbers If [TRUE] - format big numbers to K/M/B using [format_num()] function
 #' @param collapse_sep Separator for \code{\link[glue]{glue_collapse}} in cases with multiple values in single variable
+#' @param collapse_last Separator for \code{\link[glue]{glue_collapse}} for the last item, in cases with multiple values in single variable
 #' @param ... other arguments passed to \code{\link[glue]{glue}}
 #'
 #' @importFrom rlang :=
@@ -67,6 +68,7 @@ narrate_descriptive <- function(
     simplify = FALSE,
     format_numbers = TRUE,
     collapse_sep = ", ",
+    collapse_last = " and ",
     ...) {
 
 
@@ -127,12 +129,24 @@ narrate_descriptive <- function(
       template_total <- Sys.getenv("descriptive_template_total")
     }
 
+    if (Sys.getenv("descriptive_template_average") != "") {
+      template_average <- Sys.getenv("descriptive_template_average")
+    }
+
     if (Sys.getenv("descriptive_template_outlier") != "") {
       template_outlier = Sys.getenv("descriptive_template_outlier")
     }
 
     if (Sys.getenv("descriptive_template_outlier_multiple") != "") {
       template_outlier_multiple = Sys.getenv("descriptive_template_outlier_multiple")
+    }
+
+    if (Sys.getenv("descriptive_template_outlier_l2") != "") {
+      template_outlier_l2 = Sys.getenv("descriptive_template_outlier_l2")
+    }
+
+    if (Sys.getenv("descriptive_template_outlier_multiple_l2") != "") {
+      template_outlier_multiple_l2 = Sys.getenv("descriptive_template_outlier_multiple_l2")
     }
   }
 
@@ -162,7 +176,7 @@ narrate_descriptive <- function(
   if (summarization %in% c("sum", "count")) {
     narrative_total <- glue::glue(
       template_total,
-      .transformer = collapse_transformer(sep = collapse_sep)
+      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
     )
 
     narrative <- list(narrative_total) %>%
@@ -182,7 +196,7 @@ narrate_descriptive <- function(
   } else if (summarization == "average") {
     narrative_average <- glue::glue(
       template_average,
-      .transformer = collapse_transformer(sep = collapse_sep)
+      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
     )
 
     narrative <- list(narrative_average) %>%
@@ -247,7 +261,7 @@ narrate_descriptive <- function(
 
     narrative_outlier_final <- glue::glue(
       template_outlier_final,
-      .transformer = collapse_transformer(sep = collapse_sep)
+      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
     )
 
     variables_l1 <- list(

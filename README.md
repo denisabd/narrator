@@ -39,19 +39,19 @@ sales %>%
   narrate_descriptive(measure = "Sales",
                dimensions = c("Region", "Product"))
 #> $`Total Sales`
-#> Total Sales across all Regions is 35.4 M.
+#> Total Sales across all Regions is 35.7 M.
 #> 
 #> $`Region by Sales`
-#> Outlying Regions by Sales are NA (16.4 M, 46.2 %), EMEA (12.4 M, 35 %).
+#> Outlying Regions by Sales are NA (16.9 M, 47.3 %), EMEA (12.5 M, 34.8 %).
 #> 
 #> $`NA by Product`
-#> In NA, significant Products by Sales are Food and Beverage (5.6 M, 34.3 %), Electronics (3.1 M, 18.8 %).
+#> In NA, significant Products by Sales are Food & Beverage (6.1 M, 35.9 %), Electronics (3.3 M, 19.2 %).
 #> 
 #> $`EMEA by Product`
-#> In EMEA, significant Products by Sales are Food and Beverage (4.4 M, 35.8 %), Electronics (2.3 M, 18.8 %).
+#> In EMEA, significant Products by Sales are Food & Beverage (4.3 M, 34.9 %), Electronics (2.6 M, 20.8 %).
 #> 
 #> $`Product by Sales`
-#> Outlying Products by Sales are Food and Beverage (12.4 M, 35.1 %), Electronics (6.6 M, 18.8 %).
+#> Outlying Products by Sales are Food & Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %).
 ```
 
 ``` r
@@ -66,11 +66,11 @@ sales %>%
 
 | Region |    Sales | Share |
 |:-------|---------:|------:|
-| NA     | 16359589 | 0.462 |
-| EMEA   | 12376976 | 0.350 |
-| ASPAC  |  3575921 | 0.101 |
-| LATAM  |  3080286 | 0.087 |
-| Total  | 35392772 | 1.000 |
+| NA     | 16915195 | 0.473 |
+| EMEA   | 12450534 | 0.348 |
+| ASPAC  |  3242657 | 0.091 |
+| LATAM  |  3121094 | 0.087 |
+| Total  | 35729480 | 0.999 |
 
 ``` r
 sales %>%
@@ -81,12 +81,12 @@ sales %>%
   kable()
 ```
 
-| Product           |    Sales |
-|:------------------|---------:|
-| Food and Beverage | 12411093 |
-| Electronics       |  6639429 |
-| Tools             |  5534432 |
-| Home              |  5266162 |
-| Baby              |  3109344 |
-| Clothing          |  2432313 |
-| Total             | 35392772 |
+| Product         |    Sales |
+|:----------------|---------:|
+| Food & Beverage | 12669874 |
+| Electronics     |  7193458 |
+| Home            |  5313994 |
+| Tools           |  5275770 |
+| Baby            |  2836899 |
+| Clothing        |  2439485 |
+| Total           | 35729480 |

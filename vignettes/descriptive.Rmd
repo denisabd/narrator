@@ -44,7 +44,7 @@ narrate_descriptive(df_one)
 
 ## Summarization
 
-There are multiple summarization/aggregation options for the data frame, controlled by `summarization` argument that can be `sum`, `count` or `mean`
+There are multiple summarization/aggregation options for the data frame, controlled by `summarization` argument that can be `sum`, `count` or `average`
 
 ```{r}
 sales %>%
@@ -134,12 +134,13 @@ narrate_descriptive(
 sales %>%
   narrate_descriptive(
     template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
-    template_outlier_multiple = "{outlier_levels} are the biggest {dimension} by {measure} with {outlier_values}",
+    template_outlier_multiple = "{outlier_levels} are the biggest {dimension} by {measure} with {outlier_values} or {outlier_values_p} share of total {measure} respectively.",
     measure = "Sales",
     dimensions = c("Region", "Product"),
-    coverage = 0.4,
-    return_data = FALSE)
+    coverage = 0.4)
 ```
+
+### R Environment
 
 We can set the templates using `usethis::edit_r_environ()` or setting up an environment variable using your data science platform capabilities.
 
@@ -160,8 +161,51 @@ narrate_descriptive(
 )
 ```
 
+### List Templates
+
 You can get all templates currently available in the package with `list_templates()` function:
 ```{r}
 list_templates() %>%
   kable()
+```
+
+### Average vs Others
+
+When `summarization` is set to `average` the way of output calculation is significantly different. Generally better way of using it in your outputs is using different templates for different summarization types.
+
+Giving users control over template creation and avoiding strict ruling for how they should look does introduce some additional complexity. 
+
+For example, if we use a `template_outlier` for default `summarization = "sum"` we get a great descriptive narrative:
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
+    measure = "Sales",
+    dimensions = "Region",
+    coverage = 0.3)
+```
+
+But when trying the same for `summarization = "average"` we get into trouble, because for this case we compare the values for every level to the overall average Sales. Default templates handle that using logic in the `{outlier_insight}` calculation.
+
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
+    measure = "Sales",
+    dimensions = "Region",
+    summarization = "average",
+    coverage = 0.3)
+```
+
+
+So here we can using something like this:
+
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with average {measure} of {outlier_values}, {outlier_values_p} lower than average {measure} across all records.",
+    measure = "Sales",
+    dimensions = "Region",
+    summarization = "average",
+    coverage = 0.3)
 ```

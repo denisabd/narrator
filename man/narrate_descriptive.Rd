@@ -27,6 +27,7 @@ narrate_descriptive(
   simplify = FALSE,
   format_numbers = TRUE,
   collapse_sep = ", ",
+  collapse_last = " and ",
   ...
 )
 }
@@ -69,6 +70,8 @@ coverage to avoid extremely verbose narrative creation}
 \item{format_numbers}{If \link{TRUE} - format big numbers to K/M/B using \code{\link[=format_num]{format_num()}} function}
 
 \item{collapse_sep}{Separator for \code{\link[glue]{glue_collapse}} in cases with multiple values in single variable}
+
+\item{collapse_last}{Separator for \code{\link[glue]{glue_collapse}} for the last item, in cases with multiple values in single variable}
 
 \item{...}{other arguments passed to \code{\link[glue]{glue}}}
 }

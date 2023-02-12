@@ -12,7 +12,7 @@ Store <- sample(c("Big", "Medium", "Small"),
                  length(date),
                  replace = TRUE,
                  prob = c(0.65, 0.25, 0.1))
-product <- sample(c("Baby", "Electronics", "Food and Beverage", "Clothing", "Home", "Tools"),
+product <- sample(c("Baby", "Electronics", "Food & Beverage", "Clothing", "Home", "Tools"),
                   length(date),
                   replace = TRUE,
                   prob = c(0.08, 0.2, 0.35, 0.07, 0.15, 0.15))
