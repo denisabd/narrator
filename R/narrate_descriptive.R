@@ -21,7 +21,9 @@
 #' @param template_outlier_multiple \code{\link[glue]{glue}} template for multiple outliers narrative
 #' @param template_outlier_l2 \code{\link[glue]{glue}} template for deeper hierarchical single outlier narrative
 #' @param template_outlier_l2_multiple \code{\link[glue]{glue}} template for deeper hierarchical multiple outliers narrative
-#' @param use_renviron If [TRUE] use .Renviron variables in the template
+#' @param use_renviron If [TRUE] use .Renviron variables in the template.
+#' You can also set \code{options(narrator.use_renviron = TRUE)} to make it global for the session,
+#' or create an environment variable "use_renviron" by changing your .Renviron file \code{usethis::edit_r_environ()}
 #' @param return_data If [TRUE] - return a list of variables used in the function's templates
 #' @param simplify If [TRUE] - return a character vector, if [FALSE] - named list
 #' @param format_numbers If [TRUE] - format big numbers to K/M/B using [format_num()] function
@@ -33,7 +35,7 @@
 #' @importFrom tidyselect where
 #' @importFrom utils head
 #'
-#' @return A [tibble()] by default and [character()] if `simplify = TRUE`
+#' @return A [list()] of narratives by default and [character()] if `simplify = TRUE`
 #' @export
 #'
 #' @examples
@@ -73,12 +75,12 @@ narrate_descriptive <- function(
 
 
   # Assertion ---------------------------------------------------------------
-  if (!is.data.frame(df) & !dplyr::is.tbl(df)) stop("'df' must be a data frame, tibble, or dplyr::tbl connection")
+  if (!is.data.frame(df) && !dplyr::is.tbl(df)) stop("'df' must be a data frame, tibble, or dplyr::tbl connection")
 
   if (coverage_limit < 1) stop("'coverage_limit' must be higher or equal to 1")
   if (coverage_limit%%1!=0) stop("'coverage_limit' must be an interger, no decimals allowed")
 
-  if (coverage <= 0 | coverage > 1) stop("'coverage' must be more than 0 and less or equal to 1")
+  if (coverage <= 0 || coverage > 1) stop("'coverage' must be more than 0 and less or equal to 1")
 
   # Calculating dimensions from a data.frame
   if (is.null(dimensions)) {
@@ -124,6 +126,12 @@ narrate_descriptive <- function(
   # Renviron ----------------------------------------------------------------
   # Getting Environment Variables if available
   # Candidate for a helper function
+  if (!is.null(getOption("narrator.use_renviron"))) {
+    use_renviron <- getOption("narrator.use_renviron")
+  } else if (Sys.getenv("use_renviron") != "") {
+    use_renviron <- Sys.getenv("use_renviron")
+  }
+
   if (use_renviron == TRUE) {
     if (Sys.getenv("descriptive_template_total") != "") {
       template_total <- Sys.getenv("descriptive_template_total")
@@ -287,7 +295,8 @@ narrate_descriptive <- function(
 
     # Detailed Narrative ------------------------------------------------------
     # Getting one level deeper into the outlying dimension
-    if (narration_depth > 1 & dimension == dimension_one & length(dimensions) > 1) {
+    if (narration_depth > 1 && length(dimensions) > 1
+        && match(dimension, dimensions) < length(dimensions)) {
 
       levels_l1 <- outlier_levels
 
@@ -428,7 +437,7 @@ get_descriptive_outliers <- function(
       dplyr::slice(1:coverage_limit)
 
     # For a single dimension we skip to the next level
-    if (nrow(table) == 1 & table$cum_share[1] == 1) return(NULL)
+    if (nrow(table) == 1 && table$cum_share[1] == 1) return(NULL)
 
   } else if (summarization %in% c("average")) {
 

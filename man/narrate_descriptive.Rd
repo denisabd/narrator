@@ -61,7 +61,9 @@ coverage to avoid extremely verbose narrative creation}
 
 \item{template_outlier_l2_multiple}{\code{\link[glue]{glue}} template for deeper hierarchical multiple outliers narrative}
 
-\item{use_renviron}{If \link{TRUE} use .Renviron variables in the template}
+\item{use_renviron}{If \link{TRUE} use .Renviron variables in the template.
+You can also set \code{options(narrator.use_renviron = TRUE)} to make it global for the session,
+or create an environment variable "use_renviron" by changing your .Renviron file \code{usethis::edit_r_environ()}}
 
 \item{return_data}{If \link{TRUE} - return a list of variables used in the function's templates}
 
@@ -76,7 +78,7 @@ coverage to avoid extremely verbose narrative creation}
 \item{...}{other arguments passed to \code{\link[glue]{glue}}}
 }
 \value{
-A \code{\link[=tibble]{tibble()}} by default and \code{\link[=character]{character()}} if \code{simplify = TRUE}
+A \code{\link[=list]{list()}} of narratives by default and \code{\link[=character]{character()}} if \code{simplify = TRUE}
 }
 \description{
 \code{narrate_descriptive()} creates text narratives from a data frame containing one numeric and one or more character or factor text columns

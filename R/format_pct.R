@@ -16,7 +16,7 @@ format_pct <- function(text,
 
 
   # Check if text or number is provided for text
-  if (!is.character(text) & !is.numeric(text) & !is.list(text)) {
+  if (!is.character(text) && !is.numeric(text) && !is.list(text)) {
     stop("Provide list, character text or numeric value")
   }
 

@@ -4,6 +4,9 @@ ct <- NULL
 #' @import V8
 .onLoad <- function(libname, pkgname) {
 
+  options(dplyr.summarise.inform = FALSE)
+  options(narrator.use_renviron = NULL)
+
   # read in the suffixes using V8
   ct <<- V8::v8()
 
