@@ -154,7 +154,9 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
 
 <dt>use_renviron</dt>
-<dd><p>If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> use .Renviron variables in the template</p></dd>
+<dd><p>If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> use .Renviron variables in the template.
+You can also set <code>options(narrator.use_renviron = TRUE)</code> to make it global for the session,
+or create an environment variable "use_renviron" by changing your .Renviron file <code>usethis::edit_r_environ()</code></p></dd>
 
 
 <dt>return_data</dt>
@@ -185,7 +187,7 @@ coverage to avoid extremely verbose narrative creation</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> by default and <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> if <code>simplify = TRUE</code></p>
+<p>A <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> of narratives by default and <code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code> if <code>simplify = TRUE</code></p>
 
 
     </div>
@@ -216,8 +218,6 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Product</span>, <span class="va">Region</span><span class="op">)</span>  <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Quantity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Quantity</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">narrate_descriptive</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `summarise()` has grouped output by 'Product'. You can override using the</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `.groups` argument.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Quantity`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products is 0.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
