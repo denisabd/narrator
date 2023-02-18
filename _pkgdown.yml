@@ -26,6 +26,12 @@ reference:
   - starts_with("clean")
   - starts_with("format")
 
+- title: Helpers
+  desc: Helpers for other than formatting purposes
+  contents:
+  - get_frequency
+  - edit_templates
+
 - title: Pluralization
   desc: Helper functions pluralize/singularize words in English
   contents:

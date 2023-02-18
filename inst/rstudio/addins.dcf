@@ -1,0 +1,4 @@
+Name: Template Editor
+Description: Interactively change templates for narrator, see results and output final templates
+Binding: edit_templates
+Interactive: true

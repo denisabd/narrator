@@ -263,8 +263,10 @@ narrate_descriptive <- function(
 
     if (n_outliers > 1) {
       template_outlier_final <- template_outlier_multiple
+      template_selected <- "multiple"
     } else {
       template_outlier_final <- template_outlier
+      template_selected <- "single"
     }
 
     narrative_outlier_final <- glue::glue(
@@ -272,20 +274,37 @@ narrate_descriptive <- function(
       .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
     )
 
-    variables_l1 <- list(
-      list(
-        narrative_outlier_final = narrative_outlier_final,
-        template_outlier_final = template_outlier_final,
-        dimension = dimension,
-        measure = measure,
-        outlier_insight = outlier_insight,
-        n_outliers = n_outliers,
-        outlier_levels = outlier_levels,
-        outlier_values = outlier_values,
-        outlier_values_p = outlier_values_p
-      )
-    ) %>%
-      rlang::set_names(glue::glue("{dimension} by {measure}"))
+    if (template_selected == "multiple") {
+      variables_l1 <- list(
+        list(
+          narrative_outlier_final = narrative_outlier_final,
+          template_outlier_multiple = template_outlier_multiple,
+          dimension = dimension,
+          measure = measure,
+          outlier_insight = outlier_insight,
+          n_outliers = n_outliers,
+          outlier_levels = outlier_levels,
+          outlier_values = outlier_values,
+          outlier_values_p = outlier_values_p
+        )
+      ) %>%
+        rlang::set_names(glue::glue("{dimension} by {measure}"))
+    } else {
+      variables_l1 <- list(
+        list(
+          narrative_outlier_final = narrative_outlier_final,
+          template_outlier = template_outlier,
+          dimension = dimension,
+          measure = measure,
+          outlier_insight = outlier_insight,
+          n_outliers = n_outliers,
+          outlier_levels = outlier_levels,
+          outlier_values = outlier_values,
+          outlier_values_p = outlier_values_p
+        )
+      ) %>%
+        rlang::set_names(glue::glue("{dimension} by {measure}"))
+    }
 
     variables <- append(variables, variables_l1)
 
@@ -346,27 +365,48 @@ narrate_descriptive <- function(
 
         if (n_outliers > 1) {
           template_outlier_l2_final <- template_outlier_l2_multiple
+          template_selected <- "multiple"
         } else {
           template_outlier_l2_final <- template_outlier_l2
+          tempate_selected <- "single"
         }
 
         narrative_outlier_l2 <- glue::glue(template_outlier_l2_final)
 
-        variables_l2 <- list(
-          list(
-            narrative_outlier_l2_final = narrative_outlier_l2,
-            template_outlier_l2_final = template_outlier_l2,
-            level_l1 = level_l1,
-            level_l2 = level_l2,
-            measure = measure,
-            outlier_insight = outlier_insight,
-            n_outliers = n_outliers,
-            outlier_levels = outlier_levels,
-            outlier_values = outlier_values,
-            outlier_values_p = outlier_values_p
-          )
-        ) %>%
-          rlang::set_names(level_l1)
+        if (template_selected == "multiple") {
+          variables_l2 <- list(
+            list(
+              narrative_outlier_l2_final = narrative_outlier_l2,
+              template_outlier_l2_multiple = template_outlier_l2_multiple,
+              level_l1 = level_l1,
+              level_l2 = level_l2,
+              measure = measure,
+              outlier_insight = outlier_insight,
+              n_outliers = n_outliers,
+              outlier_levels = outlier_levels,
+              outlier_values = outlier_values,
+              outlier_values_p = outlier_values_p
+            )
+          ) %>%
+            rlang::set_names(level_l1)
+        } else {
+          variables_l2 <- list(
+            list(
+              narrative_outlier_l2_final = narrative_outlier_l2,
+              template_outlier_l2 = template_outlier_l2,
+              level_l1 = level_l1,
+              level_l2 = level_l2,
+              measure = measure,
+              outlier_insight = outlier_insight,
+              n_outliers = n_outliers,
+              outlier_levels = outlier_levels,
+              outlier_values = outlier_values,
+              outlier_values_p = outlier_values_p
+            )
+          ) %>%
+            rlang::set_names(level_l1)
+        }
+
 
         variables <- append(variables, variables_l2)
 

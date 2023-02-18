@@ -29,7 +29,11 @@ Imports:
     rlang,
     V8,
     shiny,
-    htmltools
+    lubridate,
+    tidyr,
+    htmltools,
+    DT,
+    miniUI (>= 0.1.1)
 Suggests: 
     covr,
     knitr,
