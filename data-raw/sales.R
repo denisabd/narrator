@@ -30,7 +30,8 @@ sales <- tibble::tibble(
   dplyr::mutate(Quantity = ifelse(Region %in% c("EMEA", "NA"), round(Quantity*1.5), Quantity),
                 Price = ifelse(Region %in% c("EMEA", "NA"), round(Price*1.3, 1), Price)) %>%
   dplyr::mutate(Sales = ifelse(Promotion == 1, Price*0.8*Quantity, Price*Quantity)) %>%
-  dplyr::relocate(`Order ID`, .before = 1)
+  dplyr::relocate(`Order ID`, .before = 1) %>%
+  dplyr::sample_frac()
 
 # Save Data
 sales %>%

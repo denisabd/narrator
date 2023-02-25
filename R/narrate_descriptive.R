@@ -73,9 +73,11 @@ narrate_descriptive <- function(
     collapse_last = " and ",
     ...) {
 
-
   # Assertion ---------------------------------------------------------------
   if (!is.data.frame(df) && !dplyr::is.tbl(df)) stop("'df' must be a data frame, tibble, or dplyr::tbl connection")
+
+  df <- df %>%
+    dplyr::ungroup()
 
   if (coverage_limit < 1) stop("'coverage_limit' must be higher or equal to 1")
   if (coverage_limit%%1!=0) stop("'coverage_limit' must be an interger, no decimals allowed")
@@ -85,7 +87,6 @@ narrate_descriptive <- function(
   # Calculating dimensions from a data.frame
   if (is.null(dimensions)) {
     dimensions <- df %>%
-      dplyr::ungroup() %>%
       dplyr::select(where(is.character), where(is.factor)) %>%
       names()
   } else {
@@ -98,7 +99,6 @@ narrate_descriptive <- function(
 
   # Checking dimensions data types
   dimension_dtypes <- df %>%
-    dplyr::ungroup() %>%
     dplyr::select(dplyr::all_of(dimensions)) %>%
     head() %>%
     dplyr::collect() %>%
@@ -110,7 +110,6 @@ narrate_descriptive <- function(
 
   if (is.null(measure)) {
     measures <- df %>%
-      dplyr::ungroup() %>%
       dplyr::select(where(is.numeric), where(is.integer)) %>%
       names()
 
@@ -120,7 +119,7 @@ narrate_descriptive <- function(
   }
 
   if (!class(df[[measure]]) %in% c("numeric", "integer", "character", "factor")) {
-    stop(glue::glue("{measure} must be a numeric column, but is {class(df[[measure]])}"))
+    stop(glue::glue("{measure} must be a numeric column, but is {class(df[[measure]])[1]}"))
   }
 
   # Renviron ----------------------------------------------------------------
@@ -162,7 +161,6 @@ narrate_descriptive <- function(
   dimension_one <- dimensions[1]
 
   total_raw <- df %>%
-    dplyr::ungroup() %>%
     dplyr::summarise(!!measure := switch(
       summarization,
       "average" = mean(base::get(measure), na.rm = TRUE),
@@ -175,7 +173,7 @@ narrate_descriptive <- function(
     round(1)
 
   if (format_numbers == TRUE) {
-    total <- format_num(total_raw)
+    total <- format_num(total_raw, decimals = 1)
   } else {
     total <- total_raw
   }
@@ -325,7 +323,6 @@ narrate_descriptive <- function(
         level_l2 <- dimensions[which(dimensions == dimension) + 1]
 
         output <- df %>%
-          dplyr::ungroup() %>%
           dplyr::filter(base::get(dimension) %in% levels_l1[i]) %>%
           dplyr::select(-dplyr::all_of(dimension)) %>%
           get_descriptive_outliers(
@@ -419,6 +416,7 @@ narrate_descriptive <- function(
 
   variables <- append(variables, list(narrative = narrative), 0)
 
+  # Output ------------------------------------------------------------------
   if (return_data == TRUE) {
     return(variables)
   }

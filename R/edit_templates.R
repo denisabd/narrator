@@ -29,6 +29,11 @@ edit_templates <- function() {
     )
 
   ui <- miniUI::miniPage(
+    shiny::tags$style(
+      type = 'text/css',
+      '.modal-dialog { width: fit-content !important; }'
+    ),
+
     miniUI::gadgetTitleBar("Edit Templates"),
     miniUI::miniContentPanel(
       ## Your UI items go here.
@@ -64,7 +69,7 @@ edit_templates <- function() {
             purrr::detect_index(not.null)
 
           shiny::modalDialog(
-            size = "l",
+            size = "xl",
             shiny::textInput(
               inputId = "single_template",
               label = "Edit Template",
@@ -80,13 +85,14 @@ edit_templates <- function() {
                 dplyr::mutate(value = as.character(value)) %>%
                 DT::datatable(
                   rownames = FALSE,
-                  extensions = "Scroller",
+                  #extensions = "Scroller",
+                  height = 800,
                   options = list(
                     pageLength = 10,
                     dom = "t",
-                    deferRender = TRUE,
-                    scrollY = 200,
-                    scroller = TRUE
+                    deferRender = TRUE#,
+                    #scrollY = 200,
+                    #scroller = TRUE
                   ),
                   class = 'cell-border stripe'
                 )

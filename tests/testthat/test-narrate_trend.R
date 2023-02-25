@@ -1,46 +1,46 @@
-test_that("narrate_descriptive() works", {
+test_that("narrate_trend() works", {
   expect_no_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"))
   )
 })
 
-test_that("narrate_descriptive() works with average summarization", {
+test_that("narrate_trend() works with average summarization", {
   expect_no_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         summarization = "average")
   )
 })
 
-test_that("narrate_descriptive() works with count summarization", {
+test_that("narrate_trend() works with count summarization", {
   expect_no_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Order ID",
         dimensions = c("Region", "Product"),
         summarization = "count")
   )
 })
 
-test_that("narrate_descriptive() works", {
+test_that("narrate_trend() works", {
   expect_no_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         return_data = TRUE)
   )
 })
 
-test_that("narrate_descriptive() returns list with return_data = TRUE", {
+test_that("narrate_trend() returns list with return_data = TRUE", {
   expect_type(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         return_data = TRUE),
@@ -48,10 +48,10 @@ test_that("narrate_descriptive() returns list with return_data = TRUE", {
   )
 })
 
-test_that("narrate_descriptive() runs with additional arguments", {
+test_that("narrate_trend() runs with additional arguments", {
   expect_no_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         coverage = 0.7,
@@ -60,10 +60,10 @@ test_that("narrate_descriptive() runs with additional arguments", {
   )
 })
 
-test_that("narrate_descriptive() throws an error when coverage is 0", {
+test_that("narrate_trend() throws an error when coverage is 0", {
   expect_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         coverage = 0.7,
@@ -71,10 +71,10 @@ test_that("narrate_descriptive() throws an error when coverage is 0", {
   )
 })
 
-test_that("narrate_descriptive() throws an error when coverage_limit is less than 0", {
+test_that("narrate_trend() throws an error when coverage_limit is less than 0", {
   expect_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         coverage = 0.7,
@@ -82,10 +82,10 @@ test_that("narrate_descriptive() throws an error when coverage_limit is less tha
   )
 })
 
-test_that("narrate_descriptive() throws an error when coverage_limit isn't an integer", {
+test_that("narrate_trend() throws an error when coverage_limit isn't an integer", {
   expect_error(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         coverage = 0.7,
@@ -93,65 +93,46 @@ test_that("narrate_descriptive() throws an error when coverage_limit isn't an in
   )
 })
 
-test_that("narrate_descriptive() returns a list", {
+test_that("narrate_trend() returns a list", {
   expect_type(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product")),
     "list")
 })
 
-test_that("narrate_descriptive() returns a character with simplify = TRUE", {
+test_that("narrate_trend() returns a character with simplify = TRUE", {
   expect_type(
     narrator::sales %>%
-      narrate_descriptive(
+      narrate_trend(
         measure = "Sales",
         dimensions = c("Region", "Product"),
         simplify = TRUE),
     "character")
 })
 
-test_that("narrate_descriptive() returns an error when no numeric column is available", {
+test_that("narrate_trend() returns an error when no numeric column is available", {
   expect_error(
     narrator::sales %>%
       dplyr::select(Orderdate, Status, Product) %>%
       dplyr::distinct() %>%
-      narrate_descriptive()
+      narrate_trend()
   )
 })
 
-test_that("narrate_descriptive() returns an error when df isn't a data.frame", {
+test_that("narrate_trend() returns an error when df isn't a data.frame", {
   expect_error(
     list(1, 2, 3) %>%
-      narrate_descriptive()
+      narrate_trend()
   )
 })
 
-test_that("narrate_descriptive() returns an error when no dimension columns are available", {
+test_that("narrate_trend() returns an error when no dimension columns are available", {
   expect_error(
     narrator::sales %>%
       dplyr::select(Date, Sales) %>%
       dplyr::distinct() %>%
-      narrate_descriptive()
-  )
-})
-
-
-test_that("narrate_descriptive() returns an error when no dimension columns are available", {
-  expect_equal(
-    sales %>%
-      dplyr::filter(Product %in% c("Home", "Electronics")) %>%
-      dplyr::group_by(Region, Product)  %>%
-      dplyr::summarise(Sales = sum(Sales)) %>%
-      narrate_descriptive() %>%
-      suppressMessages(),
-    sales %>%
-      dplyr::filter(Product %in% c("Home", "Electronics")) %>%
-      dplyr::group_by(Region, Product)  %>%
-      dplyr::summarise(Sales = sum(Sales)) %>%
-      narrate_descriptive(return_data = TRUE) %>%
-      magrittr::extract2(1) %>%
-      suppressMessages()
+      narrate_trend()
   )
 })
