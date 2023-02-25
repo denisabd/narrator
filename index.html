@@ -101,19 +101,19 @@
 <span>  <span class="fu"><a href="reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
 <span>               dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 35.7 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 35.5 M.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are NA (16.9 M, 47.3 %), EMEA (12.5 M, 34.8 %).</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (16.4 M, 46 %), EMEA (12.9 M, 36.4 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`NA by Product`</span></span>
-<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (6.1 M, 35.9 %), Electronics (3.3 M, 19.2 %).</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (5.8 M, 35.7 %), Electronics (3.4 M, 20.7 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`EMEA by Product`</span></span>
-<span><span class="co">#&gt; In EMEA, significant Products by Sales are Food &amp; Beverage (4.3 M, 34.9 %), Electronics (2.6 M, 20.8 %).</span></span>
+<span><span class="co">#&gt; In EMEA, significant Products by Sales are Food &amp; Beverage (4.7 M, 36.6 %), Electronics (2.5 M, 19.2 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 35.5 %), Electronics (7.2 M, 20.1 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.6 M, 35.5 %), Electronics (7.2 M, 20.3 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Region</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
@@ -131,28 +131,28 @@
 <tbody>
 <tr class="odd">
 <td align="left">NA</td>
-<td align="right">16915195</td>
-<td align="right">0.473</td>
+<td align="right">16351889</td>
+<td align="right">0.460</td>
 </tr>
 <tr class="even">
 <td align="left">EMEA</td>
-<td align="right">12450534</td>
-<td align="right">0.348</td>
+<td align="right">12918195</td>
+<td align="right">0.364</td>
 </tr>
 <tr class="odd">
 <td align="left">ASPAC</td>
-<td align="right">3242657</td>
-<td align="right">0.091</td>
+<td align="right">3450130</td>
+<td align="right">0.097</td>
 </tr>
 <tr class="even">
 <td align="left">LATAM</td>
-<td align="right">3121094</td>
-<td align="right">0.087</td>
+<td align="right">2817267</td>
+<td align="right">0.079</td>
 </tr>
 <tr class="odd">
 <td align="left">Total</td>
-<td align="right">35729480</td>
-<td align="right">0.999</td>
+<td align="right">35537481</td>
+<td align="right">1.000</td>
 </tr>
 </tbody>
 </table>
@@ -171,31 +171,31 @@
 <tbody>
 <tr class="odd">
 <td align="left">Food &amp; Beverage</td>
-<td align="right">12669874</td>
+<td align="right">12613552</td>
 </tr>
 <tr class="even">
 <td align="left">Electronics</td>
-<td align="right">7193458</td>
+<td align="right">7207901</td>
 </tr>
 <tr class="odd">
 <td align="left">Home</td>
-<td align="right">5313994</td>
+<td align="right">5172389</td>
 </tr>
 <tr class="even">
 <td align="left">Tools</td>
-<td align="right">5275770</td>
+<td align="right">5135457</td>
 </tr>
 <tr class="odd">
 <td align="left">Baby</td>
-<td align="right">2836899</td>
+<td align="right">2883246</td>
 </tr>
 <tr class="even">
 <td align="left">Clothing</td>
-<td align="right">2439485</td>
+<td align="right">2524937</td>
 </tr>
 <tr class="odd">
 <td align="left">Total</td>
-<td align="right">35729480</td>
+<td align="right">35537481</td>
 </tr>
 </tbody>
 </table>
