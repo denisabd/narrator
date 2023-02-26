@@ -25,8 +25,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/descriptive.html">Descriptive Narratives</a>
-    <a class="dropdown-item" href="../articles/echarts.html">Narrate Echarts Plots</a>
+    <a class="dropdown-item" href="../articles/trend.html">Trend Narratives</a>
     <a class="dropdown-item" href="../articles/formatting.html">Formatting Output</a>
+    <a class="dropdown-item" href="../articles/templates.html">Editing Templates</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -100,16 +103,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10,000 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    `Order ID` Date       Region Product       Store Promo…¹ Price Quant…²  Sales</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> QR16853    2021-01-22 LATAM  Home          Medi…       0 116.        9  <span style="text-decoration: underline;">1</span>042.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> QR10284    2019-02-02 LATAM  Electronics   Big         0  72.4       4   290.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> QR15642    2020-09-19 EMEA   Home          Big         0 167.        6  <span style="text-decoration: underline;">1</span>004.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> QR15990    2020-10-23 NA     Food &amp; Bever… Small       0 248        42 <span style="text-decoration: underline;">10</span>416 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> QR15983    2020-10-23 ASPAC  Home          Big         1  86.3      17  <span style="text-decoration: underline;">1</span>174.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> QR14741    2020-06-12 LATAM  Electronics   Big         0  53.5      22  <span style="text-decoration: underline;">1</span>177 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> QR18749    2021-08-17 NA     Food &amp; Bever… Big         1  24.7      22   435.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> QR16235    2020-11-18 NA     Electronics   Big         0 267.       34  <span style="text-decoration: underline;">9</span>064.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> QR16095    2020-11-03 EMEA   Food &amp; Bever… Big         0 302.       22  <span style="text-decoration: underline;">6</span>635.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> QR18213    2021-06-23 LATAM  Food &amp; Bever… Big         0 254.       18  <span style="text-decoration: underline;">4</span>565.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> QR10276    2019-01-30 EMEA   Tools         Big         1  89.6      28  <span style="text-decoration: underline;">2</span>007.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> QR15245    2020-07-26 ASPAC  Tools         Big         0 268.        7  <span style="text-decoration: underline;">1</span>880.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> QR13938    2020-03-05 EMEA   Home          Big         0 223.       18  <span style="text-decoration: underline;">4</span>019.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> QR15934    2020-10-08 LATAM  Clothing      Big         0 210.       27  <span style="text-decoration: underline;">5</span>681.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> QR10963    2019-04-15 EMEA   Tools         Big         0 193.       22  <span style="text-decoration: underline;">4</span>248.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> QR13639    2020-01-30 EMEA   Food &amp; Bever… Small       0 215.        8  <span style="text-decoration: underline;">1</span>717.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> QR13110    2019-12-04 LATAM  Electronics   Medi…       0 250.       22  <span style="text-decoration: underline;">5</span>498.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> QR19849    2021-12-13 EMEA   Tools         Big         0 223        59 <span style="text-decoration: underline;">13</span>157 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> QR13078    2019-12-01 EMEA   Electronics   Big         0 231        32  <span style="text-decoration: underline;">7</span>392 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> QR15064    2020-07-08 EMEA   Tools         Medi…       0 185.       21  <span style="text-decoration: underline;">3</span>889.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 9,990 more rows, and abbreviated variable names ¹​Promotion, ²​Quantity</span></span>
 </code></pre></div>
     </div>

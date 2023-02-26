@@ -25,8 +25,11 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/descriptive.html">Descriptive Narratives</a>
-    <a class="dropdown-item" href="../articles/echarts.html">Narrate Echarts Plots</a>
+    <a class="dropdown-item" href="../articles/trend.html">Trend Narratives</a>
     <a class="dropdown-item" href="../articles/formatting.html">Formatting Output</a>
+    <a class="dropdown-item" href="../articles/templates.html">Editing Templates</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -71,7 +74,7 @@
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  template_total <span class="op">=</span></span>
-<span>    <span class="st">"From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change_ytd}"</span>,</span>
+<span>    <span class="st">"From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change} ({change_p}, {total_prev} to {total_curr})"</span>,</span>
 <span>  template_average <span class="op">=</span></span>
 <span>    <span class="st">"Average {measure} across all {pluralize(dimension_one)} is {total}."</span>,</span>
 <span>  template_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}."</span>,</span>
@@ -207,7 +210,7 @@ or create an environment variable "use_renviron" by changing your .Renviron file
 <span class="r-in"><span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span> <span class="fu">narrate_trend</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`2021 YTD vs 2020 YTD`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> From 2020 YTD to 2021 YTD, Sales decreased by -127596.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> From 2020 YTD to 2021 YTD, Sales increased by 1084578.7 (8.7 %, 12.42 M to 13.5 M)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
