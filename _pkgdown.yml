@@ -51,3 +51,23 @@ reference:
   contents:
   - sales
 
+articles:
+
+- title: Narratives
+  desc: Different types of textual narratives
+  navbar: ~
+  contents:
+  - descriptive
+  - trend
+
+- title: Customization
+  desc: Making edits and formatting of the narrative outputs
+  navbar: ~
+  contents:
+  - formatting
+  - templates
+
+- title: Plots
+  desc: Using narrator with echarts4r plots
+  contents:
+  - echarts

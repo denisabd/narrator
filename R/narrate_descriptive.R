@@ -173,7 +173,7 @@ narrate_descriptive <- function(
     round(1)
 
   if (format_numbers == TRUE) {
-    total <- format_num(total_raw, decimals = 1)
+    total <- format_num(total_raw, decimals = 2)
   } else {
     total <- total_raw
   }
@@ -194,7 +194,8 @@ narrate_descriptive <- function(
         template_total = template_total,
         measure = measure,
         dimension_one = dimension_one,
-        total = total)
+        total = total,
+        total_raw = total_raw)
     ) %>%
       rlang::set_names(glue::glue("Total {measure}"))
 
@@ -427,119 +428,4 @@ narrate_descriptive <- function(
   }
 
   return(narrative)
-}
-
-
-#' Create a list with descriptive outliers
-#'
-#' @param df Data frame of tibble, can be aggregated or raw
-#' @param measure Numeric measure column
-#' @param dimension Dimension within which the outlying patterns should be found
-#' @param coverage Portion of variability to be covered by narrative, 0 to 1
-#' @param coverage_limit Maximum number of elements to be narrated, overrides
-#' coverage to avoid extremely verbose narrative creation
-#'
-#' @noRd
-get_descriptive_outliers <- function(
-    df,
-    dimension,
-    measure,
-    total = NULL,
-    summarization = "sum",
-    coverage = 0.5,
-    coverage_limit = 5) {
-
-  table <- df %>%
-    dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
-    dplyr::summarise(!!measure := switch(
-      summarization,
-      "sum" = sum(base::get(measure), na.rm = TRUE),
-      "count" = dplyr::n_distinct(base::get(measure), na.rm = TRUE),
-      "average" = mean(base::get(measure), na.rm = TRUE)
-    )
-    ) %>%
-    dplyr::arrange(dplyr::desc(base::get(measure)))
-
-  if (summarization %in% c("sum", "count")) {
-
-    if (is.null(total)) {
-      total <- table %>%
-        dplyr::summarise(total = sum(base::get(measure), na.rm = TRUE)) %>%
-        as.numeric()
-    }
-
-    table <- table %>%
-      dplyr::mutate(share = base::get(measure)/total) %>%
-      dplyr::mutate(cum_share = cumsum(share)) %>%
-      dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage, default = FALSE)) == 0) %>%
-      dplyr::slice(1:coverage_limit)
-
-    # For a single dimension we skip to the next level
-    if (nrow(table) == 1 && table$cum_share[1] == 1) return(NULL)
-
-  } else if (summarization %in% c("average")) {
-
-    if (is.null(total)) {
-      total <- table %>%
-        dplyr::summarise(total = mean(base::get(measure), na.rm = TRUE)) %>%
-        as.numeric()
-    }
-
-    table <- table %>%
-      dplyr::mutate(share = base::get(measure)/total - 1) %>%
-      dplyr::arrange(dplyr::desc(abs(share))) %>%
-      dplyr::mutate(cum_share = cumsum(abs(share))/(max(share) - min(share))) %>%
-      dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage*2, default = FALSE)) == 0) %>%
-      dplyr::slice(1:coverage_limit)
-  }
-
-  n_outliers <- nrow(table)
-
-  outlier_levels <- table %>%
-    dplyr::select(dplyr::all_of(dimension)) %>%
-    as.matrix() %>%
-    as.character()
-
-  outlier_values <- table %>%
-    dplyr::select(dplyr::all_of(measure)) %>%
-    as.matrix() %>%
-    as.numeric() %>%
-    round(1)
-
-  outlier_values_p <- table %>%
-    dplyr::mutate(share = round(share * 100, 1)) %>%
-    dplyr::select(share) %>%
-    as.matrix() %>%
-    as.numeric() %>%
-    paste("%")
-
-  output <- list(
-    n_outliers = n_outliers,
-    outlier_levels = outlier_levels,
-    outlier_values = outlier_values,
-    outlier_values_p = outlier_values_p
-  )
-
-  return(output)
-}
-
-#' Transformer to collapse variables of length 2 or more
-#'
-#' @param regex Expression to find in the template text
-#' @param ...
-#'
-#' @noRd
-collapse_transformer <- function(regex = "$", ...) {
-  function(text, envir) {
-    collapse <- grepl(regex, text)
-    if (collapse) {
-      text <- sub(regex, "", text)
-    }
-    res <- glue::identity_transformer(text, envir)
-    if (collapse) {
-      return(glue::glue_collapse(res, ...))
-    } else {
-      return(res)
-    }
-  }
 }

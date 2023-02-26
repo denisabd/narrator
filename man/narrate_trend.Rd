@@ -16,7 +16,7 @@ narrate_trend(
   coverage_limit = 5,
   narration_depth = 2,
   template_total =
-    "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change_ytd}",
+    "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change} ({change_p}, {total_prev} to {total_curr})",
   template_average =
     "Average {measure} across all {pluralize(dimension_one)} is {total}.",
   template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",

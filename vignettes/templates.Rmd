@@ -1,0 +1,130 @@
+---
+title: "Editing Templates"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Editing Templates}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(narrator)
+library(dplyr)
+library(knitr)
+```
+
+## Changing Templates
+
+Template-based systems are based on calculations of individual variables, and combining them together inside of the template. You can return a list of calculated variables and full narrative realization: 
+```{r}
+df <- sales %>%
+  group_by(Product) %>%
+  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+  arrange(desc(Sales))
+
+narrate_descriptive(df, coverage = 0.7, return_data = TRUE)
+```
+
+Let's change a template for our narrative function and rework the wording as well as changing 'is' to 'are' since `Sales` is plural:
+```{r}
+narrate_descriptive(
+  df,
+  template_total = "Overall {measure} for all {pluralize(dimension_one)} are equal to {total}. ")
+```
+
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
+    template_outlier_multiple = "{outlier_levels} are the biggest {dimension} by {measure} with {outlier_values} or {outlier_values_p} share of total {measure} respectively.",
+    measure = "Sales",
+    dimensions = c("Region", "Product"),
+    coverage = 0.4)
+```
+
+### R Environment
+
+We can set the templates using `usethis::edit_r_environ()` or setting up an environment variable using your data science platform capabilities.
+
+```{r eval=FALSE}
+Sys.getenv("descriptive_template_total")
+
+narrate_descriptive(
+  df,
+  template_total = Sys.getenv("descriptive_template_total")
+)
+```
+
+A method that is a little more handy is setting `.Renviron` variable names using a certain convention and adding `use_renviron = TRUE` to the narrate function. For example here we created a variable that uses the unique part of the function name, underscore, and template name - `descriptive` + `-` + `template_total`
+```{r}
+narrate_descriptive(
+  df, 
+  use_renviron = TRUE
+)
+```
+
+### List Templates
+
+You can get all templates currently available in the package with `list_templates()` function:
+```{r}
+list_templates() %>%
+  kable()
+```
+
+### Editing Gadget
+
+Exploring templates might not be an easy task, `narrator` allows to prepare templates interactively using `edit_templates()` function.
+
+```{r eval=FALSE}
+edit_templates()
+```
+
+### Average vs Others
+
+When `summarization` is set to `average` the way of output calculation is significantly different. Generally better way of using it in your outputs is using different templates for different summarization types.
+
+Giving users control over template creation and avoiding strict ruling for how they should look does introduce some additional complexity. 
+
+For example, if we use a `template_outlier` for default `summarization = "sum"` we get a great descriptive narrative:
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
+    measure = "Sales",
+    dimensions = "Region",
+    coverage = 0.3)
+```
+
+But when trying the same for `summarization = "average"` we get into trouble, because for this case we compare the values for every level to the overall average Sales. Default templates handle that using logic in the `{outlier_insight}` calculation.
+
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with {measure} of {outlier_values}, making it {outlier_values_p} of total.",
+    measure = "Sales",
+    dimensions = "Region",
+    summarization = "average",
+    coverage = 0.3)
+```
+
+
+So here we can using something like this:
+
+```{r}
+sales %>%
+  narrate_descriptive(
+    template_outlier = "Among {pluralize(dimension)} {outlier_levels} is an outlier, with average {measure} of {outlier_values}, {outlier_values_p} lower than average {measure} across all records.",
+    measure = "Sales",
+    dimensions = "Region",
+    summarization = "average",
+    coverage = 0.3)
+```

@@ -39,19 +39,19 @@ sales %>%
   narrate_descriptive(measure = "Sales",
                dimensions = c("Region", "Product"))
 #> $`Total Sales`
-#> Total Sales across all Regions is 35.5 M.
+#> Total Sales across all Regions is 38.79 M.
 #> 
 #> $`Region by Sales`
-#> Outlying Regions by Sales are NA (16.4 M, 46 %), EMEA (12.9 M, 36.4 %).
+#> Outlying Regions by Sales are NA (18.1 M, 46.6 %), EMEA (13.6 M, 34.9 %).
 #> 
 #> $`NA by Product`
-#> In NA, significant Products by Sales are Food & Beverage (5.8 M, 35.7 %), Electronics (3.4 M, 20.7 %).
+#> In NA, significant Products by Sales are Food & Beverage (7.4 M, 40.9 %), Electronics (3.8 M, 21 %).
 #> 
 #> $`EMEA by Product`
-#> In EMEA, significant Products by Sales are Food & Beverage (4.7 M, 36.6 %), Electronics (2.5 M, 19.2 %).
+#> In EMEA, significant Products by Sales are Food & Beverage (5.3 M, 38.8 %), Electronics (3.2 M, 23.5 %).
 #> 
 #> $`Product by Sales`
-#> Outlying Products by Sales are Food & Beverage (12.6 M, 35.5 %), Electronics (7.2 M, 20.3 %).
+#> Outlying Products by Sales are Food & Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %).
 ```
 
 ``` r
@@ -66,11 +66,11 @@ sales %>%
 
 | Region |    Sales | Share |
 |:-------|---------:|------:|
-| NA     | 16351889 | 0.460 |
-| EMEA   | 12918195 | 0.364 |
-| ASPAC  |  3450130 | 0.097 |
-| LATAM  |  2817267 | 0.079 |
-| Total  | 35537481 | 1.000 |
+| NA     | 18079736 | 0.466 |
+| EMEA   | 13555413 | 0.349 |
+| ASPAC  |  3919261 | 0.101 |
+| LATAM  |  3236068 | 0.083 |
+| Total  | 38790478 | 0.999 |
 
 ``` r
 sales %>%
@@ -83,10 +83,10 @@ sales %>%
 
 | Product         |    Sales |
 |:----------------|---------:|
-| Food & Beverage | 12613552 |
-| Electronics     |  7207901 |
-| Home            |  5172389 |
-| Tools           |  5135457 |
-| Baby            |  2883246 |
-| Clothing        |  2524937 |
-| Total           | 35537481 |
+| Food & Beverage | 15543470 |
+| Electronics     |  8608963 |
+| Home            |  4599371 |
+| Tools           |  4404197 |
+| Baby            |  3256835 |
+| Clothing        |  2377643 |
+| Total           | 38790478 |

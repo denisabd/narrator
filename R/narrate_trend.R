@@ -25,7 +25,7 @@ narrate_trend <- function(
     coverage = 0.5,
     coverage_limit = 5,
     narration_depth = 2,
-    template_total = "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change_ytd}",
+    template_total = "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change} ({change_p}, {total_prev} to {total_curr})",
     template_average = "Average {measure} across all {pluralize(dimension_one)} is {total}.",
     template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
     template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
@@ -60,8 +60,6 @@ narrate_trend <- function(
       stop("all dimensions must be columns the data frame (df)")
     }
   }
-
-  if (length(dimensions) < 1) stop("Trend narrative requires at least one dimension")
 
   # Checking dimensions data types
   dimension_dtypes <- df %>%
@@ -170,22 +168,9 @@ narrate_trend <- function(
     as.Date(origin = "1970-01-01") %>%
     max()
 
-  if (type == "yoy") {
-
-    timeframe_prev <- paste(lubridate::year(max_date) - 1, "YTD")
-    timeframe_curr <- paste(lubridate::year(max_date), "YTD")
-
-    total_curr <- df %>%
-      ytd_volume(measure = measure, date = date, summarization = summarization) %>%
-      round(1)
-
-    total_prev <- df %>%
-      pytd_volume(measure = measure, date = date, summarization = summarization) %>%
-      round(1)
-
-    narrative_name <- glue::glue("{timeframe_curr} vs {timeframe_prev}")
-
-  } else if ("previous period") {
+  # If non-yoy narratives we change df in a way that our ytd/pytd volume
+  # functions return required output
+  if (type == "previous period") {
     df <- df %>%
       dplyr::filter(base::get(date) %in% c(max_date, prev_date)) %>%
       dplyr::mutate(!!date := ifelse(
@@ -195,32 +180,64 @@ narrate_trend <- function(
       ) %>%
       dplyr::mutate(!!date := as.Date(base::get(date), origin = "1970-01-01"))
 
-    total_curr <- df %>%
-      ytd_volume(measure = measure, date = date, summarization = summarization)
-
-    total_prev <- df %>%
-      pytd_volume(measure = measure, date = date, summarization = summarization)
-
-    narrative_name <- glue::glue("{timeframe_curr} vs {timeframe_prev}")
-
-  } else if ("same period last year") {
+  } else if (type == "same period last year") {
     df <- df %>%
       dplyr::filter(base::get(date) %in% c(max_date, get_py_date(df)))
 
-    narrative_name <- glue::glue("{timeframe_curr} vs {timeframe_prev}")
-
+    # We recalculate prev date for same period of last year to get correct output
+    prev_date <- df %>%
+      dplyr::filter(base::get(date) != max_date) %>%
+      dplyr::select(dplyr::all_of(date)) %>%
+      as.matrix() %>%
+      as.Date(origin = "1970-01-01") %>%
+      max()
   }
 
-  change <- round(total_curr - total_prev, 1)
-  change_p <- paste(round((total_curr/total_prev - 1)*100, 1), "%")
+  # YoY doesn't compare one period like month or week
+  if (type == "yoy") {
+    timeframe_prev <- paste(lubridate::year(max_date) - 1, "YTD")
+    timeframe_curr <- paste(lubridate::year(max_date), "YTD")
+  } else {
+    timeframe_curr <- switch(
+      frequency,
+      "year" = lubridate::year(max_date),
+      "quarter" = paste0("Q", lubridate::quarter(max_date), " ", lubridate::year(max_date)),
+      "month" = paste(lubridate::month(max_date,label = TRUE, abbr = TRUE), lubridate::year(max_date)),
+      "week" = paste("Week", lubridate::week(max_date), lubridate::year(max_date)),
+      "day" = paste("Day", lubridate::yday(max_date), lubridate::year(max_date))
+    )
+
+    timeframe_prev <- switch(
+      frequency,
+      "year" = lubridate::year(prev_date),
+      "quarter" = paste0("Q", lubridate::quarter(prev_date), " ", lubridate::year(prev_date)),
+      "month" = paste(lubridate::month(prev_date,label = TRUE, abbr = TRUE), lubridate::year(prev_date)),
+      "week" = paste("Week", lubridate::week(prev_date), lubridate::year(prev_date)),
+      "day" = paste("Day", lubridate::yday(prev_date), lubridate::year(prev_date))
+    )
+  }
+
+  total_curr_raw <- df %>%
+    ytd_volume(measure = measure, date = date, summarization = summarization) %>%
+    round(1)
+
+  total_prev_raw <- df %>%
+    pytd_volume(measure = measure, date = date, summarization = summarization) %>%
+    round(1)
+
+  narrative_name <- glue::glue("{timeframe_curr} vs {timeframe_prev}")
+
+  change <- round(total_curr_raw - total_prev_raw, 1)
+  change_p <- paste(round((total_curr_raw/total_prev_raw - 1)*100, 1), "%")
   trend <- ifelse(change > 0, "increased", "decreased")
 
   if (format_numbers == TRUE) {
-    total_curr <- format_num(total_curr, decimals = 1)
-    total_prev <- format_num(total_prev, decimals = 1)
+    total_curr <- format_num(total_curr_raw, decimals = 2)
+    total_prev <- format_num(total_prev_raw, decimals = 2)
+  } else {
+    total_curr <- total_curr_raw
+    total_prev <- total_prev_raw
   }
-
-  template_total <- "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change}"
 
   narrative_total <- glue::glue(
     template_total,
@@ -236,7 +253,9 @@ narrate_trend <- function(
       template_total = template_total,
       measure = measure,
       total_curr = total_curr,
+      total_curr_raw = total_curr_raw,
       total_prev = total_prev,
+      total_prev_raw = total_prev_raw,
       timeframe_curr = timeframe_curr,
       timeframe_prev = timeframe_prev,
       change = change,
@@ -248,6 +267,9 @@ narrate_trend <- function(
 
 
   # High-Level Narartive ----------------------------------------------------
+  if (narration_depth > 1 && length(dimensions) > 0) {
+    dimension_one <- dimensions[1]
+  }
 
   # df %>%
   #   dplyr::group_by(dplyr::across(dplyr::all_of(dimensions))) %>%
@@ -256,9 +278,6 @@ narrate_trend <- function(
   #     ytd_volume = purrr::map_dbl(data, ytd_volume),
   #     pytd_volume = purrr::map_dbl(data, pytd_volume)
   #   )
-
-  # dimension_one <- dimensions[1]
-
 
   # Detailed Narrative ------------------------------------------------------
 
@@ -274,266 +293,5 @@ narrate_trend <- function(
   }
 
   return(narrative)
-}
-
-#' Get prior year max date from a data frame or time series. This is especially useful for weekly time series when YTD PYTD calculations aren't as straightforward.
-#' For example if "2022-05-23" is max date in weekly aggregates time series data frame is doesn't meant that PYTD will end exactly a year ago - we need to calculate number of weeks passed to get the calculation right
-#'
-#' @param df Data frame or tibble with date column
-#' @param frequency Date frequency
-#'
-#' @return \code{Date} object
-#' @noRd
-get_py_date <- function(df, frequency = NULL) {
-
-  df <- df %>%
-    dplyr::ungroup()
-
-  if (is.null(frequency)) {
-    frequency <- get_frequency(df)
-  }
-
-  date_field <- df %>%
-    dplyr::select_if(lubridate::is.timepoint) %>%
-    names() %>%
-    magrittr::extract2(1)
-
-  # rename to avoid ambiguous objects to week - name of the column and function
-  if (date_field == "week") {
-    df <- df %>%
-      dplyr::rename(date_column = week)
-
-    date_field <- "date_column"
-  }
-
-  if (length(date_field) == 0) stop("data frame must contain one date column")
-
-  max_date <- max(df[[date_field]])
-  max_year <- lubridate::year(max_date)
-
-  if (frequency == "week") {
-    df_weekly <- df %>%
-      dplyr::select(dplyr::all_of(date_field)) %>%
-      unique() %>%
-      dplyr::arrange(base::get(date_field)) %>%
-      dplyr::mutate(
-        week = lubridate::week(base::get(date_field)),
-        year = lubridate::year(base::get(date_field))
-      )
-
-    max_week <- df_weekly %>%
-      dplyr::filter(base::get(date_field) == max_date) %>%
-      dplyr::select(week) %>%
-      as.numeric()
-
-    py_date <- df_weekly %>%
-      dplyr::filter(year == max_year-1,
-                    week == max_week) %>%
-      dplyr::select(dplyr::all_of(date_field)) %>%
-      as.matrix() %>%
-      as.Date()
-
-    if (length(py_date) == 0) py_date <- max_date - lubridate::years(1)
-
-  } else {
-    py_date <- max_date - lubridate::years(1)
-  }
-
-  return(py_date)
-}
-
-
-#' Calculate YTD volume from raw dataset
-#'
-#' @param df data frame or tibble to be filtered (raw, not generated by gen_table)
-#' @param measure variable to be analyzed
-#' @param date list of columns to apply filter
-#' @param summarization summarization field in series, one of the following methods - 'count', 'average', 'sum'
-#' @param current_year add current year to avoid situation when some of the groups don't have data in latest periods and current year is estimated incorrectly
-#' @param cy_date date cutoff for current year if different from the max date of the supplied data frame
-#'
-#' @return \code{numeric} value
-#' @noRd
-ytd_volume <- function(
-    df,
-    measure = NULL,
-    date = NULL,
-    summarization = "sum",
-    current_year = NULL,
-    cy_date = NULL) {
-
-
-  # Table must be a data.frame and have at least one row
-  if (!is.data.frame(df)) stop("df must be a data.frame or tibble")
-  if (nrow(df) == 0) stop("df must have at least one row, execution is stopped")
-
-  # Getting the right data types
-  df <- df %>%
-    dplyr::ungroup() %>%
-    tibble::as_tibble() %>%
-    readr::type_convert(na = c("")) %>%
-    suppressMessages() %>%
-    suppressWarnings()
-
-  # Summarization Assertion
-  if (!summarization %in% c("sum", "count", "average")) stop("summarization must of be one of: 'sum', 'count' or 'mean'.")
-
-  # Measure, Date and Dimensions Assertion
-  if (!is.null(measure)) {
-    if (!measure %in% names(df)) stop("measure must a column in the dataset")
-  } else {
-    # If measure isn't supplied get the first numerical column from it
-    measure <- df %>%
-      dplyr::select_if(is.numeric) %>%
-      names() %>%
-      magrittr::extract2(1)
-  }
-
-  # Get Date
-  if (!is.null(date)) {
-    if (!date %in% names(df)) stop("date must a column in the dataset")
-
-    df <- df %>%
-      dplyr::mutate(!!date := as.Date(base::get(date)))
-
-    if (!lubridate::is.timepoint(df[[date]])) stop("'date' must be a date column in the dateset")
-  } else {
-    # Getting the first date field available
-    date <- df %>%
-      dplyr::select_if(lubridate::is.timepoint) %>%
-      names() %>%
-      magrittr::extract2(1) # Get the first date field available
-  }
-
-  # Current Year's Date
-  if (is.null(cy_date)) {
-    cy_date <- max(df[[date]])
-  } else {
-    cy_date <- as.Date(cy_date)
-  }
-
-  # Current year assertion
-  if (!is.null(current_year) && current_year != lubridate::year(max(df[[date]]))) {
-    current_year <- suppressWarnings(as.numeric(current_year))
-    if (is.na(current_year)) stop("current_year argument must be numeric or convertable to numeric like 2022 or '2022' ")
-  } else {
-    current_year <- lubridate::year(cy_date)
-  }
-
-  cy_volume <- df %>%
-    dplyr::mutate(year = lubridate::year(base::get(date))) %>%
-    dplyr::filter(year == current_year,
-                  base::get(date) <= cy_date) %>%
-    dplyr::summarise(value = switch(
-      summarization,
-      "sum" = sum(base::get(measure),na.rm = TRUE),
-      "count" = length(unique(base::get(measure))),
-      "average" = mean(base::get(measure),na.rm = TRUE)
-    )
-    )  %>%
-    as.numeric()
-
-  return(cy_volume)
-}
-
-#' Calculate PYTD volume from raw dataset
-#'
-#' @param df data frame or tibble to be filtered (raw, not generated by gen_table)
-#' @param measure variable to be analyzed
-#' @param date list of columns to apply filter
-#' @param summarization summarization field in series, one of the following methods - 'count', 'mean', 'sum'
-#' @param current_year add current year to avoid situation when some of the groups don't have data in latest periods and current year is estimated incorrectly
-#' @param py_date date to be used for PYTD calculation, if NULL then \code{get_py_date()} will be used by default
-#'
-#' @return \code{numeric} value
-#' @noRd
-pytd_volume <- function(
-    df,
-    measure = NULL,
-    date = NULL,
-    summarization = "sum",
-    current_year = NULL,
-    py_date = NULL) {
-
-  # Table must be a data.frame and have at least one row
-  if (!is.data.frame(df)) stop("df must be a data.frame or tibble")
-  if (nrow(df) == 0) stop("df must have at least one row, execution is stopped")
-
-  # Getting the right data types
-  df <- df %>%
-    dplyr::ungroup() %>%
-    tibble::as_tibble() %>%
-    readr::type_convert(na = c("")) %>%
-    suppressMessages() %>%
-    suppressWarnings()
-
-  # Summarization Assertion
-  if (!summarization %in% c("sum", "count", "average")) stop("summarization must of be one of: 'sum', 'count' or 'mean'.")
-
-  # Measure, Date and Dimensions Assertion
-  if (!is.null(measure)) {
-    if (!measure %in% names(df)) stop("measure must a column in the dataset")
-  } else {
-    # If measure isn't supplied get the first numerical column from it
-    measure <- df %>%
-      dplyr::select_if(is.numeric) %>%
-      names() %>%
-      magrittr::extract2(1)
-  }
-
-  # Get Date
-  if (!is.null(date)) {
-    if (!date %in% names(df)) stop("date must a column in the dataset")
-
-    df <- df %>%
-      dplyr::mutate(!!date := as.Date(base::get(date)))
-
-    if (!lubridate::is.timepoint(df[[date]])) stop("'date' must be a date column in the dateset")
-  } else {
-    # Getting the first date field available
-    date <- df %>%
-      dplyr::select_if(lubridate::is.timepoint) %>%
-      names() %>%
-      magrittr::extract2(1) # Get the first date field available
-  }
-
-  # PY Date
-  if (is.null(py_date)) {
-    py_date <- get_py_date(df)
-  } else {
-    py_date <- as.Date(py_date)
-  }
-
-  # Current year assertion
-  if (!is.null(current_year) && current_year != lubridate::year(max(df[[date]]))) {
-
-    current_year <- suppressWarnings(as.numeric(current_year))
-
-    if (is.na(current_year)) {
-      stop("current_year argument must be numeric or convertable to numeric like 2022 or '2022' ")
-    }
-
-    # we need py_date since we don't have current year's max date here.
-    previous_year <- current_year - 1
-
-    py_date <- as.Date(py_date)
-  } else {
-    previous_year <- lubridate::year(py_date)
-  }
-
-  py_volume <- df %>%
-    dplyr::mutate(year = lubridate::year(base::get(date))) %>%
-    dplyr::filter(year == previous_year,
-                  base::get(date) <= py_date) %>%
-    dplyr::summarise(value = switch(
-      summarization,
-      "sum" = sum(base::get(measure),na.rm = TRUE),
-      "average" = mean(base::get(measure),na.rm = TRUE),
-      "count" = length(unique(base::get(measure)))
-    )
-    ) %>%
-    as.numeric()
-
-  return(py_volume)
 }
 

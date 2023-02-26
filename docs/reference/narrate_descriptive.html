@@ -31,8 +31,11 @@ and all character or factor columns as dimensions"><!-- mathjax --><script src="
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/descriptive.html">Descriptive Narratives</a>
-    <a class="dropdown-item" href="../articles/echarts.html">Narrate Echarts Plots</a>
+    <a class="dropdown-item" href="../articles/trend.html">Trend Narratives</a>
     <a class="dropdown-item" href="../articles/formatting.html">Formatting Output</a>
+    <a class="dropdown-item" href="../articles/templates.html">Editing Templates</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -198,19 +201,19 @@ or create an environment variable "use_renviron" by changing your .Renviron file
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
 <span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions is 35.5 M.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions is 38.79 M.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (16.4 M, 46 %), EMEA (12.9 M, 36.4 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (18.1 M, 46.6 %), EMEA (13.6 M, 34.9 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`NA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Food &amp; Beverage (5.8 M, 35.7 %), Electronics (3.4 M, 20.7 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Food &amp; Beverage (7.4 M, 40.9 %), Electronics (3.8 M, 21 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`EMEA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Food &amp; Beverage (4.7 M, 36.6 %), Electronics (2.5 M, 19.2 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Food &amp; Beverage (5.3 M, 38.8 %), Electronics (3.2 M, 23.5 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Food &amp; Beverage (12.6 M, 35.5 %), Electronics (7.2 M, 20.3 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Food &amp; Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
@@ -234,7 +237,7 @@ or create an environment variable "use_renviron" by changing your .Renviron file
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total Order ID across all Regions is 10 K.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Order ID`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Order ID are NA (3,994, 39.9 %), EMEA (3,032, 30.3 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Order ID are NA (3,975, 39.8 %), EMEA (2,986, 29.9 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

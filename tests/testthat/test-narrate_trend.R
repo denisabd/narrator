@@ -7,6 +7,68 @@ test_that("narrate_trend() works", {
   )
 })
 
+test_that("narrate_trend() works", {
+  expect_no_error(
+    narrator::sales %>%
+      narrate_trend(
+        measure = "Sales",
+        date = "Date",
+        frequency = "month",
+        dimensions = c("Region", "Product"),
+        type = 2
+      )
+  )
+})
+
+test_that("narrate_trend() works", {
+  expect_no_error(
+    narrator::sales %>%
+      narrate_trend(
+        measure = "Sales",
+        date = "Date",
+        frequency = "month",
+        dimensions = c("Region", "Product"),
+        type = 3
+      )
+  )
+})
+
+test_that("narrate_trend() works", {
+  expect_no_error(
+    narrator::sales %>%
+      narrate_trend(
+        measure = "Sales",
+        date = "Date",
+        frequency = "quarter",
+        dimensions = c("Region", "Product"),
+        type = 3
+      )
+  )
+})
+
+test_that("narrate_trend() works", {
+  expect_no_error(
+    narrator::sales %>%
+      narrate_trend(
+        measure = "Sales",
+        date = "Date",
+        frequency = "week",
+        dimensions = c("Region", "Product"),
+        type = 2
+      )
+  )
+})
+
+test_that("narrate_trend() works", {
+  expect_no_error(
+    narrator::sales %>%
+      dplyr::mutate(Date = lubridate::floor_date(Date, unit = "month")) %>%
+      dplyr::group_by(Date) %>%
+      dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+      narrate_trend(type = 1)
+  )
+})
+
 test_that("narrate_trend() works with average summarization", {
   expect_no_error(
     narrator::sales %>%
@@ -128,8 +190,8 @@ test_that("narrate_trend() returns an error when df isn't a data.frame", {
   )
 })
 
-test_that("narrate_trend() returns an error when no dimension columns are available", {
-  expect_error(
+test_that("narrate_trend() works when no dimension columns are available", {
+  expect_no_error(
     narrator::sales %>%
       dplyr::select(Date, Sales) %>%
       dplyr::distinct() %>%
