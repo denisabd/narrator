@@ -25,12 +25,12 @@ narrate_trend <- function(
     coverage = 0.5,
     coverage_limit = 5,
     narration_depth = 2,
-    template_total = "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change} ({change_p}, {total_prev} to {total_curr})",
-    template_average = "Average {measure} across all {pluralize(dimension_one)} is {total}.",
-    template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
-    template_outlier_multiple = "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
-    template_outlier_l2 = "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
-    template_outlier_l2_multiple = "In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}.",
+    template_total = "From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
+    template_average = "Average {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
+    template_outlier = "{dimension} with biggest changes of {measure} is {outlier_insight}.",
+    template_outlier_multiple = "{pluralize(dimension)} with biggest changes of {measure} are {outlier_insight}.",
+    template_outlier_l2 = "In {level_l1}, significant {level_l2} by {measure} change is {outlier_insight}.",
+    template_outlier_l2_multiple = "In {level_l1}, significant {pluralize(level_l2)} by {measure} change are {outlier_insight}.",
     use_renviron = FALSE,
     return_data = FALSE,
     simplify = FALSE,
@@ -229,58 +229,286 @@ narrate_trend <- function(
 
   change <- round(total_curr_raw - total_prev_raw, 1)
   change_p <- paste(round((total_curr_raw/total_prev_raw - 1)*100, 1), "%")
-  trend <- ifelse(change > 0, "increased", "decreased")
+  trend <- ifelse(change > 0, "increase", "decrease")
 
   if (format_numbers == TRUE) {
     total_curr <- format_num(total_curr_raw, decimals = 2)
     total_prev <- format_num(total_prev_raw, decimals = 2)
+    change <- format_num(change, decimals = 2)
   } else {
     total_curr <- total_curr_raw
     total_prev <- total_prev_raw
+    change <- format_num(change, decimals = 2)
   }
 
-  narrative_total <- glue::glue(
-    template_total,
-    .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
-  )
+  # Sum/Count ---------------------------------------------------------------
+  if (summarization %in% c("sum", "count")) {
 
-  narrative <- list(narrative_total) %>%
-    rlang::set_names(narrative_name)
-
-  variables <- list(
-    list(
-      narrative_total = narrative_total,
-      template_total = template_total,
-      measure = measure,
-      total_curr = total_curr,
-      total_curr_raw = total_curr_raw,
-      total_prev = total_prev,
-      total_prev_raw = total_prev_raw,
-      timeframe_curr = timeframe_curr,
-      timeframe_prev = timeframe_prev,
-      change = change,
-      change_p = change_p,
-      trend = trend
+    narrative_total <- glue::glue(
+      template_total,
+      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
     )
-  ) %>%
-    rlang::set_names(narrative_name)
 
+    narrative <- list(narrative_total) %>%
+      rlang::set_names(narrative_name)
 
-  # High-Level Narartive ----------------------------------------------------
-  if (narration_depth > 1 && length(dimensions) > 0) {
-    dimension_one <- dimensions[1]
+    variables <- list(
+      list(
+        narrative_total = narrative_total,
+        template_total = template_total,
+        measure = measure,
+        total_curr = total_curr,
+        total_curr_raw = total_curr_raw,
+        total_prev = total_prev,
+        total_prev_raw = total_prev_raw,
+        timeframe_curr = timeframe_curr,
+        timeframe_prev = timeframe_prev,
+        change = change,
+        change_p = change_p,
+        trend = trend
+      )
+    ) %>%
+      rlang::set_names(narrative_name)
+
+    # Average ------------------------------------------------------------
+  } else if (summarization == "average") {
+
+    narrative_average <- glue::glue(
+      template_average,
+      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
+    )
+
+    narrative <- list(narrative_average) %>%
+      rlang::set_names(narrative_name)
+
+    variables <- list(
+      list(
+        narrative_average = narrative_average,
+        template_average = template_average,
+        measure = measure,
+        total_curr = total_curr,
+        total_curr_raw = total_curr_raw,
+        total_prev = total_prev,
+        total_prev_raw = total_prev_raw,
+        timeframe_curr = timeframe_curr,
+        timeframe_prev = timeframe_prev,
+        change = change,
+        change_p = change_p,
+        trend = trend
+      )
+    ) %>%
+      rlang::set_names(narrative_name)
   }
 
-  # df %>%
-  #   dplyr::group_by(dplyr::across(dplyr::all_of(dimensions))) %>%
-  #   tidyr::nest() %>%
-  #   dplyr::mutate(
-  #     ytd_volume = purrr::map_dbl(data, ytd_volume),
-  #     pytd_volume = purrr::map_dbl(data, pytd_volume)
-  #   )
+  # High-Level Narrative ----------------------------------------------------
+  if (length(dimensions) > 0) {
 
-  # Detailed Narrative ------------------------------------------------------
+    for (dimension in dimensions) {
+      output <- df %>%
+        get_trend_outliers(
+          dimension = dimension,
+          measure = measure,
+          # we need overall total for average only, in other cases it leads to incorrect output
+          total = switch(summarization,
+                         "average" = total_curr_raw - total_prev_raw,
+                         "sum" = NULL,
+                         "count" = NULL),
+          summarization = summarization,
+          coverage = coverage,
+          coverage_limit = coverage_limit)
 
+      if (is.null(output)) next
+
+      # Outputting all to the global env
+      n_outliers <- output$n_outliers
+      outlier_levels <- output$outlier_levels
+      outlier_curr_volume <- output$outlier_curr_volume
+      outlier_prev_volume <- output$outlier_prev_volume
+      trend <- output$trend
+      outlier_change <- output$outlier_change
+      outlier_change_p <- output$outlier_change_p
+
+      if (format_numbers == TRUE) {
+        outlier_curr_volume <- format_num(outlier_curr_volume)
+        outlier_prev_volume <- format_num(outlier_prev_volume)
+        outlier_change <- format_num(outlier_change)
+      }
+
+      outlier_insight <- list(
+        outlier_levels, " (", outlier_change, ", ", outlier_change_p, ", ",
+        outlier_prev_volume, " to ", outlier_curr_volume,")"
+      ) %>%
+        purrr::pmap(paste0) %>%
+        unlist() %>%
+        toString()
+
+      if (n_outliers > 1) {
+        template_outlier_final <- template_outlier_multiple
+        template_selected <- "multiple"
+      } else {
+        template_outlier_final <- template_outlier
+        template_selected <- "single"
+      }
+
+      narrative_outlier_final <- glue::glue(
+        template_outlier_final,
+        .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
+      )
+
+      if (template_selected == "multiple") {
+        variables_l1 <- list(
+          list(
+            narrative_outlier_final = narrative_outlier_final,
+            template_outlier_multiple = template_outlier_multiple,
+            dimension = dimension,
+            measure = measure,
+            outlier_insight = outlier_insight,
+            n_outliers = n_outliers,
+            outlier_levels = outlier_levels,
+            outlier_curr_volume = outlier_curr_volume,
+            outlier_prev_volume = outlier_prev_volume,
+            outlier_change = outlier_change,
+            outlier_change_p = outlier_change_p
+          )
+        ) %>%
+          rlang::set_names(glue::glue("{dimension} by {measure}"))
+      } else {
+        variables_l1 <- list(
+          list(
+            narrative_outlier_final = narrative_outlier_final,
+            template_outlier = template_outlier,
+            dimension = dimension,
+            measure = measure,
+            outlier_insight = outlier_insight,
+            n_outliers = n_outliers,
+            outlier_levels = outlier_levels,
+            outlier_curr_volume = outlier_curr_volume,
+            outlier_prev_volume = outlier_prev_volume,
+            outlier_change = outlier_change,
+            outlier_change_p = outlier_change_p
+          )
+        ) %>%
+          rlang::set_names(glue::glue("{measure} change by {dimension}"))
+      }
+
+      variables <- append(variables, variables_l1)
+
+      narrative <- list(narrative_outlier_final) %>%
+        rlang::set_names(glue::glue("{measure} change by {dimension}")) %>%
+        append(narrative, after = 0)
+
+      # Detailed Narrative ------------------------------------------------------
+      # Getting one level deeper into the outlying dimension
+      if (narration_depth > 1 && length(dimensions) > 1
+          && match(dimension, dimensions) < length(dimensions)) {
+
+        levels_l1 <- outlier_levels
+
+        for (i in seq_along(levels_l1)) {
+
+          level_l1 <- levels_l1[i]
+          level_l2 <- dimensions[which(dimensions == dimension) + 1]
+
+          output <- df %>%
+            dplyr::filter(base::get(dimension) %in% levels_l1[i]) %>%
+            dplyr::select(-dplyr::all_of(dimension)) %>%
+            get_trend_outliers(
+              dimension = level_l2,
+              measure = measure,
+              # we need overall total for average only, in other cases it leads to incorrect output
+              total = switch(summarization,
+                             "average" = total_curr_raw - total_prev_raw,
+                             "sum" = NULL,
+                             "count" = NULL),
+              summarization = summarization,
+              coverage = coverage,
+              coverage_limit = coverage_limit)
+
+          if (is.null(output)) next
+
+          # Outputting all to the global env
+          n_outliers <- output$n_outliers
+          outlier_levels <- output$outlier_levels
+          outlier_curr_volume <- output$outlier_curr_volume
+          outlier_prev_volume <- output$outlier_prev_volume
+          trend <- output$trend
+          outlier_change <- output$outlier_change
+          outlier_change_p <- output$outlier_change_p
+
+          if (format_numbers == TRUE) {
+            outlier_curr_volume <- format_num(outlier_curr_volume)
+            outlier_prev_volume <- format_num(outlier_prev_volume)
+            outlier_change <- format_num(outlier_change)
+          }
+
+          outlier_insight <- list(
+            outlier_levels, " (", outlier_change, ", ", outlier_change_p, ", ",
+            outlier_prev_volume, " to ", outlier_curr_volume,")"
+          ) %>%
+            purrr::pmap(paste0) %>%
+            unlist() %>%
+            toString()
+
+          if (n_outliers > 1) {
+            template_outlier_l2_final <- template_outlier_l2_multiple
+            template_selected <- "multiple"
+          } else {
+            template_outlier_l2_final <- template_outlier_l2
+            tempate_selected <- "single"
+          }
+
+          narrative_outlier_l2 <- glue::glue(template_outlier_l2_final)
+
+          if (template_selected == "multiple") {
+            variables_l2 <- list(
+              list(
+                narrative_outlier_l2_final = narrative_outlier_l2,
+                template_outlier_l2_multiple = template_outlier_l2_multiple,
+                level_l1 = level_l1,
+                level_l2 = level_l2,
+                measure = measure,
+                outlier_insight = outlier_insight,
+                n_outliers = n_outliers,
+                outlier_levels = outlier_levels,
+                outlier_curr_volume = outlier_curr_volume,
+                outlier_prev_volume = outlier_prev_volume,
+                outlier_change = outlier_change,
+                outlier_change_p = outlier_change_p
+              )
+            ) %>%
+              rlang::set_names(level_l1)
+          } else {
+            variables_l2 <- list(
+              list(
+                narrative_outlier_l2_final = narrative_outlier_l2,
+                template_outlier_l2 = template_outlier_l2,
+                level_l1 = level_l1,
+                level_l2 = level_l2,
+                measure = measure,
+                outlier_insight = outlier_insight,
+                n_outliers = n_outliers,
+                outlier_levels = outlier_levels,
+                outlier_curr_volume = outlier_curr_volume,
+                outlier_prev_volume = outlier_prev_volume,
+                outlier_change = outlier_change,
+                outlier_change_p = outlier_change_p
+              )
+            ) %>%
+              rlang::set_names(level_l1)
+          }
+
+
+          variables <- append(variables, variables_l2)
+
+          narrative <- list(narrative_outlier_l2) %>%
+            rlang::set_names(glue::glue("{level_l1} by {level_l2}")) %>%
+            append(narrative, after = 0)
+        }
+      }
+    }
+  }
+
+  variables <- append(variables, list(narrative = narrative), 0)
 
   # Output ------------------------------------------------------------------
   if (return_data == TRUE) {

@@ -405,7 +405,6 @@ narrate_descriptive <- function(
             rlang::set_names(level_l1)
         }
 
-
         variables <- append(variables, variables_l2)
 
         narrative <- list(narrative_outlier_l2) %>%

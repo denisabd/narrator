@@ -16,16 +16,17 @@ narrate_trend(
   coverage_limit = 5,
   narration_depth = 2,
   template_total =
-    "From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change} ({change_p}, {total_prev} to {total_curr})",
+    "From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
   template_average =
-    "Average {measure} across all {pluralize(dimension_one)} is {total}.",
-  template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
+    "Average {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
+  template_outlier =
+    "{dimension} with biggest changes of {measure} is {outlier_insight}.",
   template_outlier_multiple =
-    "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}.",
+    "{pluralize(dimension)} with biggest changes of {measure} are {outlier_insight}.",
   template_outlier_l2 =
-    "In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}.",
+    "In {level_l1}, significant {level_l2} by {measure} change is {outlier_insight}.",
   template_outlier_l2_multiple =
-    "In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}.",
+    "In {level_l1}, significant {pluralize(level_l2)} by {measure} change are {outlier_insight}.",
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,

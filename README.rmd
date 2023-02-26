@@ -45,7 +45,7 @@ devtools::install_github("denisabd/narrator")
 ```
 
 
-## Basic Use
+## Basic Use Cases
 
 ```{r}
 library(narrator)
@@ -53,27 +53,17 @@ library(dplyr)
 library(knitr)
 
 sales %>%
-  narrate_descriptive(measure = "Sales",
-               dimensions = c("Region", "Product"))
+  narrate_descriptive(
+    measure = "Sales",
+    dimensions = c("Region", "Product"))
 ```
-
-
 ```{r}
 sales %>%
-  group_by(Region) %>%
-  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
-  arrange(desc(Sales)) %>%
-  mutate(Share = round(Sales/sum(Sales), 3)) %>%
-  janitor::adorn_totals() %>%
-  kable()
+  narrate_trend(
+    measure = "Sales",
+    date = "Date",
+    dimensions = c("Region", "Product")
+  )
+
 ```
 
-
-```{r}
-sales %>%
-  group_by(Product) %>%
-  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
-  arrange(desc(Sales)) %>%
-  janitor::adorn_totals() %>%
-  kable()
-```

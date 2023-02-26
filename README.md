@@ -28,7 +28,7 @@ You can install the development version of narrator from
 devtools::install_github("denisabd/narrator")
 ```
 
-## Basic Use
+## Basic Use Cases
 
 ``` r
 library(narrator)
@@ -36,8 +36,9 @@ library(dplyr)
 library(knitr)
 
 sales %>%
-  narrate_descriptive(measure = "Sales",
-               dimensions = c("Region", "Product"))
+  narrate_descriptive(
+    measure = "Sales",
+    dimensions = c("Region", "Product"))
 #> $`Total Sales`
 #> Total Sales across all Regions is 38.79 M.
 #> 
@@ -56,37 +57,23 @@ sales %>%
 
 ``` r
 sales %>%
-  group_by(Region) %>%
-  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
-  arrange(desc(Sales)) %>%
-  mutate(Share = round(Sales/sum(Sales), 3)) %>%
-  janitor::adorn_totals() %>%
-  kable()
+  narrate_trend(
+    measure = "Sales",
+    date = "Date",
+    dimensions = c("Region", "Product")
+  )
+#> $`2021 YTD vs 2020 YTD`
+#> From 2020 YTD to 2021 YTD, Sales had an increase of 1.13 M (9.1 %, 12.42 M to 13.55 M).
+#> 
+#> $`Sales change by Region`
+#> Regions with biggest changes of Sales are NA (533.1 K, 9.1 %, 5.9 M to 6.4 M), EMEA (416.9 K, 9.91 %, 4.2 M to 4.6 M).
+#> 
+#> $`NA by Product`
+#> In NA, significant Products by Sales change are Food & Beverage (243.3 K, 9.92 %, 2.5 M to 2.7 M), Tools (190.5 K, 32.72 %, 582.2 K to 772.7 K).
+#> 
+#> $`EMEA by Product`
+#> In EMEA, significant Products by Sales change are Electronics (313.1 K, 36.05 %, 868.6 K to 1.2 M), Food & Beverage (244.8 K, 15.01 %, 1.6 M to 1.9 M).
+#> 
+#> $`Sales change by Product`
+#> Products with biggest changes of Sales are Food & Beverage (535.4 K, 10.63 %, 5 M to 5.6 M), Electronics (525.9 K, 19.79 %, 2.7 M to 3.2 M).
 ```
-
-| Region |    Sales | Share |
-|:-------|---------:|------:|
-| NA     | 18079736 | 0.466 |
-| EMEA   | 13555413 | 0.349 |
-| ASPAC  |  3919261 | 0.101 |
-| LATAM  |  3236068 | 0.083 |
-| Total  | 38790478 | 0.999 |
-
-``` r
-sales %>%
-  group_by(Product) %>%
-  summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
-  arrange(desc(Sales)) %>%
-  janitor::adorn_totals() %>%
-  kable()
-```
-
-| Product         |    Sales |
-|:----------------|---------:|
-| Food & Beverage | 15543470 |
-| Electronics     |  8608963 |
-| Home            |  4599371 |
-| Tools           |  4404197 |
-| Baby            |  3256835 |
-| Clothing        |  2377643 |
-| Total           | 38790478 |

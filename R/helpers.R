@@ -285,6 +285,8 @@ pytd_volume <- function(
 #' @param df Data frame of tibble, can be aggregated or raw
 #' @param measure Numeric measure column
 #' @param dimension Dimension within which the outlying patterns should be found
+#' @param total Total measure value passed
+#' @param summarization Approach for data summarization/aggregation - 'sum', 'count' or 'average'
 #' @param coverage Portion of variability to be covered by narrative, 0 to 1
 #' @param coverage_limit Maximum number of elements to be narrated, overrides
 #' coverage to avoid extremely verbose narrative creation
@@ -372,4 +374,132 @@ get_descriptive_outliers <- function(
 
   return(output)
 }
+
+#' Create a list with descriptive outliers
+#'
+#' @param df Data frame of tibble, can be aggregated or raw
+#' @param measure Numeric measure column
+#' @param total Total measure value passed
+#' @param summarization Approach for data summarization/aggregation - 'sum', 'count' or 'average'
+#' @param dimension Dimension within which the outlying patterns should be found
+#' @param coverage Portion of variability to be covered by narrative, 0 to 1
+#' @param coverage_limit Maximum number of elements to be narrated, overrides
+#' coverage to avoid extremely verbose narrative creation
+#'
+#' @noRd
+get_trend_outliers <- function(
+    df,
+    dimension,
+    measure,
+    total = NULL,
+    summarization = "sum",
+    coverage = 0.5,
+    coverage_limit = 5) {
+
+  table <- df %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(
+      curr_volume = purrr::map_dbl(data, ytd_volume,
+                                   summarization = summarization,
+                                   measure = measure),
+      prev_volume = purrr::map_dbl(data, pytd_volume,
+                                   summarization = summarization,
+                                   measure = measure),
+      change = curr_volume - prev_volume,
+      change_p = paste(round(change/prev_volume*100, 2), "%"),
+      abs_change = abs(change),
+      trend = ifelse(change > 0, "increase", "decrease")
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-data) %>%
+    dplyr::arrange(-abs_change)
+
+  if (summarization %in% c("sum", "count")) {
+
+    # if (is.null(total)) {
+    #   curr_volume <- table %>%
+    #     dplyr::summarise(total = sum(curr_volume, na.rm = TRUE)) %>%
+    #     as.numeric()
+    #
+    #   prev_volume <- table %>%
+    #     dplyr::summarise(total = sum(prev_volume, na.rm = TRUE)) %>%
+    #     as.numeric()
+    #
+    #   change <- curr_volume - prev_volume
+    # }
+
+    table <- table %>%
+      dplyr::mutate(share = abs_change/sum(abs_change)) %>%
+      dplyr::mutate(cum_share = cumsum(share)) %>%
+      dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage, default = FALSE)) == 0) %>%
+      dplyr::slice(1:coverage_limit)
+
+    # For a single dimension we skip to the next level
+    if (nrow(table) == 1 && table$cum_share[1] == 1) return(NULL)
+
+  } else if (summarization %in% c("average")) {
+
+    if (is.null(total)) {
+      total <- table %>%
+        dplyr::summarise(total = mean(change, na.rm = TRUE)) %>%
+        as.numeric()
+    }
+
+    table <- table %>%
+      dplyr::mutate(share = abs_change/total) %>%
+      dplyr::mutate(cum_share = cumsum(abs(share))/(max(abs(share)) - min(abs(share)))) %>%
+      dplyr::filter(cumsum(dplyr::lag(cum_share >= coverage*4, default = FALSE)) == 0) %>%
+      dplyr::slice(1:coverage_limit)
+  }
+
+  n_outliers <- nrow(table)
+
+  outlier_levels <- table %>%
+    dplyr::select(dplyr::all_of(dimension)) %>%
+    as.matrix() %>%
+    as.character()
+
+  outlier_curr_volume <- table %>%
+    dplyr::select(curr_volume) %>%
+    as.matrix() %>%
+    as.numeric() %>%
+    round(1)
+
+  outlier_prev_volume <- table %>%
+    dplyr::select(prev_volume) %>%
+    as.matrix() %>%
+    as.numeric() %>%
+    round(1)
+
+  trend <- table %>%
+    dplyr::select(trend) %>%
+    as.matrix() %>%
+    as.character()
+
+  outlier_change <- table %>%
+    dplyr::select(change) %>%
+    as.matrix() %>%
+    as.numeric() %>%
+    round(1)
+
+  outlier_change_p <- table %>%
+    dplyr::select(change_p) %>%
+    as.matrix() %>%
+    as.character()
+
+  output <- list(
+    n_outliers = n_outliers,
+    outlier_levels = outlier_levels,
+    outlier_curr_volume = outlier_curr_volume,
+    outlier_prev_volume = outlier_prev_volume,
+    trend = trend,
+    outlier_change = outlier_change,
+    outlier_change_p = outlier_change_p
+  )
+
+  return(output)
+}
+
+
 

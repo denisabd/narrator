@@ -22,7 +22,6 @@ library(dplyr)
 library(knitr)
 ```
 
-# Descriptive Narrative
 
 Basic narrative type is descriptive stats, looking into outliers or biggest contributors to the total volumes in the data set. This narratives are quite useful and can help to look deeper into the data set hierarchy.
 

@@ -22,9 +22,10 @@ library(dplyr)
 library(knitr)
 ```
 
-# Trend Narrative
 
 When looking into data set with a date or datetime fields, narrator is exploring changes that happen to selected measure in time. Here is a glimpse of such a data set:
+
+## Year-over-Year
 
 ```{r}
 df <- sales %>%
@@ -43,12 +44,16 @@ Default narrative returned will be analyzing year-to-date (YTD) vs prior year-to
 narrate_trend(df)
 ```
 
+## Previous Period
+
 Different time frame can be selected using `type` argument of `narrate_trend()` function. Both numeric and string values are accepted, where 1 stands for 'yoy', 2 for 'previous period', 3 for 'same period last year'. 
 
 When `previous period` is selected, we compare volumes from December 2021 to November 2021:
 ```{r}
 narrate_trend(df, type = "previous period")
 ```
+
+## Same Period Last Year
 
 Alternatively, we can use numeric option, if you are more comfortable with it. Here the function will get December 2020 data for comparison:
 ```{r}
