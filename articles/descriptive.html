@@ -92,16 +92,13 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="descriptive-narrative">Descriptive Narrative<a class="anchor" aria-label="anchor" href="#descriptive-narrative"></a>
-</h2>
 <p>Basic narrative type is descriptive stats, looking into outliers or
 biggest contributors to the total volumes in the data set. This
 narratives are quite useful and can help to look deeper into the data
 set hierarchy.</p>
-<div class="section level3">
-<h3 id="simple-table">Simple Table<a class="anchor" aria-label="anchor" href="#simple-table"></a>
-</h3>
+<div class="section level2">
+<h2 id="simple-table">Simple Table<a class="anchor" aria-label="anchor" href="#simple-table"></a>
+</h2>
 <p>Starting with a simplest table that has only one dimension and one
 measure. Here overall sales volume as well as outlying Territories will
 be analyzed.</p>
@@ -144,9 +141,9 @@ be analyzed.</p>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
 <span><span class="co">#&gt; Outlying Regions by Sales are NA (18.1 M, 46.6 %), EMEA (13.6 M, 34.9 %).</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
-</h3>
+<div class="section level2">
+<h2 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
+</h2>
 <p>There are multiple summarization/aggregation options for the data
 frame, controlled by <code>summarization</code> argument that can be
 <code>sum</code>, <code>count</code> or <code>average</code></p>
@@ -175,9 +172,9 @@ frame, controlled by <code>summarization</code> argument that can be
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
 <span><span class="co">#&gt; Outlying Regions by Sales are LATAM (2,303.3, -40.6 % vs average Sales), ASPAC (2,398.6, -38.2 % vs average Sales).</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
-</h3>
+<div class="section level2">
+<h2 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
+</h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_two</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Region</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="st">"EMEA"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -269,9 +266,9 @@ frame, controlled by <code>summarization</code> argument that can be
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
 <span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 40 %), Electronics (7 M, 22 %).</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="depth">Depth<a class="anchor" aria-label="anchor" href="#depth"></a>
-</h3>
+<div class="section level2">
+<h2 id="depth">Depth<a class="anchor" aria-label="anchor" href="#depth"></a>
+</h2>
 <p>Narration depth can be controlled with <code>narration_depth</code>
 argument. To get summary narratives only set
 <code>narration_depth = 1</code></p>
@@ -289,9 +286,9 @@ argument. To get summary narratives only set
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
 <span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 40 %), Electronics (7 M, 22 %).</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
-</h3>
+<div class="section level2">
+<h2 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
+</h2>
 <p>Key argument for all narratives is <code>coverage</code>. It is used
 to narrate the most important things and avoid simple looping through
 all of the dimension levels. <br><br> By default coverage is set to 0.5
@@ -369,7 +366,6 @@ returned.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
 <span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %), Home (4.6 M, 11.9 %).</span></span></code></pre></div>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -232,10 +232,10 @@ function name, underscore, and template name - <code>descriptive</code>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="11%">
+<col width="10%">
 <col width="6%">
-<col width="16%">
-<col width="65%">
+<col width="15%">
+<col width="67%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">fun</th>
@@ -291,42 +291,43 @@ is {total}.</td>
 <td align="left">trend</td>
 <td align="left">template_total</td>
 <td align="left">From {timeframe_prev} to {timeframe_curr}, {measure}
-{trend} by {change} ({change_p}, {total_prev} to {total_curr})</td>
+had an {trend} of {change} ({change_p}, {total_prev} to
+{total_curr}).</td>
 </tr>
 <tr class="even">
 <td align="left">narrate_trend</td>
 <td align="left">trend</td>
 <td align="left">template_average</td>
-<td align="left">Average {measure} across all {pluralize(dimension_one)}
-is {total}.</td>
+<td align="left">Average {measure} had an {trend} of {change}
+({change_p}, {total_prev} to {total_curr}).</td>
 </tr>
 <tr class="odd">
 <td align="left">narrate_trend</td>
 <td align="left">trend</td>
 <td align="left">template_outlier</td>
-<td align="left">Outlying {dimension} by {measure} is
+<td align="left">{dimension} with biggest changes of {measure} is
 {outlier_insight}.</td>
 </tr>
 <tr class="even">
 <td align="left">narrate_trend</td>
 <td align="left">trend</td>
 <td align="left">template_outlier_multiple</td>
-<td align="left">Outlying {pluralize(dimension)} by {measure} are
-{outlier_insight}.</td>
+<td align="left">{pluralize(dimension)} with biggest changes of
+{measure} are {outlier_insight}.</td>
 </tr>
 <tr class="odd">
 <td align="left">narrate_trend</td>
 <td align="left">trend</td>
 <td align="left">template_outlier_l2</td>
-<td align="left">In {level_l1}, significant {level_l2} by {measure} is
-{outlier_insight}.</td>
+<td align="left">In {level_l1}, significant {level_l2} by {measure}
+change is {outlier_insight}.</td>
 </tr>
 <tr class="even">
 <td align="left">narrate_trend</td>
 <td align="left">trend</td>
 <td align="left">template_outlier_l2_multiple</td>
 <td align="left">In {level_l1}, significant {pluralize(level_l2)} by
-{measure} are {outlier_insight}.</td>
+{measure} change are {outlier_insight}.</td>
 </tr>
 </tbody>
 </table>

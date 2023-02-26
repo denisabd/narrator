@@ -92,12 +92,12 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="trend-narrative">Trend Narrative<a class="anchor" aria-label="anchor" href="#trend-narrative"></a>
-</h2>
 <p>When looking into data set with a date or datetime fields, narrator
 is exploring changes that happen to selected measure in time. Here is a
 glimpse of such a data set:</p>
+<div class="section level2">
+<h2 id="year-over-year">Year-over-Year<a class="anchor" aria-label="anchor" href="#year-over-year"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">floor_date</a></span><span class="op">(</span><span class="va">Date</span>, unit <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -159,7 +159,23 @@ current year will be considered to be the max date of supplied data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_trend.html">narrate_trend</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`2021 YTD vs 2020 YTD`</span></span>
-<span><span class="co">#&gt; From 2020 YTD to 2021 YTD, Sales increased by 1130660.4 (9.1 %, 12.42 M to 13.55 M)</span></span></code></pre></div>
+<span><span class="co">#&gt; From 2020 YTD to 2021 YTD, Sales had an increase of 1.13 M (9.1 %, 12.42 M to 13.55 M).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Sales change by Region`</span></span>
+<span><span class="co">#&gt; Regions with biggest changes of Sales are NA (533.1 K, 9.1 %, 5.9 M to 6.4 M), EMEA (416.9 K, 9.91 %, 4.2 M to 4.6 M).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`NA by Product`</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales change are Food &amp; Beverage (243.3 K, 9.92 %, 2.5 M to 2.7 M), Tools (186.8 K, 31.87 %, 585.9 K to 772.7 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`EMEA by Product`</span></span>
+<span><span class="co">#&gt; In EMEA, significant Products by Sales change are Electronics (312.1 K, 35.88 %, 869.7 K to 1.2 M), Food &amp; Beverage (238.2 K, 14.54 %, 1.6 M to 1.9 M).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Sales change by Product`</span></span>
+<span><span class="co">#&gt; Products with biggest changes of Sales are Food &amp; Beverage (535.4 K, 10.63 %, 5 M to 5.6 M), Electronics (525.9 K, 19.79 %, 2.7 M to 3.2 M).</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="previous-period">Previous Period<a class="anchor" aria-label="anchor" href="#previous-period"></a>
+</h2>
 <p>Different time frame can be selected using <code>type</code> argument
 of <code><a href="../reference/narrate_trend.html">narrate_trend()</a></code> function. Both numeric and string values
 are accepted, where 1 stands for ‘yoy’, 2 for ‘previous period’, 3 for
@@ -169,16 +185,45 @@ from December 2021 to November 2021:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_trend.html">narrate_trend</a></span><span class="op">(</span><span class="va">df</span>, type <span class="op">=</span> <span class="st">"previous period"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Dec 2021 vs Nov 2021`</span></span>
-<span><span class="co">#&gt; From Nov 2021 to Dec 2021, Sales increased by 176315.2 (10.3 %, 1.71 M to 1.89 M)</span></span></code></pre></div>
+<span><span class="co">#&gt; From Nov 2021 to Dec 2021, Sales had an increase of 176.32 K (10.3 %, 1.71 M to 1.89 M).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Sales change by Region`</span></span>
+<span><span class="co">#&gt; Regions with biggest changes of Sales are EMEA (154.2 K, 26.54 %, 580.8 K to 735 K), NA (-111 K, -13.14 %, 844.4 K to 733.4 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`EMEA by Product`</span></span>
+<span><span class="co">#&gt; In EMEA, significant Products by Sales change are Food &amp; Beverage (97.1 K, 45.41 %, 213.8 K to 310.9 K), Tools (60.1 K, 76.53 %, 78.6 K to 138.7 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`NA by Product`</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales change are Tools (-87.2 K, -55.54 %, 157 K to 69.8 K), Home (-51.4 K, -44.95 %, 114.3 K to 62.9 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Sales change by Product`</span></span>
+<span><span class="co">#&gt; Product with biggest changes of Sales is Food &amp; Beverage (197.2 K, 31.28 %, 630.6 K to 827.8 K).</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="same-period-last-year">Same Period Last Year<a class="anchor" aria-label="anchor" href="#same-period-last-year"></a>
+</h2>
 <p>Alternatively, we can use numeric option, if you are more comfortable
 with it. Here the function will get December 2020 data for
 comparison:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_trend.html">narrate_trend</a></span><span class="op">(</span><span class="va">df</span>, type <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Dec 2021 vs Dec 2020`</span></span>
-<span><span class="co">#&gt; From Dec 2020 to Dec 2021, Sales increased by 92889.7 (5.2 %, 1.79 M to 1.89 M)</span></span></code></pre></div>
+<span><span class="co">#&gt; From Dec 2020 to Dec 2021, Sales had an increase of 92.89 K (5.2 %, 1.79 M to 1.89 M).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Sales change by Region`</span></span>
+<span><span class="co">#&gt; Regions with biggest changes of Sales are EMEA (184.3 K, 33.48 %, 550.6 K to 735 K), NA (-144.3 K, -16.44 %, 877.8 K to 733.4 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`EMEA by Product`</span></span>
+<span><span class="co">#&gt; In EMEA, significant Products by Sales change are Food &amp; Beverage (104.2 K, 50.43 %, 206.7 K to 310.9 K), Tools (78.5 K, 130.46 %, 60.2 K to 138.7 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`NA by Product`</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales change are Clothing (-71.6 K, -76.95 %, 93.1 K to 21.5 K), Home (-44.3 K, -41.31 %, 107.2 K to 62.9 K).</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $`Sales change by Product`</span></span>
+<span><span class="co">#&gt; Products with biggest changes of Sales are Food &amp; Beverage (118.3 K, 16.67 %, 709.5 K to 827.8 K), Electronics (108.3 K, 36.23 %, 298.8 K to 407.1 K), Baby (-79.3 K, -33.91 %, 233.9 K to 154.6 K).</span></span></code></pre></div>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

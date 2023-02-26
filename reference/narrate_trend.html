@@ -74,16 +74,17 @@
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  template_total <span class="op">=</span></span>
-<span>    <span class="st">"From {timeframe_prev} to {timeframe_curr}, {measure} {trend} by {change} ({change_p}, {total_prev} to {total_curr})"</span>,</span>
+<span>    <span class="st">"From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr})."</span>,</span>
 <span>  template_average <span class="op">=</span></span>
-<span>    <span class="st">"Average {measure} across all {pluralize(dimension_one)} is {total}."</span>,</span>
-<span>  template_outlier <span class="op">=</span> <span class="st">"Outlying {dimension} by {measure} is {outlier_insight}."</span>,</span>
+<span>    <span class="st">"Average {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr})."</span>,</span>
+<span>  template_outlier <span class="op">=</span></span>
+<span>    <span class="st">"{dimension} with biggest changes of {measure} is {outlier_insight}."</span>,</span>
 <span>  template_outlier_multiple <span class="op">=</span></span>
-<span>    <span class="st">"Outlying {pluralize(dimension)} by {measure} are {outlier_insight}."</span>,</span>
+<span>    <span class="st">"{pluralize(dimension)} with biggest changes of {measure} are {outlier_insight}."</span>,</span>
 <span>  template_outlier_l2 <span class="op">=</span></span>
-<span>    <span class="st">"In {level_l1}, significant {level_l2} by {measure} is {outlier_insight}."</span>,</span>
+<span>    <span class="st">"In {level_l1}, significant {level_l2} by {measure} change is {outlier_insight}."</span>,</span>
 <span>  template_outlier_l2_multiple <span class="op">=</span></span>
-<span>    <span class="st">"In {level_l1}, significant {pluralize(level_l2)} by {measure} are {outlier_insight}."</span>,</span>
+<span>    <span class="st">"In {level_l1}, significant {pluralize(level_l2)} by {measure} change are {outlier_insight}."</span>,</span>
 <span>  use_renviron <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -210,7 +211,19 @@ or create an environment variable "use_renviron" by changing your .Renviron file
 <span class="r-in"><span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Sales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Sales</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span> <span class="fu">narrate_trend</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`2021 YTD vs 2020 YTD`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> From 2020 YTD to 2021 YTD, Sales increased by 1084578.7 (8.7 %, 12.42 M to 13.5 M)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> From 2020 YTD to 2021 YTD, Sales had an increase of 1.08 M (8.7 %, 12.42 M to 13.5 M).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Sales change by Region`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regions with biggest changes of Sales are NA (520.6 K, 8.89 %, 5.9 M to 6.4 M), EMEA (386.6 K, 9.17 %, 4.2 M to 4.6 M).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`NA by Product`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales change are Food &amp; Beverage (239.3 K, 9.76 %, 2.5 M to 2.7 M), Tools (189.6 K, 32.51 %, 583.2 K to 772.7 K).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`EMEA by Product`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales change are Electronics (310.4 K, 35.72 %, 868.9 K to 1.2 M), Food &amp; Beverage (223.4 K, 13.61 %, 1.6 M to 1.9 M).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Sales change by Product`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Products with biggest changes of Sales are Electronics (529.1 K, 19.95 %, 2.7 M to 3.2 M), Food &amp; Beverage (507.9 K, 10.07 %, 5 M to 5.6 M).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
