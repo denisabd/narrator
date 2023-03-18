@@ -79,6 +79,8 @@ and all character or factor columns as <code>dimensions</code></p>
 <span>  coverage <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  use_chatgpt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  openai_api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span>,</span>
 <span>  template_total <span class="op">=</span> <span class="st">"Total {measure} across all {pluralize(dimension_one)} is {total}."</span>,</span>
 <span>  template_average <span class="op">=</span></span>
 <span>    <span class="st">"Average {measure} across all {pluralize(dimension_one)} is {total}."</span>,</span>
@@ -92,7 +94,7 @@ and all character or factor columns as <code>dimensions</code></p>
 <span>  use_renviron <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  format_numbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  format_numbers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  collapse_sep <span class="op">=</span> <span class="st">", "</span>,</span>
 <span>  collapse_last <span class="op">=</span> <span class="st">" and "</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -130,6 +132,14 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
 <dt>narration_depth</dt>
 <dd><p>Parameter to control the depth of the analysis 1 for summary and 2 for detailed</p></dd>
+
+
+<dt>use_chatgpt</dt>
+<dd><p>If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> - use ChatGPT to enhance the narrative</p></dd>
+
+
+<dt>openai_api_key</dt>
+<dd><p>Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with <code>Sys.getenv("OPENAI_API_KEY")</code></p></dd>
 
 
 <dt>template_total</dt>
@@ -201,43 +211,49 @@ or create an environment variable "use_renviron" by changing your .Renviron file
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Sales"</span>,</span></span>
 <span class="r-in"><span>            dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions is 38.79 M.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Sales across all Regions is 38790478.4.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (18.1 M, 46.6 %), EMEA (13.6 M, 34.9 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Sales are NA (18079736.4, 46.6 %), EMEA (13555412.7, 34.9 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`NA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Food &amp; Beverage (7.4 M, 40.9 %), Electronics (3.8 M, 21 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Products by Sales are Food &amp; Beverage (7392821, 40.9 %), Electronics (3789132.7, 21 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`EMEA by Product`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Food &amp; Beverage (5.3 M, 38.8 %), Electronics (3.2 M, 23.5 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In EMEA, significant Products by Sales are Food &amp; Beverage (5265113.2, 38.8 %), Electronics (3182803.4, 23.5 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Sales`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Food &amp; Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Product</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Product A"</span>, <span class="st">"Product B"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Product</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tools"</span>, <span class="st">"Clothing"</span>, <span class="st">"Home"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Product</span>, <span class="va">Region</span><span class="op">)</span>  <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Quantity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Quantity</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">narrate_descriptive</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products is 0.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Quantity across all Products is 65653.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Product by Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Product by Quantity is .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Products by Quantity are Home (26697, 40.7 %), Tools (25457, 38.8 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Home by Region`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In Home, significant Regions by Quantity are NA (12204, 45.7 %), EMEA (8693, 32.6 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Tools by Region`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In Tools, significant Regions by Quantity are NA (11253, 44.2 %), EMEA (8216, 32.3 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Quantity`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Region by Quantity is .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Quantity are NA (29819, 45.4 %), EMEA (21249, 32.4 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">sales</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span><span class="fu">narrate_descriptive</span><span class="op">(</span>measure <span class="op">=</span> <span class="st">"Order ID"</span>, dimensions <span class="op">=</span> <span class="st">"Region"</span>, summarization <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Total Order ID`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Order ID across all Regions is 10 K.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Order ID across all Regions is 10000.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Region by Order ID`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Order ID are NA (3,975, 39.8 %), EMEA (2,986, 29.9 %).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Outlying Regions by Order ID are NA (3975, 39.8 %), EMEA (2986, 29.9 %).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

@@ -17,6 +17,9 @@ reference:
   desc: Functions to create text out of data
   contents:
   - starts_with("narrate")
+  - enhance_narrative
+  - translate_narrative
+  - summarize_narrative
   - list_templates
 
 - title: Formatting Helpers

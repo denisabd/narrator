@@ -15,6 +15,8 @@
 #' @param coverage_limit Integer maximum number of elements to be narrated, overrides
 #' coverage to avoid extremely verbose narrative creation
 #' @param narration_depth Parameter to control the depth of the analysis 1 for summary and 2 for detailed
+#' @param use_chatgpt If [TRUE] - use ChatGPT to enhance the narrative
+#' @param openai_api_key Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with \code{Sys.getenv("OPENAI_API_KEY")}
 #' @param template_total \code{\link[glue]{glue}} template for total volumes narrative
 #' @param template_average \code{\link[glue]{glue}} template for average volumes narrative
 #' @param template_outlier \code{\link[glue]{glue}} template for single outlier narrative
@@ -44,7 +46,7 @@
 #'             dimensions = c("Region", "Product"))
 #'
 #' sales %>%
-#'   dplyr::filter(Product %in% c("Product A", "Product B")) %>%
+#'   dplyr::filter(Product %in% c("Tools", "Clothing", "Home")) %>%
 #'   dplyr::group_by(Product, Region)  %>%
 #'   dplyr::summarise(Quantity = sum(Quantity)) %>%
 #'   narrate_descriptive()
@@ -59,6 +61,8 @@ narrate_descriptive <- function(
     coverage = 0.5,
     coverage_limit = 5,
     narration_depth = 2,
+    use_chatgpt = FALSE,
+    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
     template_total = "Total {measure} across all {pluralize(dimension_one)} is {total}.",
     template_average = "Average {measure} across all {pluralize(dimension_one)} is {total}.",
     template_outlier = "Outlying {dimension} by {measure} is {outlier_insight}.",
@@ -68,7 +72,7 @@ narrate_descriptive <- function(
     use_renviron = FALSE,
     return_data = FALSE,
     simplify = FALSE,
-    format_numbers = TRUE,
+    format_numbers = FALSE,
     collapse_sep = ", ",
     collapse_last = " and ",
     ...) {
@@ -415,6 +419,11 @@ narrate_descriptive <- function(
   }
 
   variables <- append(variables, list(narrative = narrative), 0)
+
+  # ChatGPT -----------------------------------------------------------------
+  if (use_chatgpt) {
+    narrative <- enhance_narrative(narrative, openai_api_key = openai_api_key)
+  }
 
   # Output ------------------------------------------------------------------
   if (return_data == TRUE) {

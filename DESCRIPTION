@@ -39,6 +39,8 @@ Suggests:
     knitr,
     rmarkdown,
     echarts4r,
+    jsonlite,
+    httr,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 

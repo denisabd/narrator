@@ -1,8 +1,9 @@
 ---
 output: github_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-
-
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,17 +15,25 @@ knitr::opts_chunk$set(
 ```
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-# Narrator <img src="man/figures/hex.png" align="right" alt="" width="160" />
+
+# Narrator <img src="man/figures/hex.png" align="right" width="160"/>
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
-[![Codecov test coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
+[![Codecov test
+coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
 [![R-CMD-check](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 <!-- badges: end -->
 
-Template-based NLG framework for creating text narratives out of data.
-Demo [shiny application](https://deny.shinyapps.io/narrator_app/) showing core package capabilities is deployed on shinyapps.io.
+Template-based NLG framework for creating text narratives out of data
+and enhance them using ChatGPT. Demo [shiny
+application](https://deny.shinyapps.io/narrator_app/) showing core
+package capabilities is deployed on shinyapps.io.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -34,36 +43,91 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 ## Installation
 
-You can install the development version of narrator from [GitHub](https://github.com/) with:
+You can install the development version of narrator from
+[GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("denisabd/narrator")
 ```
 
-
 ## Basic Use Cases
 
-```{r}
+Simple tables with one or more categorical columns (dimensions) and one
+measure can be transformed to text using `narrate_descriptive()`
+function.
+
+```{r message=FALSE, warning=FALSE}
 library(narrator)
 library(dplyr)
-library(knitr)
+```
 
-sales %>%
+```{r}
+narrative_one <- sales %>%
   narrate_descriptive(
     measure = "Sales",
-    dimensions = c("Region", "Product"))
+    dimensions = c("Region", "Product")
+  )
+
+narrative_one
 ```
+
+You can analyze changes over time using `narrate_trend()` function:
+
 ```{r}
-sales %>%
+narrative_two <- sales %>%
   narrate_trend(
     measure = "Sales",
     date = "Date",
     dimensions = c("Region", "Product")
   )
 
+narrative_two
 ```
 
+## ChatGPT
+
+`narrator` can use ChatGPT API to improve your narratives. To do so you
+can either set `use_chatgpt = TRUE` in any function that creates
+narrative or use `enhance_narrative()` to improve existing narrative
+output. You can supply `list` or `character`, function will collapse all
+text into a sentence and send a request to Chat GPT. Set your token in
+`.Renviron` file as `OPENAI_API_KEY` or supply it to a function as
+`openai_api_key` argument.
+
+This functionality requires you to setup the ChatGPT API key and make it
+accessible from R.
+
+-   Obtain your ChatGPT API key. You can create an API key by accessing
+    [OpenAI API page](https://platform.openai.com/account/api-keys)
+
+-   [Best Practices for API Key
+    Safety](https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety)
+
+-   Change your `.Renviron` file with `usethis::edit_r_environ()` by
+    adding \``` OPENAI_API_KEY=xx-xxxxxx` ``
+
+```{r results='asis'}
+narrative_enhanced <- enhance_narrative(narrative_one)
+cat(narrative_enhanced)
+```
+
+### Translation
+
+Translate you text using `translate_narrative()` function, specify `language` argument in English:
+
+```{r results='asis'}
+translation <- translate_narrative(narrative_enhanced, language = "Czech")
+cat(translation)
+```
+
+### Summarization
+
+If your output is too verbose you can summarize it with `summarize_narrative()` function:
+
+```{r results='asis'}
+summarization <- summarize_narrative(narrative_enhanced)
+cat(summarization)
+```

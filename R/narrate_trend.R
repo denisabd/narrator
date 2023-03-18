@@ -25,6 +25,8 @@ narrate_trend <- function(
     coverage = 0.5,
     coverage_limit = 5,
     narration_depth = 2,
+    use_chatgpt = FALSE,
+    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
     template_total = "From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
     template_average = "Average {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
     template_outlier = "{dimension} with biggest changes of {measure} is {outlier_insight}.",
@@ -509,6 +511,11 @@ narrate_trend <- function(
   }
 
   variables <- append(variables, list(narrative = narrative), 0)
+
+  # ChatGPT -----------------------------------------------------------------
+  if (use_chatgpt) {
+    narrative <- enhance_narrative(narrative, openai_api_key = openai_api_key)
+  }
 
   # Output ------------------------------------------------------------------
   if (return_data == TRUE) {

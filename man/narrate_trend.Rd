@@ -15,6 +15,8 @@ narrate_trend(
   coverage = 0.5,
   coverage_limit = 5,
   narration_depth = 2,
+  use_chatgpt = FALSE,
+  openai_api_key = Sys.getenv("OPENAI_API_KEY"),
   template_total =
     "From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
   template_average =
@@ -59,6 +61,10 @@ or factor variable will be used}
 coverage to avoid extremely verbose narrative creation}
 
 \item{narration_depth}{Parameter to control the depth of the analysis 1 for summary and 2 for detailed}
+
+\item{use_chatgpt}{If \link{TRUE} - use ChatGPT to enhance the narrative}
+
+\item{openai_api_key}{Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with \code{Sys.getenv("OPENAI_API_KEY")}}
 
 \item{template_total}{\code{\link[glue]{glue}} template for total volumes narrative}
 

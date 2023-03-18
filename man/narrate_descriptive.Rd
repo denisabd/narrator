@@ -12,6 +12,8 @@ narrate_descriptive(
   coverage = 0.5,
   coverage_limit = 5,
   narration_depth = 2,
+  use_chatgpt = FALSE,
+  openai_api_key = Sys.getenv("OPENAI_API_KEY"),
   template_total = "Total {measure} across all {pluralize(dimension_one)} is {total}.",
   template_average =
     "Average {measure} across all {pluralize(dimension_one)} is {total}.",
@@ -25,7 +27,7 @@ narrate_descriptive(
   use_renviron = FALSE,
   return_data = FALSE,
   simplify = FALSE,
-  format_numbers = TRUE,
+  format_numbers = FALSE,
   collapse_sep = ", ",
   collapse_last = " and ",
   ...
@@ -48,6 +50,10 @@ or factor variable will be used}
 coverage to avoid extremely verbose narrative creation}
 
 \item{narration_depth}{Parameter to control the depth of the analysis 1 for summary and 2 for detailed}
+
+\item{use_chatgpt}{If \link{TRUE} - use ChatGPT to enhance the narrative}
+
+\item{openai_api_key}{Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with \code{Sys.getenv("OPENAI_API_KEY")}}
 
 \item{template_total}{\code{\link[glue]{glue}} template for total volumes narrative}
 
@@ -92,7 +98,7 @@ narrate_descriptive(measure = "Sales",
             dimensions = c("Region", "Product"))
 
 sales \%>\%
-  dplyr::filter(Product \%in\% c("Product A", "Product B")) \%>\%
+  dplyr::filter(Product \%in\% c("Tools", "Clothing", "Home")) \%>\%
   dplyr::group_by(Product, Region)  \%>\%
   dplyr::summarise(Quantity = sum(Quantity)) \%>\%
   narrate_descriptive()
