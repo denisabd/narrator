@@ -136,10 +136,10 @@ be analyzed.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_one</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 38.79 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 38790478.4.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are NA (18.1 M, 46.6 %), EMEA (13.6 M, 34.9 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (18079736.4, 46.6 %), EMEA (13555412.7, 34.9 %).</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
@@ -155,10 +155,10 @@ frame, controlled by <code>summarization</code> argument that can be
 <span>    summarization <span class="op">=</span> <span class="st">"count"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 9,026.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 9026.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are NA (3,821, 39.4 %), EMEA (2,883, 29.8 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (3821, 39.4 %), EMEA (2883, 29.8 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
@@ -167,10 +167,10 @@ frame, controlled by <code>summarization</code> argument that can be
 <span>    summarization <span class="op">=</span> <span class="st">"average"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $`Average Sales`</span></span>
-<span><span class="co">#&gt; Average Sales across all Regions is 3,879.</span></span>
+<span><span class="co">#&gt; Average Sales across all Regions is 3879.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are LATAM (2,303.3, -40.6 % vs average Sales), ASPAC (2,398.6, -38.2 % vs average Sales).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Regions by Sales are LATAM (2303.3, -40.6 % vs average Sales), ASPAC (2398.6, -38.2 % vs average Sales).</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="multiple-dimensions">Multiple Dimensions<a class="anchor" aria-label="anchor" href="#multiple-dimensions"></a>
@@ -255,16 +255,16 @@ frame, controlled by <code>summarization</code> argument that can be
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_two</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 31.64 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 31635149.1.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Region by Sales is NA (18.1 M, 57.2 %).</span></span>
+<span><span class="co">#&gt; Outlying Region by Sales is NA (18079736.4, 57.2 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`NA by Product`</span></span>
-<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (7.4 M, 40.9 %), Electronics (3.8 M, 21 %).</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (7392821, 40.9 %), Electronics (3789132.7, 21 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 40 %), Electronics (7 M, 22 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12657934.2, 40 %), Electronics (6971936.1, 22 %).</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="depth">Depth<a class="anchor" aria-label="anchor" href="#depth"></a>
@@ -278,13 +278,13 @@ argument. To get summary narratives only set
 <span>  narration_depth <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 31.64 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 31635149.1.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Region by Sales is NA (18.1 M, 57.2 %).</span></span>
+<span><span class="co">#&gt; Outlying Region by Sales is NA (18079736.4, 57.2 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12.7 M, 40 %), Electronics (7 M, 22 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (12657934.2, 40 %), Electronics (6971936.1, 22 %).</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="coverage">Coverage<a class="anchor" aria-label="anchor" href="#coverage"></a>
@@ -355,17 +355,17 @@ returned.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 38.79 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 38790478.4.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span><span class="va">df_three</span>, coverage <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Products is 38.79 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Products is 38790478.4.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %), Home (4.6 M, 11.9 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %), Home (4599370.9, 11.9 %).</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

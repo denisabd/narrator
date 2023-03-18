@@ -79,11 +79,12 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="narrator-">Narrator <img src="reference/figures/hex.png" align="right" alt="" width="160"><a class="anchor" aria-label="anchor" href="#narrator-"></a>
+<div class="page-header"><h1 id="narrator-">Narrator <img src="reference/figures/hex.png" align="right" width="160"><a class="anchor" aria-label="anchor" href="#narrator-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>Template-based NLG framework for creating text narratives out of data. Demo <a href="https://deny.shinyapps.io/narrator_app/" class="external-link">shiny application</a> showing core package capabilities is deployed on shinyapps.io.</p>
+<!-- badges: end -->
+<p>Template-based NLG framework for creating text narratives out of data and enhance them using ChatGPT. Demo <a href="https://deny.shinyapps.io/narrator_app/" class="external-link">shiny application</a> showing core package capabilities is deployed on shinyapps.io.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -95,36 +96,42 @@
 <div class="section level2">
 <h2 id="basic-use-cases">Basic Use Cases<a class="anchor" aria-label="anchor" href="#basic-use-cases"></a>
 </h2>
+<p>Simple tables with one or more categorical columns (dimensions) and one measure can be transformed to text using <code><a href="reference/narrate_descriptive.html">narrate_descriptive()</a></code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://denisabd.github.io/narrator/">narrator</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">narrative_one</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
 <span>    measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
-<span>    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">narrative_one</span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
-<span><span class="co">#&gt; Total Sales across all Regions is 38.79 M.</span></span>
+<span><span class="co">#&gt; Total Sales across all Regions is 38790478.4.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Region by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Regions by Sales are NA (18.1 M, 46.6 %), EMEA (13.6 M, 34.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Regions by Sales are NA (18079736.4, 46.6 %), EMEA (13555412.7, 34.9 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`NA by Product`</span></span>
-<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (7.4 M, 40.9 %), Electronics (3.8 M, 21 %).</span></span>
+<span><span class="co">#&gt; In NA, significant Products by Sales are Food &amp; Beverage (7392821, 40.9 %), Electronics (3789132.7, 21 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`EMEA by Product`</span></span>
-<span><span class="co">#&gt; In EMEA, significant Products by Sales are Food &amp; Beverage (5.3 M, 38.8 %), Electronics (3.2 M, 23.5 %).</span></span>
+<span><span class="co">#&gt; In EMEA, significant Products by Sales are Food &amp; Beverage (5265113.2, 38.8 %), Electronics (3182803.4, 23.5 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15.5 M, 40.1 %), Electronics (8.6 M, 22.2 %).</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).</span></span></code></pre></div>
+<p>You can analyze changes over time using <code><a href="reference/narrate_trend.html">narrate_trend()</a></code> function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">narrative_two</span> <span class="op">&lt;-</span> <span class="va">sales</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/narrate_trend.html">narrate_trend</a></span><span class="op">(</span></span>
 <span>    measure <span class="op">=</span> <span class="st">"Sales"</span>,</span>
 <span>    date <span class="op">=</span> <span class="st">"Date"</span>,</span>
 <span>    dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Region"</span>, <span class="st">"Product"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">narrative_two</span></span>
 <span><span class="co">#&gt; $`2021 YTD vs 2020 YTD`</span></span>
 <span><span class="co">#&gt; From 2020 YTD to 2021 YTD, Sales had an increase of 1.13 M (9.1 %, 12.42 M to 13.55 M).</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -139,6 +146,39 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Sales change by Product`</span></span>
 <span><span class="co">#&gt; Products with biggest changes of Sales are Food &amp; Beverage (535.4 K, 10.63 %, 5 M to 5.6 M), Electronics (525.9 K, 19.79 %, 2.7 M to 3.2 M).</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="chatgpt">ChatGPT<a class="anchor" aria-label="anchor" href="#chatgpt"></a>
+</h2>
+<p><code>narrator</code> can use ChatGPT API to improve your narratives. To do so you can either set <code>use_chatgpt = TRUE</code> in any function that creates narrative or use <code><a href="reference/enhance_narrative.html">enhance_narrative()</a></code> to improve existing narrative output. You can supply <code>list</code> or <code>character</code>, function will collapse all text into a sentence and send a request to Chat GPT. Set your token in <code>.Renviron</code> file as <code>OPENAI_API_KEY</code> or supply it to a function as <code>openai_api_key</code> argument.</p>
+<p>This functionality requires you to setup the ChatGPT API key and make it accessible from R.</p>
+<ul>
+<li><p>Obtain your ChatGPT API key. You can create an API key by accessing <a href="https://platform.openai.com/account/api-keys" class="external-link">OpenAI API page</a></p></li>
+<li><p><a href="https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety" class="external-link">Best Practices for API Key Safety</a></p></li>
+<li><p>Change your <code>.Renviron</code> file with <code>usethis::edit_r_environ()</code> by adding `<code>OPENAI_API_KEY=xx-xxxxxx`</code></p></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">narrative_enhanced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/enhance_narrative.html">enhance_narrative</a></span><span class="op">(</span><span class="va">narrative_one</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span></code></pre></div>
+<p>The aggregate sales figure across all regions showcases an impressive result of 38790478.4. The outlying regions such as North America (18079736.4, 46.6%) and Europe, the Middle East, and Africa (EMEA) (13555412.7, 34.9%) have made noteworthy contributions to this total sales figure. In North America, products that have stood out in terms of sales are the Food &amp; Beverage category (7392821, 40.9%) and Electronics (3789132.7, 21%). In the EMEA region, the notable products by sales are Food &amp; Beverage (5265113.2, 38.8%) and Electronics (3182803.4, 23.5%). The outlying products category which has seen the most significant contribution to the total sales figures in both regions is Food &amp; Beverage (15543469.7, 40.1%), followed by Electronics (8608962.8, 22.2%).</p>
+<div class="section level3">
+<h3 id="translation">Translation<a class="anchor" aria-label="anchor" href="#translation"></a>
+</h3>
+<p>Translate you text using <code><a href="reference/translate_narrative.html">translate_narrative()</a></code> function, specify <code>language</code> argument in English:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">translation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/translate_narrative.html">translate_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span>, language <span class="op">=</span> <span class="st">"Czech"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">translation</span><span class="op">)</span></span></code></pre></div>
+<p>Celkové prodeje po všech regionech ukazují impresivní výsledek ve výši 38790478,4. Externí regiony, jako Severní Amerika (18079736,4, 46,6 %) a Evropa, Střední Východ a Afrika (EMEA) (13555412,7, 34,9 %) přispěly k tomuto celkovému prodeji významným dílem. V Severní Americe se v kategorii prodejů výrazně osvědčily produkty v oblasti jídla a nápojů (7392821, 40,9 %) a elektroniky (3789132,7, 21 %). V oblasti EMEA jsou nejvýznamnějšími produkty podle prodeje jídlo a nápoje (5265113,2, 38,8 %) a elektronika (3182803,4, 23,5 %). Kategorie se nejvýrazněji přispívající k celkovému prodeji v obou regionech je jídlo a nápoje (15543469,7, 40,1 %), následované elektronikou (8608962,8, 22,2 %).</p>
+</div>
+<div class="section level3">
+<h3 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
+</h3>
+<p>If your output is too verbose you can summarize it with <code><a href="reference/summarize_narrative.html">summarize_narrative()</a></code> function:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">summarization</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarize_narrative.html">summarize_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">summarization</span><span class="op">)</span></span></code></pre></div>
+<p>Total sales are impressive at 38790478.4, with North America (46.6%) and EMEA (34.9%) making notable contributions. Food &amp; Beverage and Electronics were standout categories in both regions, with Food &amp; Beverage being the most significant contributor to total sales in both regions.</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

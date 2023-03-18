@@ -73,6 +73,8 @@
 <span>  coverage <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  coverage_limit <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  use_chatgpt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  openai_api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span>,</span>
 <span>  template_total <span class="op">=</span></span>
 <span>    <span class="st">"From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr})."</span>,</span>
 <span>  template_average <span class="op">=</span></span>
@@ -138,6 +140,14 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
 <dt>narration_depth</dt>
 <dd><p>Parameter to control the depth of the analysis 1 for summary and 2 for detailed</p></dd>
+
+
+<dt>use_chatgpt</dt>
+<dd><p>If <a href="https://rdrr.io/r/base/logical.html" class="external-link">TRUE</a> - use ChatGPT to enhance the narrative</p></dd>
+
+
+<dt>openai_api_key</dt>
+<dd><p>Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with <code>Sys.getenv("OPENAI_API_KEY")</code></p></dd>
 
 
 <dt>template_total</dt>
