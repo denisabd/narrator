@@ -18,6 +18,7 @@ summarize_narrative(narrative, openai_api_key = Sys.getenv("OPENAI_API_KEY"))
 Summarize the narrative output with ChatGPT
 }
 \examples{
+\dontrun{
 narrative <- sales \%>\%
 dplyr::filter(Product \%in\% c("Tools", "Clothing", "Home")) \%>\%
   dplyr::group_by(Product, Region)  \%>\%
@@ -26,4 +27,5 @@ dplyr::filter(Product \%in\% c("Tools", "Clothing", "Home")) \%>\%
 
 narrative <- enhance_narrative(narrative)
 summarize_narrative(narrative)
+}
 }

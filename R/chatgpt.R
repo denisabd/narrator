@@ -7,6 +7,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' narrative <- sales %>%
 #' dplyr::filter(Product %in% c("Tools", "Clothing", "Home")) %>%
 #'   dplyr::group_by(Product, Region)  %>%
@@ -14,6 +15,7 @@
 #'   narrate_descriptive()
 #'
 #' enhance_narrative(narrative)
+#' }
 enhance_narrative <- function(
     narrative,
     openai_api_key = Sys.getenv("OPENAI_API_KEY")
@@ -46,6 +48,7 @@ enhance_narrative <- function(
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' narrative <- sales %>%
 #' dplyr::filter(Product %in% c("Tools", "Clothing", "Home")) %>%
 #'   dplyr::group_by(Product, Region)  %>%
@@ -54,6 +57,7 @@ enhance_narrative <- function(
 #'
 #' narrative <- enhance_narrative(narrative)
 #' translate_narrative(narrative, "Spanish")
+#' }
 translate_narrative <- function(
     narrative,
     language,
@@ -88,6 +92,7 @@ translate_narrative <- function(
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' narrative <- sales %>%
 #' dplyr::filter(Product %in% c("Tools", "Clothing", "Home")) %>%
 #'   dplyr::group_by(Product, Region)  %>%
@@ -96,6 +101,7 @@ translate_narrative <- function(
 #'
 #' narrative <- enhance_narrative(narrative)
 #' summarize_narrative(narrative)
+#' }
 summarize_narrative <- function(
     narrative,
     openai_api_key = Sys.getenv("OPENAI_API_KEY")

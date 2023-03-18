@@ -119,18 +119,15 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-The aggregate sales figure across all regions showcases an impressive
-result of 38790478.4. The outlying regions such as North America
-(18079736.4, 46.6%) and Europe, the Middle East, and Africa (EMEA)
-(13555412.7, 34.9%) have made noteworthy contributions to this total
-sales figure. In North America, products that have stood out in terms of
-sales are the Food & Beverage category (7392821, 40.9%) and Electronics
-(3789132.7, 21%). In the EMEA region, the notable products by sales are
-Food & Beverage (5265113.2, 38.8%) and Electronics (3182803.4, 23.5%).
-The outlying products category which has seen the most significant
-contribution to the total sales figures in both regions is Food &
-Beverage (15543469.7, 40.1%), followed by Electronics (8608962.8,
-22.2%).
+The total sales figure for all regions amounts to an impressive
+38,790,478.4. The regions that stood out in terms of sales were North
+America (18,079,736.4, 46.6%) and EMEA (13,555,412.7, 34.9%). In North
+America, the products that contributed significantly to sales were Food
+& Beverage (7,392,821, 40.9%) and Electronics (3,789,132.7, 21%).
+Similarly, in EMEA, Food & Beverage (5,265,113.2, 38.8%) and Electronics
+(3,182,803.4, 23.5%) played a significant role in boosting sales. The
+products that performed exceptionally well across all regions were Food
+& Beverage (15,543,469.7, 40.1%) and Electronics (8,608,962.8, 22.2%).
 
 ### Translation
 
@@ -142,16 +139,15 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
-Celkové prodeje po všech regionech ukazují impresivní výsledek ve výši
-38790478,4. Externí regiony, jako Severní Amerika (18079736,4, 46,6 %) a
-Evropa, Střední Východ a Afrika (EMEA) (13555412,7, 34,9 %) přispěly k
-tomuto celkovému prodeji významným dílem. V Severní Americe se v
-kategorii prodejů výrazně osvědčily produkty v oblasti jídla a nápojů
-(7392821, 40,9 %) a elektroniky (3789132,7, 21 %). V oblasti EMEA jsou
-nejvýznamnějšími produkty podle prodeje jídlo a nápoje (5265113,2, 38,8
-%) a elektronika (3182803,4, 23,5 %). Kategorie se nejvýrazněji
-přispívající k celkovému prodeji v obou regionech je jídlo a nápoje
-(15543469,7, 40,1 %), následované elektronikou (8608962,8, 22,2 %).
+Celková prodejní částka pro všechny regiony dosahuje impresivní částky
+38 790 478,4. Regiony, které vynikaly v oblasti prodeje, byly Severní
+Amerika (18 079 736,4, 46,6 %) a EMEA (13 555 412,7, 34,9 %). V Severní
+Americe produkty, které výrazně přispěly k prodeji, byly Food & Beverage
+(7 392 821, 40,9 %) a Elektronika (3 789 132,7, 21 %). Podobně v regionu
+EMEA hrály v prodejním růstu významnou roli Food & Beverage (5 265
+113,2, 38,8 %) a Elektronika (3 182 803,4, 23,5 %). Produkty, které se
+mimořádně osvědčily napříč všemi regiony, byly Food & Beverage (15 543
+469,7, 40,1 %) a Elektronika (8 608 962,8, 22,2 %).
 
 ### Summarization
 
@@ -163,8 +159,7 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-Total sales are impressive at 38790478.4, with North America (46.6%) and
-EMEA (34.9%) making notable contributions. Food & Beverage and
-Electronics were standout categories in both regions, with Food &
-Beverage being the most significant contributor to total sales in both
-regions.
+Total sales were 38.7M, with North America and EMEA leading with 18.1M
+and 13.5M in sales, respectively. In both regions, Food & Beverage and
+Electronics were top-selling products. Overall best-performing products
+were Food & Beverage and Electronics.

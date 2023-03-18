@@ -24,6 +24,7 @@ translate_narrative(
 Translate the narrative output with ChatGPT
 }
 \examples{
+\dontrun{
 narrative <- sales \%>\%
 dplyr::filter(Product \%in\% c("Tools", "Clothing", "Home")) \%>\%
   dplyr::group_by(Product, Region)  \%>\%
@@ -32,4 +33,5 @@ dplyr::filter(Product \%in\% c("Tools", "Clothing", "Home")) \%>\%
 
 narrative <- enhance_narrative(narrative)
 translate_narrative(narrative, "Spanish")
+}
 }
