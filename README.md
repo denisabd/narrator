@@ -20,9 +20,23 @@ and enhance them using ChatGPT. Demo [shiny
 application](https://deny.shinyapps.io/narrator_app/) showing core
 package capabilities is deployed on shinyapps.io.
 
+Package is available in both R and Python, with all core features and
+even syntax being the same or similar. Corresponding classes and data
+types are used in both languages:
+
+- data.frame vs pandas dataframe
+- list vs dictionary
+- character vector vs list
+
 ## Installation
 
-You can install the development version of narrator from
+For Python install `pynarrator` from pip:
+
+``` bash
+pip3 install pynarrator
+```
+
+For R you can install the development version of narrator from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -35,6 +49,8 @@ devtools::install_github("denisabd/narrator")
 Simple tables with one or more categorical columns (dimensions) and one
 measure can be transformed to text using `narrate_descriptive()`
 function.
+
+### R
 
 ``` r
 library(narrator)
@@ -65,32 +81,45 @@ narrative_one
 #> Outlying Products by Sales are Food & Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).
 ```
 
-You can analyze changes over time using `narrate_trend()` function:
+### Python
 
-``` r
-narrative_two <- sales %>%
-  narrate_trend(
-    measure = "Sales",
-    date = "Date",
-    dimensions = c("Region", "Product")
-  )
-
-narrative_two
-#> $`2021 YTD vs 2020 YTD`
-#> From 2020 YTD to 2021 YTD, Sales had an increase of 1.13 M (9.1 %, 12.42 M to 13.55 M).
-#> 
-#> $`Sales change by Region`
-#> Regions with biggest changes of Sales are NA (533.1 K, 9.1 %, 5.9 M to 6.4 M), EMEA (416.9 K, 9.91 %, 4.2 M to 4.6 M).
-#> 
-#> $`NA by Product`
-#> In NA, significant Products by Sales change are Food & Beverage (243.3 K, 9.92 %, 2.5 M to 2.7 M), Tools (190.5 K, 32.72 %, 582.2 K to 772.7 K).
-#> 
-#> $`EMEA by Product`
-#> In EMEA, significant Products by Sales change are Electronics (313.1 K, 36.05 %, 868.6 K to 1.2 M), Food & Beverage (244.8 K, 15.01 %, 1.6 M to 1.9 M).
-#> 
-#> $`Sales change by Product`
-#> Products with biggest changes of Sales are Food & Beverage (535.4 K, 10.63 %, 5 M to 5.6 M), Electronics (525.9 K, 19.79 %, 2.7 M to 3.2 M).
+``` python
+import os
+from pynarrator import narrate_descriptive, read_data
+import pprint
 ```
+
+``` python
+sales = read_data()
+```
+
+``` python
+narrative_one = narrate_descriptive(
+  df = sales, 
+  measure = 'Sales', 
+  dimensions = ['Region', 'Product'], 
+  return_data = False, 
+  coverage = 0.5
+  )
+  
+pprint.pprint(narrative_one)
+#> {'Product by Sales': 'Outlying Products by Sales are Food & Beverage '
+#>                      '(15543469.7, 40.0%), Electronics (8608962.8, 22.0%).',
+#>  'Region by Sales': 'Outlying Regions by Sales are NA (18079736.4, 47.0%), '
+#>                     'EMEA (13555412.7, 35.0%).',
+#>  'Total Sales': 'Total Sales across all Regions is 38790478.42.'}
+```
+
+<!-- You can analyze changes over time using `narrate_trend()` function: -->
+<!-- ```{r} -->
+<!-- narrative_two <- sales %>% -->
+<!--   narrate_trend( -->
+<!--     measure = "Sales", -->
+<!--     date = "Date", -->
+<!--     dimensions = c("Region", "Product") -->
+<!--   ) -->
+<!-- narrative_two -->
+<!-- ``` -->
 
 ## ChatGPT
 
@@ -119,15 +148,26 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-The total sales figure for all regions amounts to an impressive
-38,790,478.4. The regions that stood out in terms of sales were North
-America (18,079,736.4, 46.6%) and EMEA (13,555,412.7, 34.9%). In North
-America, the products that contributed significantly to sales were Food
-& Beverage (7,392,821, 40.9%) and Electronics (3,789,132.7, 21%).
-Similarly, in EMEA, Food & Beverage (5,265,113.2, 38.8%) and Electronics
-(3,182,803.4, 23.5%) played a significant role in boosting sales. The
-products that performed exceptionally well across all regions were Food
-& Beverage (15,543,469.7, 40.1%) and Electronics (8,608,962.8, 22.2%).
+The total amount of sales across all global regions stands at
+38,790,478.4 units. Notably, North America (NA) and Europe, Middle-East,
+and Africa (EMEA) lead the sales charts with 18,079,736.4 units (46.6%)
+and 13,555,412.7 units (34.9%) respectively.
+
+In the North American region, the significant products driving sales are
+Food & Beverage (7,392,821 units, 40.9%) and Electronics (3,789,132.7
+units, 21%). Whereas, in EMEA, Food & Beverage (5,265,113.2 units,
+38.8%) and Electronics (3,182,803.4 units, 23.5%) dominate the sales
+figures.
+
+Moreover, when exploring product-specific sales figures, we see that
+Food & Beverage (15,543,469.7 units, 40.1%) and Electronics (8,608,962.8
+units, 22.2%) remain the outlying products in terms of sales figures.
+
+Similar in Python
+
+``` python
+narrative_enhanced = enhance_narrative(narrative_one)
+```
 
 ### Translation
 
@@ -139,15 +179,27 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
-Celková prodejní částka pro všechny regiony dosahuje impresivní částky
-38 790 478,4. Regiony, které vynikaly v oblasti prodeje, byly Severní
-Amerika (18 079 736,4, 46,6 %) a EMEA (13 555 412,7, 34,9 %). V Severní
-Americe produkty, které výrazně přispěly k prodeji, byly Food & Beverage
-(7 392 821, 40,9 %) a Elektronika (3 789 132,7, 21 %). Podobně v regionu
-EMEA hrály v prodejním růstu významnou roli Food & Beverage (5 265
-113,2, 38,8 %) a Elektronika (3 182 803,4, 23,5 %). Produkty, které se
-mimořádně osvědčily napříč všemi regiony, byly Food & Beverage (15 543
-469,7, 40,1 %) a Elektronika (8 608 962,8, 22,2 %).
+Celkový počet prodaných výrobků všech globálních oblastí činí 38 790
+478,4 jednotek. Zvláště severní Amerika (NA) a Evropa, Střední východ a
+Afrika (EMEA) vedou prodejní statistiky s 18 079 736,4 jednotkami (46,6
+%) a 13 555 412,7 jednotkami (34,9 %) odpovídajícě.
+
+V oblasti Severní Ameriky jsou hlavními výrobky, které stimulují prodej,
+potraviny a nápoje (7 392 821 jednotek, 40,9 %) a elektronika (3 789
+132,7 jednotek, 21 %). Na druhé straně, v oblasti EMEA dominují
+potraviny a nápoje (5 265 113,2 jednotek, 38,8 %) a elektronika (3 182
+803,4 jednotek, 23,5 %).
+
+Navíc, při zkoumání prodeje konkrétních výrobků, vidíme, že potraviny a
+nápoje (15 543 469,7 jednotek, 40,1 %) a elektronika (8 608 962,8
+jednotek, 22,2 %) zůstávají výraznými výrobky v termínech prodejních
+čísel.
+
+In Python:
+
+``` python
+translation = translate_narrative(narrative_enhanced, language = "Czech")
+```
 
 ### Summarization
 
@@ -159,7 +211,14 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-Total sales were 38.7M, with North America and EMEA leading with 18.1M
-and 13.5M in sales, respectively. In both regions, Food & Beverage and
-Electronics were top-selling products. Overall best-performing products
-were Food & Beverage and Electronics.
+Global sales stand at 38,790,478.4 units, with North America and EMEA
+leading the charts. In North America, Food & Beverage and Electronics
+are significant drivers, while in EMEA, Food & Beverage and Electronics
+dominate. Food & Beverage and Electronics continue to be the outlying
+products in terms of sales figures.
+
+In Python:
+
+``` python
+summarization = summarize_narrative(narrative_enhanced)
+```

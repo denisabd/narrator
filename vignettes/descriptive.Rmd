@@ -16,14 +16,16 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+Basic narrative type is descriptive stats, looking into outliers or biggest contributors to the total volumes in the data set. This narratives are quite useful and can help to look deeper into the data set hierarchy.
+
+# R
+
 ```{r setup}
 library(narrator)
 library(dplyr)
 library(knitr)
 ```
-
-
-Basic narrative type is descriptive stats, looking into outliers or biggest contributors to the total volumes in the data set. This narratives are quite useful and can help to look deeper into the data set hierarchy.
 
 ## Simple Table
 
@@ -114,3 +116,4 @@ narrate_descriptive(df_three)
 ```{r}
 narrate_descriptive(df_three, coverage = 0.7)
 ```
+

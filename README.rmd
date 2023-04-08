@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+sales <- narrator::sales
 ```
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -35,6 +37,12 @@ and enhance them using ChatGPT. Demo [shiny
 application](https://deny.shinyapps.io/narrator_app/) showing core
 package capabilities is deployed on shinyapps.io.
 
+Package is available in both R and Python, with all core features and even syntax being the same or similar. Corresponding classes and data types are used in both languages:
+
+- data.frame vs pandas dataframe
+- list vs dictionary
+- character vector vs list
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   comment = "#>",
@@ -45,7 +53,12 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-You can install the development version of narrator from
+For Python install `pynarrator` from pip:
+```{bash, eval=FALSE}
+pip3 install pynarrator
+```
+
+For R you can install the development version of narrator from
 [GitHub](https://github.com/) with:
 
 ```{r, eval=FALSE}
@@ -58,6 +71,8 @@ devtools::install_github("denisabd/narrator")
 Simple tables with one or more categorical columns (dimensions) and one
 measure can be transformed to text using `narrate_descriptive()`
 function.
+
+### R
 
 ```{r message=FALSE, warning=FALSE}
 library(narrator)
@@ -74,18 +89,45 @@ narrative_one <- sales %>%
 narrative_one
 ```
 
-You can analyze changes over time using `narrate_trend()` function:
-
-```{r}
-narrative_two <- sales %>%
-  narrate_trend(
-    measure = "Sales",
-    date = "Date",
-    dimensions = c("Region", "Product")
-  )
-
-narrative_two
+### Python
+```{python}
+import os
+from pynarrator import narrate_descriptive, read_data
+import pprint
 ```
+
+```{python eval=FALSE}
+sales = read_data()
+```
+
+```{python include=FALSE}
+sales = r.sales
+```
+
+```{python}
+narrative_one = narrate_descriptive(
+  df = sales, 
+  measure = 'Sales', 
+  dimensions = ['Region', 'Product'], 
+  return_data = False, 
+  coverage = 0.5
+  )
+  
+pprint.pprint(narrative_one)
+```
+
+<!-- You can analyze changes over time using `narrate_trend()` function: -->
+
+<!-- ```{r} -->
+<!-- narrative_two <- sales %>% -->
+<!--   narrate_trend( -->
+<!--     measure = "Sales", -->
+<!--     date = "Date", -->
+<!--     dimensions = c("Region", "Product") -->
+<!--   ) -->
+
+<!-- narrative_two -->
+<!-- ``` -->
 
 ## ChatGPT
 
@@ -114,6 +156,11 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
+Similar in Python
+```{python eval=FALSE}
+narrative_enhanced = enhance_narrative(narrative_one)
+```
+
 ### Translation
 
 Translate you text using `translate_narrative()` function, specify `language` argument in English:
@@ -121,6 +168,11 @@ Translate you text using `translate_narrative()` function, specify `language` ar
 ```{r results='asis'}
 translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
+```
+
+In Python:
+```{python eval=FALSE}
+translation = translate_narrative(narrative_enhanced, language = "Czech")
 ```
 
 ### Summarization
@@ -131,3 +183,9 @@ If your output is too verbose you can summarize it with `summarize_narrative()` 
 summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
+
+In Python:
+```{python eval=FALSE}
+summarization = summarize_narrative(narrative_enhanced)
+```
+
