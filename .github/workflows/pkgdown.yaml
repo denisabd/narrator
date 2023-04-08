@@ -32,12 +32,7 @@ jobs:
         with:
           extra-packages: any::pkgdown, any::echarts4r, local::.
           needs: website
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-          cache: 'pip' # caching pip dependencies
-      - run: pip install pynarrator
+      - run: pip3 install pynarrator
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
