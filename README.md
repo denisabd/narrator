@@ -148,20 +148,17 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-The total amount of sales across all global regions stands at
-38,790,478.4 units. Notably, North America (NA) and Europe, Middle-East,
-and Africa (EMEA) lead the sales charts with 18,079,736.4 units (46.6%)
-and 13,555,412.7 units (34.9%) respectively.
-
-In the North American region, the significant products driving sales are
-Food & Beverage (7,392,821 units, 40.9%) and Electronics (3,789,132.7
-units, 21%). Whereas, in EMEA, Food & Beverage (5,265,113.2 units,
-38.8%) and Electronics (3,182,803.4 units, 23.5%) dominate the sales
-figures.
-
-Moreover, when exploring product-specific sales figures, we see that
-Food & Beverage (15,543,469.7 units, 40.1%) and Electronics (8,608,962.8
-units, 22.2%) remain the outlying products in terms of sales figures.
+The aggregate sales count for all regions stands at an impressive
+38790478.4. Among the sales achieved, the two outlying regions, namely
+North America (18079736.4, 46.6%) and EMEA (13555412.7, 34.9%), have
+notably contributed to this success. Delving further, it’s worth
+mentioning that in North America, Food & Beverage (7392821, 40.9%) and
+Electronics (3789132.7, 21%) were key products that led to these sales
+numbers. Similarly, in EMEA, Food & Beverage (5265113.2, 38.8%) and
+Electronics (3182803.4, 23.5%) emerged as the top-selling categories.
+Furthermore, Food & Beverage (15543469.7, 40.1%) and Electronics
+(8608962.8, 22.2%) were identified as the top-performing products across
+all regions.
 
 Similar in Python
 
@@ -179,21 +176,16 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
-Celkový počet prodaných výrobků všech globálních oblastí činí 38 790
-478,4 jednotek. Zvláště severní Amerika (NA) a Evropa, Střední východ a
-Afrika (EMEA) vedou prodejní statistiky s 18 079 736,4 jednotkami (46,6
-%) a 13 555 412,7 jednotkami (34,9 %) odpovídajícě.
-
-V oblasti Severní Ameriky jsou hlavními výrobky, které stimulují prodej,
-potraviny a nápoje (7 392 821 jednotek, 40,9 %) a elektronika (3 789
-132,7 jednotek, 21 %). Na druhé straně, v oblasti EMEA dominují
-potraviny a nápoje (5 265 113,2 jednotek, 38,8 %) a elektronika (3 182
-803,4 jednotek, 23,5 %).
-
-Navíc, při zkoumání prodeje konkrétních výrobků, vidíme, že potraviny a
-nápoje (15 543 469,7 jednotek, 40,1 %) a elektronika (8 608 962,8
-jednotek, 22,2 %) zůstávají výraznými výrobky v termínech prodejních
-čísel.
+Celkový obrat z prodeje všech regionů dosahuje impozantního čísla 38 790
+478,4. Z této částky měly značný podíl dva vzdálené regiony, a to
+Severní Amerika (18 079 736,4, 46,6 %) a EMEA (13 555 412,7, 34,9 %). V
+Severní Americe se jako klíčové produkty, které vedly k těmto prodejům,
+ukázaly být potraviny a nápoje (7 392 821, 40,9 %) a elektronika (3 789
+132,7, 21 %). Podobně v EMEA se kategorie potravin a nápojů (5 265
+113,2, 38,8 %) a elektroniky (3 182 803,4, 23,5 %) ukázaly jako
+nejprodávanější. Navíc se potraviny a nápoje (15 543 469,7, 40,1 %) a
+elektronika (8 608 962,8, 22,2 %) identifikovaly jako nejlepší produkty
+v prodeji všech regionů.
 
 In Python:
 
@@ -211,11 +203,11 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-Global sales stand at 38,790,478.4 units, with North America and EMEA
-leading the charts. In North America, Food & Beverage and Electronics
-are significant drivers, while in EMEA, Food & Beverage and Electronics
-dominate. Food & Beverage and Electronics continue to be the outlying
-products in terms of sales figures.
+Sales count is impressive at 38790478.4, with North America and EMEA
+making a substantial contribution. In North America, Food & Beverage and
+Electronics were key products, while EMEA saw the same success with
+those categories. Overall, Food & Beverage and Electronics were
+top-performing products across all regions.
 
 In Python:
 

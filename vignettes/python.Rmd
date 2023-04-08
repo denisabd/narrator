@@ -21,6 +21,7 @@ Basic narrative type is descriptive stats, looking into outliers or biggest cont
 
 ```{r setup, include=FALSE}
 library(narrator)
+library(reticulate)
 
 sales <- narrator::sales
 ```

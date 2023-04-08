@@ -38,6 +38,7 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
+    reticulate,
     echarts4r,
     jsonlite,
     httr,
