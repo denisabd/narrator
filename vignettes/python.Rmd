@@ -38,7 +38,7 @@ sales <- narrator::sales
 
 To use the Python version of the package install `pynarrator` from pip:
 
-```{bash eval=FALSE}
+```{bash}
 pip3 install pynarrator
 ```
 
