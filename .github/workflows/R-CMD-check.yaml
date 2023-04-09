@@ -51,7 +51,8 @@ jobs:
       - name: Setup r-reticulate env
         run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
         shell: Rscript {0}
-        run: reticulate::virtualenv_install("r-reticulate", "pynarrator")
+
+      - run: reticulate::virtualenv_install("r-reticulate", "pynarrator")
 
       - uses: r-lib/actions/check-r-package@v2
         with:
