@@ -36,11 +36,11 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.9'
-      - run: pip install pynarrator
 
       - name: Setup r-reticulate env
         run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
         shell: Rscript {0}
+        run: reticulate::virtualenv_install("r-reticulate", "pynarrator")
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
