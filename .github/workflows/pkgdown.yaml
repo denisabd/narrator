@@ -33,11 +33,13 @@ jobs:
           extra-packages: any::pkgdown, any::echarts4r, any::reticulate, local::.
           needs: website
 
-      - name: Install Miniconda
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Setup r-reticulate env
+        run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
         shell: Rscript {0}
-        run: |
-          reticulate::install_miniconda()
-          reticulate::py_install("pynarrator", pip = TRUE)
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)

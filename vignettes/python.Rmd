@@ -23,9 +23,16 @@ Basic narrative type is descriptive stats, looking into outliers or biggest cont
 library(narrator)
 library(reticulate)
 
+#reticulate::virtualenv_create("narrator")
+#python <- "~/.virtualenvs/narrator/bin/python"
+
+#if (file.exists(python)) use_python(python, required = TRUE)
+#reticulate::virtualenv_install(envname = "narrator", packages = "pynarrator")
+
+py_install("pynarrator")
+
 sales <- narrator::sales
 ```
-
 
 ## Installation
 
