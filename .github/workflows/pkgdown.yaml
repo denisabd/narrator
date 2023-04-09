@@ -24,21 +24,23 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          cache: 'pip'
-
-      - run: pip install pynarrator
-
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, any::echarts4r, local::.
+          extra-packages: any::pkgdown, any::echarts4r, any::reticulate, local::.
           needs: website
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - run: pip install pynarrator
+
+      - name: Setup r-reticulate env
+        run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
+        shell: Rscript {0}
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
