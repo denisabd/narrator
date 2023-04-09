@@ -37,6 +37,9 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Install pynarrator
+        run: pip install pynarrator
+
       - name: Setup r-reticulate env
         run: reticulate::virtualenv_create("r-reticulate", Sys.which("python"))
         shell: Rscript {0}
