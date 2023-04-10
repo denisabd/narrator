@@ -37,6 +37,10 @@ To use the Python version of the package install `pynarrator` from pip:
 pip3 install pynarrator
 ```
 
+```{bash include=FALSE}
+pip3 install pynarrator
+```
+
 ```{python}
 import os
 from pynarrator import narrate_descriptive, read_data
