@@ -37,6 +37,9 @@ jobs:
         with:
           python-version: "3.8"
 
+      - name: install pynarrator
+        run: pip3 install pynarrator
+
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
