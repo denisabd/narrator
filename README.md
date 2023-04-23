@@ -5,12 +5,14 @@
 
 <!-- badges: start -->
 
-\[![CRAN status](https://www.r-pkg.org/badges/version/narrator)\]
-<!-- (https://CRAN.R-project.org/package=narrator) --> [![Codecov test
+[![CRAN
+status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
+[![Codecov test
 coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
 [![R-CMD-check](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+
 <!-- badges: end -->
 
 Template-based NLG framework for creating text narratives out of data
@@ -133,28 +135,30 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-The overall total sales figure for all regions is an impressive
-38790478.4. Notably, two outlying regions showcased exceptional sales
-performance. The North American region accounted for a massive 46.6% of
-total sales, which amounted to 18079736.4. Meanwhile, the EMEA region
-contributed significantly with a 34.9% stake in total sales, which
-amounted to 13555412.7.
+The company has achieved a remarkable Total Sales figure of 38790478.4
+across all Regions. Upon further analysis, it is evident that the
+Outlying Regions, such as NA and EMEA, have contributed significantly to
+this commendable feat. NA has recorded an impressive figure of
+18079736.4, which accounts for 46.6% of the overall sales, whereas EMEA
+has recorded 13555412.7, which is 34.9% of the total sales.
 
-It is also worth noting that within the North American region, products
-in the food and beverage category garnered the highest sales, amounting
-to 7392821, which accounted for 40.9% of total sales. Electronics came
-in second with sales of 3789132.7, which accounted for 21% of the total
-sales.
+Upon examination of the NA market, it is observed that Food & Beverage
+has emerged as the leading product category, accounting for a
+substantial figure of 7392821, which is 40.9% of the sales. Furthermore,
+Electronics follows suit, with an impressive contribution of 3789132.7,
+which is 21% of the total sales.
 
-Similarly, in the EMEA region, the food and beverage category also
-dominated sales, amounting to 5265113.2, which accounted for 38.8% of
-total sales. Electronics followed closely behind with sales of
-3182803.4, which accounted for 23.5% of total sales.
+Similarly, the EMEA market depicts Food & Beverage as the dominant
+player in terms of sales figures, accounting for a whopping 5265113.2,
+which constitutes 38.8% of the total sales. Electronics comes in a close
+second, contributing 3182803.4, which is 23.5% of the sales.
 
-Overall, outlying products in the food and beverage category registered
-the highest sales volume at 15543469.7, which accounted for 40.1% of
-total sales. Electronics products followed closely behind with sales of
-8608962.8, which accounted for 22.2% of total sales.
+Additionally, Food & Beverage emerges as the major contributor to
+Outlying Products by Sales, with a massive figure of 15543469.7, which
+accounts for a significant 40.1% of the overall sales. Electronics
+follows suit, contributing 8608962.8, which is 22.2% of the total sales.
+These numbers highlight the significance of these products in the
+overall success of the company’s sales figures.
 
 ### Translation
 
@@ -166,26 +170,28 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
-Celkový prodej všech regionů je impozantních 38790478,4. Výjimečný
-prodej zaznamenaly dvě okrajové oblasti. Severoamerický region měl
-obrovský podíl na celkovém prodeji, a to 46,6%, což představuje
-18079736,4. Zatímco region EMEA významně přispěl s podílem 34,9% na
-celkovém prodeji, což činí 13555412,7.
+Společnost dosáhla pozoruhodného celkového tržby ve výši 38790478,4
+všech regionů. Z další analýzy je jasné, že odlehlé regiony, jako jsou
+NA a EMEA, významně přispěly k tomuto pochvalnému úspěchu. NA
+zaznamenala skvělou částku 18079736,4, což představuje 46,6 % celkových
+prodejů, zatímco EMEA zapsala 13555412,7, což znamená 34,9 % celkových
+prodejů.
 
-Stojí za zmínku, že v rámci Severoamerického regionu měly produkty v
-kategorii potravin a nápojů nejvyšší prodeje, a to ve výši 7392821, což
-představuje 40,9% celkových prodejů. Elektro zařízení byla na druhém
-místě s prodejem 3789132,7, což znamená 21% celkových prodejů.
+Při zkoumání NA trhu je pozorováno, že potraviny a nápoje se staly
+vedoucí kategorií produktů, představující podstatnou částku 7392821, což
+je 40,9 % prodejů. Elektronika následuje, s impozantním přínosem
+3789132,7, což je 21 % celkových prodejů.
 
-Podobně v regionu EMEA také kategorie potravin a nápojů dominovala
-prodejům, a to ve výši 5265113,2, což je 38,8% celkových prodejů.
-Elektro zařízení následovala těsně za prodejem 3182803,4, což
-představuje 23,5% celkových prodejů.
+Podobně se na trhu EMEA ukazuje, že potraviny a nápoje jsou dominantním
+hráčem z hlediska prodejních čísel, představující ohromující 5265113,2,
+což představuje 38,8 % celkových prodejů. Elektronika následuje těsně za
+ní, přispívající 3182803,4, což je 23,5 % prodejů.
 
-Celkově gledá, zboží v kategorii potravin a nápojů mělo nejvyšší
-prodejní objem 15543469,7, což tvoří 40,1% celkových prodejů. Elektro
-zařízení následovala těsně za s prodejem 8608962,8, což představuje
-22,2% celkových prodejů.
+Dodatečně se potraviny a nápoje stávají hlavním přispěvatelem k prodejům
+odlehlých produktů, s obrovskou částkou 15543469,7, což představuje
+významných 40,1 % celkových prodejů. Elektronika následuje s přínosem
+8608962,8, což je 22,2 % celkových prodejů. Tyto čísla zdůrazňují význam
+těchto produktů v celkovém úspěchu prodejů společnosti.
 
 ### Summarization
 
@@ -197,12 +203,12 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-Total sales were impressive at 38790478.4. North America and EMEA
-notably had exceptional sales performances, accounting for 46.6% and
-34.9% of sales respectively. In North America, food and beverage
-products had the highest sales, while in EMEA, food and beverage
-products also dominated sales. Food and beverage products overall had
-the highest sales volume.
+The company achieved total sales of \$38,790,478.4 with contributions
+from NA and EMEA regions. Food & Beverage dominated both markets with
+highest sales figures, totaling \$15,543,469.7 and \$5,265,113.2,
+respectively. Electronics followed with \$8,608,962.8 and \$3,182,803.4
+in sales. These products are significant for the company’s overall sales
+success.
 
 # Python
 

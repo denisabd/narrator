@@ -5,9 +5,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Template-based NLG system that converts a data frame to text. 
+<meta name="description" content='Template-based natural language generation system that converts a data frame to text.
     Different narrative types are available depending on the data frame structure.
-    Templates are built with the glue package.">
+    Narrative outputs can be further improved, translated or summarized using "ChatGPT".'>
 <title>Create Natural Language Text Narratives from the Data • narrator</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
@@ -17,9 +17,9 @@
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Create Natural Language Text Narratives from the Data">
-<meta property="og:description" content="Template-based NLG system that converts a data frame to text. 
+<meta property="og:description" content='Template-based natural language generation system that converts a data frame to text.
     Different narrative types are available depending on the data frame structure.
-    Templates are built with the glue package.">
+    Narrative outputs can be further improved, translated or summarized using "ChatGPT".'>
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -83,6 +83,7 @@
 </h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>Template-based NLG framework for creating text narratives out of data and enhance them using ChatGPT. Demo <a href="https://deny.shinyapps.io/narrator_app/" class="external-link">shiny application</a> showing core package capabilities is deployed on shinyapps.io.</p>
 <p>Package is available in both R and Python, with all core features and even syntax being the same or similar. Corresponding classes and data types are used in both languages:</p>
 <ul>
@@ -171,10 +172,10 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">narrative_enhanced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/enhance_narrative.html">enhance_narrative</a></span><span class="op">(</span><span class="va">narrative_one</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span></code></pre></div>
-<p>The overall total sales figure for all regions is an impressive 38790478.4. Notably, two outlying regions showcased exceptional sales performance. The North American region accounted for a massive 46.6% of total sales, which amounted to 18079736.4. Meanwhile, the EMEA region contributed significantly with a 34.9% stake in total sales, which amounted to 13555412.7.</p>
-<p>It is also worth noting that within the North American region, products in the food and beverage category garnered the highest sales, amounting to 7392821, which accounted for 40.9% of total sales. Electronics came in second with sales of 3789132.7, which accounted for 21% of the total sales.</p>
-<p>Similarly, in the EMEA region, the food and beverage category also dominated sales, amounting to 5265113.2, which accounted for 38.8% of total sales. Electronics followed closely behind with sales of 3182803.4, which accounted for 23.5% of total sales.</p>
-<p>Overall, outlying products in the food and beverage category registered the highest sales volume at 15543469.7, which accounted for 40.1% of total sales. Electronics products followed closely behind with sales of 8608962.8, which accounted for 22.2% of total sales.</p>
+<p>The company has achieved a remarkable Total Sales figure of 38790478.4 across all Regions. Upon further analysis, it is evident that the Outlying Regions, such as NA and EMEA, have contributed significantly to this commendable feat. NA has recorded an impressive figure of 18079736.4, which accounts for 46.6% of the overall sales, whereas EMEA has recorded 13555412.7, which is 34.9% of the total sales.</p>
+<p>Upon examination of the NA market, it is observed that Food &amp; Beverage has emerged as the leading product category, accounting for a substantial figure of 7392821, which is 40.9% of the sales. Furthermore, Electronics follows suit, with an impressive contribution of 3789132.7, which is 21% of the total sales.</p>
+<p>Similarly, the EMEA market depicts Food &amp; Beverage as the dominant player in terms of sales figures, accounting for a whopping 5265113.2, which constitutes 38.8% of the total sales. Electronics comes in a close second, contributing 3182803.4, which is 23.5% of the sales.</p>
+<p>Additionally, Food &amp; Beverage emerges as the major contributor to Outlying Products by Sales, with a massive figure of 15543469.7, which accounts for a significant 40.1% of the overall sales. Electronics follows suit, contributing 8608962.8, which is 22.2% of the total sales. These numbers highlight the significance of these products in the overall success of the company’s sales figures.</p>
 <div class="section level3">
 <h3 id="translation">Translation<a class="anchor" aria-label="anchor" href="#translation"></a>
 </h3>
@@ -182,10 +183,10 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">translation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/translate_narrative.html">translate_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span>, language <span class="op">=</span> <span class="st">"Czech"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">translation</span><span class="op">)</span></span></code></pre></div>
-<p>Celkový prodej všech regionů je impozantních 38790478,4. Výjimečný prodej zaznamenaly dvě okrajové oblasti. Severoamerický region měl obrovský podíl na celkovém prodeji, a to 46,6%, což představuje 18079736,4. Zatímco region EMEA významně přispěl s podílem 34,9% na celkovém prodeji, což činí 13555412,7.</p>
-<p>Stojí za zmínku, že v rámci Severoamerického regionu měly produkty v kategorii potravin a nápojů nejvyšší prodeje, a to ve výši 7392821, což představuje 40,9% celkových prodejů. Elektro zařízení byla na druhém místě s prodejem 3789132,7, což znamená 21% celkových prodejů.</p>
-<p>Podobně v regionu EMEA také kategorie potravin a nápojů dominovala prodejům, a to ve výši 5265113,2, což je 38,8% celkových prodejů. Elektro zařízení následovala těsně za prodejem 3182803,4, což představuje 23,5% celkových prodejů.</p>
-<p>Celkově gledá, zboží v kategorii potravin a nápojů mělo nejvyšší prodejní objem 15543469,7, což tvoří 40,1% celkových prodejů. Elektro zařízení následovala těsně za s prodejem 8608962,8, což představuje 22,2% celkových prodejů.</p>
+<p>Společnost dosáhla pozoruhodného celkového tržby ve výši 38790478,4 všech regionů. Z další analýzy je jasné, že odlehlé regiony, jako jsou NA a EMEA, významně přispěly k tomuto pochvalnému úspěchu. NA zaznamenala skvělou částku 18079736,4, což představuje 46,6 % celkových prodejů, zatímco EMEA zapsala 13555412,7, což znamená 34,9 % celkových prodejů.</p>
+<p>Při zkoumání NA trhu je pozorováno, že potraviny a nápoje se staly vedoucí kategorií produktů, představující podstatnou částku 7392821, což je 40,9 % prodejů. Elektronika následuje, s impozantním přínosem 3789132,7, což je 21 % celkových prodejů.</p>
+<p>Podobně se na trhu EMEA ukazuje, že potraviny a nápoje jsou dominantním hráčem z hlediska prodejních čísel, představující ohromující 5265113,2, což představuje 38,8 % celkových prodejů. Elektronika následuje těsně za ní, přispívající 3182803,4, což je 23,5 % prodejů.</p>
+<p>Dodatečně se potraviny a nápoje stávají hlavním přispěvatelem k prodejům odlehlých produktů, s obrovskou částkou 15543469,7, což představuje významných 40,1 % celkových prodejů. Elektronika následuje s přínosem 8608962,8, což je 22,2 % celkových prodejů. Tyto čísla zdůrazňují význam těchto produktů v celkovém úspěchu prodejů společnosti.</p>
 </div>
 <div class="section level3">
 <h3 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
@@ -194,7 +195,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summarization</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarize_narrative.html">summarize_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">summarization</span><span class="op">)</span></span></code></pre></div>
-<p>Total sales were impressive at 38790478.4. North America and EMEA notably had exceptional sales performances, accounting for 46.6% and 34.9% of sales respectively. In North America, food and beverage products had the highest sales, while in EMEA, food and beverage products also dominated sales. Food and beverage products overall had the highest sales volume.</p>
+<p>The company achieved total sales of $38,790,478.4 with contributions from NA and EMEA regions. Food &amp; Beverage dominated both markets with highest sales figures, totaling $15,543,469.7 and $5,265,113.2, respectively. Electronics followed with $8,608,962.8 and $3,182,803.4 in sales. These products are significant for the company’s overall sales success.</p>
 </div>
 </div>
 </div>
@@ -274,16 +275,17 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Denis Abdullin <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
+<li>Denis Abdullin <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=narrator" class="external-link"><img src="https://www.r-pkg.org/badges/version/narrator" alt="CRAN status"></a></li>
 <li><a href="https://app.codecov.io/gh/denisabd/narrator?branch=main" class="external-link"><img src="https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-green.svg" alt="Lifecycle: stable"></a></li>
 </ul>
 </div>
 
