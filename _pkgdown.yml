@@ -56,12 +56,6 @@ reference:
 
 articles:
 
-- title: Python
-  desc: Using pynarrator with Python
-  navbar: ~
-  contents:
-  - python
-
 - title: Narratives
   desc: Different types of textual narratives
   navbar: ~

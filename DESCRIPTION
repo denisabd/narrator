@@ -1,6 +1,6 @@
 Package: narrator
 Title: Create Natural Language Text Narratives from the Data
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person(
         given = "Denis", 
@@ -8,9 +8,9 @@ Authors@R:
         email = "denisabdullincz@gmail.com", 
         role = c("aut", "cre")
         )
-Description: Template-based NLG system that converts a data frame to text. 
+Description: Template-based natural language generation system that converts a data frame to text.
     Different narrative types are available depending on the data frame structure.
-    Templates are built with the 'glue' package.
+    Narrative outputs can be further improved, translated or summarized using "ChatGPT".
 License: MIT + file LICENSE
 URL: https://denisabd.github.io/narrator/
 BugReports: https://github.com/denisabd/narrator/issues/

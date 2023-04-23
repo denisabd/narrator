@@ -6,12 +6,15 @@
 \usage{
 translate_narrative(
   narrative,
+  prompt = "Using professional language translate the following text to",
   language,
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }
 \arguments{
 \item{narrative}{List of narratives returned by narrate_* function, character vector or string that will be enhanced by ChatGPT}
+
+\item{prompt}{Prompt to send to OpenAI API}
 
 \item{language}{Write a language to translate narrative to, please use English here, ex. "Spanish" not "Español"}
 

@@ -2,6 +2,7 @@
 #'
 #' @inheritParams narrate_descriptive
 #' @param narrative List of narratives returned by narrate_* function, character vector or string that will be enhanced by ChatGPT
+#' @param prompt Prompt to send to OpenAI API
 #'
 #' @return [character()] of narratives enhanced by ChatGPT
 #' @export
@@ -18,21 +19,19 @@
 #' }
 enhance_narrative <- function(
     narrative,
+    prompt = "Improve the narrative by adding better business language for the following:",
     openai_api_key = Sys.getenv("OPENAI_API_KEY")
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
 
-  if (class(narrative) == "list") {
+  if ("list" %in% class(narrative)) {
     narrative <- as.character(narrative)
   }
 
   narrative <- paste(narrative, collapse = " ")
 
-  output <- paste0(
-    'Improve the narrative by adding better business language for the following: "',
-    narrative
-  ) %>%
+  output <- paste0(prompt, narrative) %>%
     gpt_get_completions(openai_api_key = openai_api_key) %>%
     parse_response()
 
@@ -60,24 +59,20 @@ enhance_narrative <- function(
 #' }
 translate_narrative <- function(
     narrative,
+    prompt = "Using professional language translate the following text to",
     language,
     openai_api_key = Sys.getenv("OPENAI_API_KEY")
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
 
-  if (class(narrative) == "list") {
+  if ("list" %in% class(narrative)) {
     narrative <- as.character(narrative)
   }
 
   narrative <- paste(narrative, collapse = " ")
 
-  output <- paste0(
-    'Using professional language translate the following text to ',
-    language,
-    ': "',
-    narrative
-  ) %>%
+  output <- paste(prompt, language, ':', narrative) %>%
     gpt_get_completions(openai_api_key = openai_api_key) %>%
     parse_response()
 
@@ -104,19 +99,20 @@ translate_narrative <- function(
 #' }
 summarize_narrative <- function(
     narrative,
+    prompt = "Summarize the following narrative to make it shorter:",
     openai_api_key = Sys.getenv("OPENAI_API_KEY")
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
 
-  if (class(narrative) == "list") {
+  if ("list" %in% class(narrative)) {
     narrative <- as.character(narrative)
   }
 
   narrative <- paste(narrative, collapse = " ")
 
   output <- paste0(
-    'Summarize the following narrative to make it shorter: "',
+    prompt,
     narrative
   ) %>%
     gpt_get_completions(openai_api_key = openai_api_key) %>%

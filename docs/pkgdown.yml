@@ -5,10 +5,9 @@ articles:
   descriptive: descriptive.html
   echarts: echarts.html
   formatting: formatting.html
-  python: python.html
   templates: templates.html
   trend: trend.html
-last_built: 2023-04-10T07:26Z
+last_built: 2023-04-23T09:31Z
 urls:
   reference: https://denisabd.github.io/narrator/reference
   article: https://denisabd.github.io/narrator/articles

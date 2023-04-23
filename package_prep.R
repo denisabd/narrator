@@ -38,6 +38,12 @@ covr::report()
 # release -----------------------------------------------------------------
 usethis::use_release_issue()
 
+devtools::build_readme()
+urlchecker::url_check()
+devtools::check(remote = TRUE, manual = TRUE)
+devtools::check_win_devel()
+rhub::check_for_cran()
+
 # licence -----------------------------------------------------------------
 usethis::use_mit_license("Denis Abdullin")
 

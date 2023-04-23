@@ -1,3 +1,6 @@
-# narrator 0.0.1
+# narrator 0.1.0
 
-* Initial package release
+* CRAN Release
+* Core functions for narrative creation: `narrate_descriptive()`, `narrate_trend()`
+* Output formatting functions for rendering in HTML for Rmarkdown and shiny
+* OpenAI API, ChatGPT is accessible for improving, translating or summarizing narratives

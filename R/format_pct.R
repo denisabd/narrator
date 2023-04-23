@@ -47,7 +47,7 @@ format_pct <- function(text,
       suppressWarnings()
   }
 
-  if (class(text) == "list") {
+  if ("list" %in% class(text)) {
     text_output <- text %>%
       lapply(clean_text)
   } else {

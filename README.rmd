@@ -23,13 +23,12 @@ sales <- narrator::sales
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
+status](https://www.r-pkg.org/badges/version/narrator)]
+<!-- (https://CRAN.R-project.org/package=narrator) -->
 [![Codecov test
 coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
 [![R-CMD-check](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 Template-based NLG framework for creating text narratives out of data
@@ -39,7 +38,7 @@ package capabilities is deployed on shinyapps.io.
 
 Package is available in both R and Python, with all core features and even syntax being the same or similar. Corresponding classes and data types are used in both languages:
 
-- data.frame vs pandas dataframe
+- data.frame vs pandas data frame
 - list vs dictionary
 - character vector vs list
 
@@ -53,12 +52,7 @@ knitr::opts_chunk$set(
 library(reticulate)
 ```
 
-## Installation
-
-For Python install `pynarrator` from pip:
-```{bash, eval=FALSE}
-pip3 install pynarrator
-```
+# Installation
 
 For R you can install the development version of narrator from
 [GitHub](https://github.com/) with:
@@ -68,13 +62,19 @@ For R you can install the development version of narrator from
 devtools::install_github("denisabd/narrator")
 ```
 
+For Python install `pynarrator` from pip:
+
+```{bash, eval=FALSE}
+pip3 install pynarrator
+```
+
+# R
+
 ## Basic Use Cases
 
 Simple tables with one or more categorical columns (dimensions) and one
 measure can be transformed to text using `narrate_descriptive()`
 function.
-
-### R
 
 ```{r message=FALSE, warning=FALSE}
 library(narrator)
@@ -91,45 +91,18 @@ narrative_one <- sales %>%
 narrative_one
 ```
 
-### Python
-```{python}
-import os
-from pynarrator import narrate_descriptive, read_data
-import pprint
-```
+You can analyze changes over time using `narrate_trend()` function:
 
-```{python eval=FALSE}
-sales = read_data()
-```
-
-```{python include=FALSE}
-sales = r.sales
-```
-
-```{python}
-narrative_one = narrate_descriptive(
-  df = sales, 
-  measure = 'Sales', 
-  dimensions = ['Region', 'Product'], 
-  return_data = False, 
-  coverage = 0.5
+```{r}
+narrative_two <- sales %>%
+  narrate_trend(
+    measure = "Sales",
+    date = "Date",
+    dimensions = c("Region", "Product")
   )
-  
-pprint.pprint(narrative_one)
+
+narrative_two
 ```
-
-<!-- You can analyze changes over time using `narrate_trend()` function: -->
-
-<!-- ```{r} -->
-<!-- narrative_two <- sales %>% -->
-<!--   narrate_trend( -->
-<!--     measure = "Sales", -->
-<!--     date = "Date", -->
-<!--     dimensions = c("Region", "Product") -->
-<!--   ) -->
-
-<!-- narrative_two -->
-<!-- ``` -->
 
 ## ChatGPT
 
@@ -158,10 +131,6 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-Similar in Python
-```{python eval=FALSE}
-narrative_enhanced = enhance_narrative(narrative_one)
-```
 
 ### Translation
 
@@ -170,11 +139,6 @@ Translate you text using `translate_narrative()` function, specify `language` ar
 ```{r results='asis'}
 translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
-```
-
-In Python:
-```{python eval=FALSE}
-translation = translate_narrative(narrative_enhanced, language = "Czech")
 ```
 
 ### Summarization
@@ -186,8 +150,71 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-In Python:
+
+# Python
+
+Here are some basic Python examples, for more details visit [pynarrator github](https://github.com/denisabd/pynarrator) and [pynarrator website](https://denisabd.github.io/pynarrator/)
+
 ```{python eval=FALSE}
-summarization = summarize_narrative(narrative_enhanced)
+import os
+from pynarrator import narrate_descriptive, read_data, enhance_narrative, translate_narrative, summarize_narrative
 ```
 
+```{python eval=FALSE}
+sales = read_data()
+```
+
+By default `narrate_descriptive()` returns a dictionary of narratives with names.
+```{python eval=FALSE}
+narrate_descriptive(
+  df = sales, 
+  measure = 'Sales', 
+  dimensions = ['Region', 'Product'], 
+  return_data = False, 
+  coverage = 0.5
+  )
+```
+
+When `simplify = True` the output is a list:
+```{python eval=FALSE}
+narrate_descriptive(
+  df = sales, 
+  measure = 'Sales', 
+  dimensions = 'Region', 
+  return_data = False, 
+  simplify = True,
+  coverage = 0.5
+  )
+```
+
+```{python eval=FALSE}
+narrative_two = narrate_descriptive(
+  df = sales, 
+  measure = 'Sales', 
+  dimensions = 'Region', 
+  return_data = False, 
+  simplify = True,
+  coverage = 0.5
+  )
+  
+pprint.pprint(narrative_two)
+```
+
+When `return_data=True` we get a list of variables calculated inside of the function:
+```{python eval=FALSE}
+narrate_descriptive(
+  df = sales, 
+  measure = 'Sales', 
+  dimensions = ['Region', 'Product'], 
+  return_data = True, 
+  simplify = True,
+  coverage = 0.5
+  )
+```
+
+As all other functions, Chat GPT related calls are to similar to those in R
+```{python eval=FALSE}
+narrative_enhanced = enhance_narrative(narrative_one)
+translation = translate_narrative(narrative_enhanced, language = "Czech")
+summarization = summarize_narrative(narrative_enhanced)
+```

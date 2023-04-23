@@ -4,10 +4,16 @@
 \alias{enhance_narrative}
 \title{Enhance the narrative output with ChatGPT}
 \usage{
-enhance_narrative(narrative, openai_api_key = Sys.getenv("OPENAI_API_KEY"))
+enhance_narrative(
+  narrative,
+  prompt = "Improve the narrative by adding better business language for the following:",
+  openai_api_key = Sys.getenv("OPENAI_API_KEY")
+)
 }
 \arguments{
 \item{narrative}{List of narratives returned by narrate_* function, character vector or string that will be enhanced by ChatGPT}
+
+\item{prompt}{Prompt to send to OpenAI API}
 
 \item{openai_api_key}{Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with \code{Sys.getenv("OPENAI_API_KEY")}}
 }
