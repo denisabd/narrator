@@ -171,7 +171,7 @@ narrate_forecast <- function(
 
   # Current Year
   max_actuals_date <- df %>%
-    dplyr::filter(!is.na(Actuals)) %>%
+    dplyr::filter(!is.na(base::get(actuals))) %>%
     dplyr::select(dplyr::all_of(date)) %>%
     as.matrix() %>%
     as.Date() %>%
@@ -199,23 +199,27 @@ narrate_forecast <- function(
 
   cy_forecast <- df %>%
     dplyr::filter(lubridate::year(base::get(date)) == current_year) %>%
-    dplyr::mutate(Forecast = ifelse(is.na(Actuals), Forecast, Actuals)) %>%
-    dplyr::summarise(Forecast = sum(Forecast, na.rm = TRUE)) %>%
+    dplyr::mutate(!!forecast := ifelse(is.na(base::get(actuals)), base::get(forecast), base::get(actuals))) %>%
+    dplyr::summarise(!!forecast := sum(base::get(forecast), na.rm = TRUE)) %>%
     as.numeric() %>%
-    round()
+    round(2)
 
-  narrative_cy <- glue::glue(template_cy, ...)
+  narrative_cy <- glue::glue(template_cy)
 
   narrative <- list(narrative_cy) %>%
     rlang::set_names("Current Year Actuals")
 
   variables <- list(
-    template_cy = narrative_cy,
-    current_year = current_year,
-    max_actuals_date = max_actuals_date,
-    max_forecast_date = max_forecast_date,
-    frequency = frequency,
-    cy_forecast = cy_forecast)
+    list(
+      template_cy = narrative_cy,
+      current_year = current_year,
+      max_actuals_date = max_actuals_date,
+      max_forecast_date = max_forecast_date,
+      frequency = frequency,
+      cy_forecast = cy_forecast
+    )
+  ) %>%
+    rlang::set_names("Current Year Actuals")
 
   # Next 12 months
   # In case we have at least one year of forecast values narrate FTM
@@ -224,46 +228,88 @@ narrate_forecast <- function(
     ftm_forecast <- df %>%
       dplyr::filter(base::get(date) > max_actuals_date,
                     base::get(date) <= max_actuals_date + months(12)) %>%
-      dplyr::summarise(Forecast = sum(Forecast, na.rm = TRUE)) %>%
+      dplyr::summarise(!!forecast := sum(base::get(forecast), na.rm = TRUE)) %>%
       as.numeric() %>%
-      round()
+      round(2)
 
-    narrative_ftm <- glue::glue(template_ftm, ...)
+    narrative_ftm <- glue::glue(template_ftm)
 
     narrative <- list(narrative_ftm) %>%
-      rlang::set_names(glue::glue("Overall {forecast} in the next 12 months")) %>%
+      rlang::set_names("12 Month Projection") %>%
       append(narrative, after = 0)
 
-    variables <- append(variables, list(narrative_ftm = narrative_ftm), 1)
-    variables <- append(variables, list(template_ftm = template_ftm), 1)
-    variables <- append(variables, list(ftm_forecast = ftm_forecast))
+    variables_ftm <- list(
+      list(
+        narrative_ftm = narrative_ftm,
+        template_ftm = template_ftm,
+        ftm_forecast = ftm_forecast
+      )
+    ) %>%
+      rlang::set_names("12 Month Projection")
+
+    variables <- append(variables, variables_ftm)
 
     if (!is.null(template_ftm_change)) {
       ltm_actuals <- df %>%
-        dplyr::filter(!is.na(Actuals),
+        dplyr::filter(!is.na(base::get(actuals)),
                       base::get(date) > max_actuals_date - months(12)) %>%
-        dplyr::summarise(Forecast = sum(Forecast, na.rm = TRUE)) %>%
+        dplyr::summarise(!!forecast := sum(base::get(actuals), na.rm = TRUE)) %>%
         as.numeric() %>%
-        round()
+        round(2)
 
       trend <- ifelse(ftm_forecast > ltm_actuals, "increase", "decrease")
       ftm_change <- ftm_forecast - ltm_actuals
-      ftm_change_p <- round(ftm_change/ltm_actuals*100, 1)
+      ftm_change_p <- round(ftm_change/ltm_actuals*100, 2)
 
-      narrative_ftm_change <- glue::glue(template_ftm_change, ...)
+      narrative_ftm_change <- glue::glue(template_ftm_change)
 
       narrative <- list(narrative_ftm_change) %>%
         rlang::set_names(glue::glue("Overall {trend} the next 12 months")) %>%
         append(narrative, after = 0)
 
-      variables <- append(variables, list(narrative_ftm_change = narrative_ftm_change), 1)
-      variables <- append(variables, list(template_ftm_change = template_ftm_change), 1)
-      variables <- append(variables,
-                          list(trend = trend,
-                               ltm_actuals = ltm_actuals)
-      )
+      variables_ftm_change <- list(
+        list(
+          narrative_ftm_change = narrative_ftm_change,
+          template_ftm_change = template_ftm_change,
+          trend = trend,
+          ltm_actuals = ltm_actuals
+        )
+      ) %>%
+        rlang::set_names(glue::glue("Overall {trend} the next 12 months"))
+
+      variables <- append(variables, variables_ftm_change)
     }
   }
+
+  # Trend -------------------------------------------------------------------
+  trend_df <- df %>%
+    dplyr::mutate(!!forecast := ifelse(
+      !is.na(base::get(actuals)),
+      base::get(actuals),
+      base::get(forecast)
+    )
+    ) %>%
+    dplyr::select(-dplyr::all_of(actuals))
+
+  trend_narrative <- trend_df %>%
+    narrator::narrate_trend(
+      type = "yoy",
+      coverage = coverage,
+      coverage_limit = coverage_limit,
+      narration_depth = narration_depth
+    )
+
+  variables_trend <- trend_df %>%
+    narrator::narrate_trend(
+      type = "yoy",
+      coverage = coverage,
+      coverage_limit = coverage_limit,
+      narration_depth = narration_depth,
+      return_data = TRUE
+    )
+
+  narrative <- append(narrative, trend_narrative)
+  variables <- append(variables, variables_trend)
 
   # ChatGPT -----------------------------------------------------------------
   if (use_chatgpt) {

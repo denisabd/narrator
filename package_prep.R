@@ -17,7 +17,7 @@ devtools::install(upgrade = "never", build_vignettes = TRUE)
 
 # website -----------------------------------------------------------------
 devtools::build_readme()
-pkgdown::build_site(lazy = TRUE, new_process = TRUE)
+pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 
 # github actions
 # Run once

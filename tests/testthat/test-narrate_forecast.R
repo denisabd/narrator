@@ -22,36 +22,34 @@ test_that("narrate_forecast() works", {
     dplyr::select(-data) %>%
     tidyr::unnest(forecast) %>%
     dplyr::select(ds, yhat) %>%
-    dplyr::left_join(actuals) %>%
-    dplyr::rename(Actuals = y,
-                  Forecast = yhat)
+    dplyr::left_join(actuals)
 
-  expect_no_error(narrate_forecast(df))
-  expect_no_error(narrate_forecast(df))
-  expect_type(narrate_forecast(df), "list")
-  expect_type(narrate_forecast(df), "list")
-  expect_type(narrate_forecast(df, return_data = TRUE), "list")
-  expect_type(narrate_forecast(df, simplify = TRUE), "character")
-  expect_error(narrate_forecast(df, actuals = "y", forecast = "yhat"))
-  expect_error(narrate_forecast(df, coverage_limit = 0))
-  expect_error(narrate_forecast(df, coverage_limit = 1.5))
+  expect_no_error(narrate_forecast(df, actuals = "y", forecast = "yhat"))
+  expect_no_error(narrate_forecast(df, actuals = "y", forecast = "yhat"))
+  expect_type(narrate_forecast(df, actuals = "y", forecast = "yhat"), "list")
+  expect_type(narrate_forecast(df, actuals = "y", forecast = "yhat"), "list")
+  expect_type(narrate_forecast(df, actuals = "y", forecast = "yhat", return_data = TRUE), "list")
+  expect_type(narrate_forecast(df, actuals = "y", forecast = "yhat", simplify = TRUE), "character")
+  expect_error(narrate_forecast(df, actuals = "Acts", forecast = "Fct"))
+  expect_error(narrate_forecast(df, actuals = "y", forecast = "yhat", coverage_limit = 0))
+  expect_error(narrate_forecast(df, actuals = "y", forecast = "yhat", coverage_limit = 1.5))
 
   expect_error({
     df %>%
       dplyr::select(-ds) %>%
-      narrate_forecast()
+      narrate_forecast(actuals = "y", forecast = "yhat")
   })
 
   expect_error({
     df %>%
-      dplyr::select(-Actuals) %>%
-      narrate_forecast()
+      dplyr::select(-y) %>%
+      narrate_forecast(actuals = "y", forecast = "yhat")
   })
 
   expect_error({
     df %>%
-      dplyr::select(-Forecast) %>%
-      narrate_forecast()
+      dplyr::select(-yhat) %>%
+      narrate_forecast(actuals = "y", forecast = "yhat")
   })
 })
 
