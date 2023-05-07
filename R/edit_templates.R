@@ -7,14 +7,13 @@ edit_templates <- function() {
   templates <- list_templates() %>%
     dplyr::select(name, type, template)
 
-  # templates %>%
-  #   dplyr::mutate(words = stringr::str_extract_all(
-  #     template,
-  #     "(?<=\\{)[^\\}]+")
-  #   )
-
-  df <- narrator::sales %>%
+  df_descriptive <- narrator::sales %>%
     dplyr::group_by(Region, Product) %>%
+    dplyr::summarise(Sales = sum(Sales))
+
+  df_trend <- narrator::sales %>%
+    dplyr::mutate(Month = lubridate::floor_date(Date, unit = "months")) %>%
+    dplyr::group_by(Region, Product, Month) %>%
     dplyr::summarise(Sales = sum(Sales))
 
   not.null <- function(x) {
@@ -22,12 +21,21 @@ edit_templates <- function() {
     if (!is.null(x)) return(TRUE)
   }
 
-  narrative_output <- df %>%
+  narrative_descriptive <- df_descriptive %>%
     narrate_descriptive(
       return_data = TRUE,
       coverage = 0.4
     )
 
+  narrative_trend <- df_trend %>%
+    narrate_trend(
+      return_data = TRUE,
+      coverage = 0.4
+    )
+
+  narrative_output <- c(narrative_descriptive, narrative_trend)
+
+  # ui ----------------------------------------------------------------------
   ui <- miniUI::miniPage(
     shiny::tags$style(
       type = 'text/css',
@@ -47,22 +55,28 @@ edit_templates <- function() {
         label = "Export",
         class = "btn-warning"),
 
+      h3("Templates"),
       DT::DTOutput("template_table"),
 
+      h3("Updated Narrative"),
       DT::DTOutput("new_table")
     )
   )
 
   server <- function(input, output, session) {
 
-    data <- shiny::reactiveValues(data = templates)
+    rv <- shiny::reactiveValues(
+      data = templates,
+      template_type = NULL
+    )
 
     shiny::observeEvent(input$edit,{
       shiny::showModal(
         if (length(input$template_table_rows_selected) >=1 ) {
 
-          template_name <- toString(data$data[input$template_table_rows_selected, 1])
-          template <- toString(data$data[input$template_table_rows_selected, 3])
+          template_name <- toString(rv$data[input$template_table_rows_selected, 1])
+          rv$template_type <- toString(rv$data[input$template_table_rows_selected, 2])
+          template <- toString(rv$data[input$template_table_rows_selected, 3])
 
           ind <- narrative_output %>%
             purrr::map(template_name) %>%
@@ -85,14 +99,11 @@ edit_templates <- function() {
                 dplyr::mutate(value = as.character(value)) %>%
                 DT::datatable(
                   rownames = FALSE,
-                  #extensions = "Scroller",
                   height = 800,
                   options = list(
                     pageLength = 10,
                     dom = "t",
-                    deferRender = TRUE#,
-                    #scrollY = 200,
-                    #scroller = TRUE
+                    deferRender = TRUE
                   ),
                   class = 'cell-border stripe'
                 )
@@ -117,12 +128,12 @@ edit_templates <- function() {
 
       i <- input$template_table_rows_selected
       template_new <- input$single_template
-      data$data[i, 3] <- template_new
+      rv$data[i, 3] <- template_new
       shiny::removeModal()
     })
 
     shiny::observeEvent(input$export,{
-      output <- data$data %>%
+      output <- rv$data %>%
         dplyr::mutate(result = glue::glue("{type}_{name} = {template}
 
                                           ")) %>%
@@ -146,11 +157,12 @@ edit_templates <- function() {
 
     output$template_table <- DT::renderDataTable({
       DT::datatable(
-        data$data,
+        rv$data,
         rownames = FALSE,
         extensions = "Scroller",
         selection = list(mode = "single"),
         options = list(
+          pageLength = 10,
           dom = "t",
           deferRender = TRUE,
           scrollY = 200,
@@ -161,17 +173,36 @@ edit_templates <- function() {
     })
 
     output$new_table <- DT::renderDataTable({
-      templates_new <- data$data
+      req(rv$template_type)
 
-      do.call(narrator::narrate_descriptive,
-              c(list(df = df), split(templates_new$template, templates_new$name))
+      templates_descriptive <- rv$data %>%
+        dplyr::filter(type == "descriptive")
+
+      templates_trend <- rv$data %>%
+        dplyr::filter(type == "trend")
+
+      templates_new <<- templates_new
+      template_type <<- rv$template_type
+
+      output_descriptive <- do.call(narrator::narrate_descriptive,
+                                    c(list(df = df_descriptive), split(templates_descriptive$template, templates_descriptive$name))
       ) %>%
         tibble::enframe(name = "Name", value = "Narrative") %>%
-        tidyr::unnest(cols = Narrative) %>%
+        tidyr::unnest(cols = Narrative)
+
+      output_trend <- do.call(narrator::narrate_trend,
+                        c(list(df = df_trend), split(templates_trend$template, templates_trend$name))
+      ) %>%
+        tibble::enframe(name = "Name", value = "Narrative") %>%
+        tidyr::unnest(cols = Narrative)
+
+      output_descriptive %>%
+        dplyr::bind_rows(output_trend) %>%
         DT::datatable(
           rownames = FALSE,
           extensions = "Scroller",
           options = list(
+            pageLength = 10,
             dom = "t",
             deferRender = TRUE,
             scrollY = 200,

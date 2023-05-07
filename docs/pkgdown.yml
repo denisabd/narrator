@@ -4,10 +4,11 @@ pkgdown_sha: ~
 articles:
   descriptive: descriptive.html
   echarts: echarts.html
+  forecast: forecast.html
   formatting: formatting.html
   templates: templates.html
   trend: trend.html
-last_built: 2023-04-23T10:16Z
+last_built: 2023-05-07T18:34Z
 urls:
   reference: https://denisabd.github.io/narrator/reference
   article: https://denisabd.github.io/narrator/articles

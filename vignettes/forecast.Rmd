@@ -1,0 +1,75 @@
+---
+title: "Forecast Narratives"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Forecast Narratives}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(narrator)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(knitr)
+library(prophet)
+```
+
+
+## Overall Forecast
+
+If we have a `data.frame` with a time series forecast and actuals in time, use `narrate_forecast()` to create the narrative around overall forecast, anticipated changes in the next time period and current year volumes.
+
+Let's use `prophet` as an example. Notice that we require a data frame here, so if you are using `ts` objects, please make relevant conversions first.
+
+```{r}
+fit_prophet <- function(data) {
+  model <- prophet::prophet(data)
+  future <- prophet::make_future_dataframe(model, periods = 12, freq = "month")
+  forecast <- predict(model, future)
+  return(forecast)
+}
+
+grouped_data <- sales %>%
+  dplyr::mutate(ds = lubridate::floor_date(Date, unit = "month")) %>%
+  dplyr::group_by(Region, ds) %>%
+  dplyr::summarise(y = sum(Sales, na.rm = TRUE)) %>%
+  tidyr::nest()
+
+grouped_data$forecast <- lapply(grouped_data$data, fit_prophet)
+
+actuals <- grouped_data %>%
+  dplyr::select(-forecast) %>%
+  tidyr::unnest(data)
+
+df <- grouped_data %>%
+  dplyr::select(-data) %>%
+  tidyr::unnest(forecast) %>%
+  dplyr::select(ds, yhat) %>%
+  dplyr::left_join(actuals) %>%
+  dplyr::rename(Actuals = y,
+                Forecast = yhat)
+```
+
+
+```{r}
+df %>%
+  head() %>%
+  kable()
+```
+
+Actuals in the most recent year, overall forecast for the next year (if available in forecast data frame) and projected YoY change for next vs last twelve months:
+```{r}
+narrate_forecast(df, forecast = "Forecast", actuals = "Actuals")
+```
+

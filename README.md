@@ -135,30 +135,27 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-The company has achieved a remarkable Total Sales figure of 38790478.4
-across all Regions. Upon further analysis, it is evident that the
-Outlying Regions, such as NA and EMEA, have contributed significantly to
-this commendable feat. NA has recorded an impressive figure of
-18079736.4, which accounts for 46.6% of the overall sales, whereas EMEA
-has recorded 13555412.7, which is 34.9% of the total sales.
+The company’s Total Sales across all Regions have reached a remarkable
+figure of 38790478.4. Outlying Regions by Sales are NA, which has
+generated sales figures of 18079736.4, accounting for 46.6% of the total
+sales. Following closely is EMEA, responsible for sales figures of
+13555412.7, representing 34.9% of the total sales.
 
-Upon examination of the NA market, it is observed that Food & Beverage
-has emerged as the leading product category, accounting for a
-substantial figure of 7392821, which is 40.9% of the sales. Furthermore,
-Electronics follows suit, with an impressive contribution of 3789132.7,
-which is 21% of the total sales.
+Analysing the sales figures for the NA market, we can identify two
+significant products that have achieved excellent results. Food &
+Beverage led the way with an outstanding 7392821 in sales, comprising
+40.9% of the market share. Electronics followed closely with sales
+figures of 3789132.7, accounting for an estimated 21% market share.
 
-Similarly, the EMEA market depicts Food & Beverage as the dominant
-player in terms of sales figures, accounting for a whopping 5265113.2,
-which constitutes 38.8% of the total sales. Electronics comes in a close
-second, contributing 3182803.4, which is 23.5% of the sales.
+In the EMEA market, we also see impressive figures of sales for the Food
+& Beverage sector with 5265113.2 accounting for 38.8% market share, and
+Electronics achieving sales of 3182803.4, accounting for an estimated
+23.5% of the market.
 
-Additionally, Food & Beverage emerges as the major contributor to
-Outlying Products by Sales, with a massive figure of 15543469.7, which
-accounts for a significant 40.1% of the overall sales. Electronics
-follows suit, contributing 8608962.8, which is 22.2% of the total sales.
-These numbers highlight the significance of these products in the
-overall success of the company’s sales figures.
+Combined, Food & Beverage and Electronics products have driven the
+Outlying Products by Sales with notable figures of 15543469.7 and
+8608962.8, which represent 40.1% and 22.2% of the market share,
+respectively.
 
 ### Translation
 
@@ -170,28 +167,26 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
-Společnost dosáhla pozoruhodného celkového tržby ve výši 38790478,4
-všech regionů. Z další analýzy je jasné, že odlehlé regiony, jako jsou
-NA a EMEA, významně přispěly k tomuto pochvalnému úspěchu. NA
-zaznamenala skvělou částku 18079736,4, což představuje 46,6 % celkových
-prodejů, zatímco EMEA zapsala 13555412,7, což znamená 34,9 % celkových
+Celkové Spojené Prodeje Společnosti napříč všemi regiony dosáhly
+pozoruhodné sumy 38790478.4. Regiony nad rámec očekávání jsou Severní
+Amerika (NA), která vygenerovala prodej ve výši 18079736.4, což
+představuje 46,6% celkového prodeje. Těsně na druhém místě je EMEA,
+zodpovědná za prodej ve výši 13555412.7, což odpovídá 34,9% celkových
 prodejů.
 
-Při zkoumání NA trhu je pozorováno, že potraviny a nápoje se staly
-vedoucí kategorií produktů, představující podstatnou částku 7392821, což
-je 40,9 % prodejů. Elektronika následuje, s impozantním přínosem
-3789132,7, což je 21 % celkových prodejů.
+Analýzou prodejů na trhu Severní Ameriky můžeme identifikovat dva
+významné produkty, které dosáhly vynikajících výsledků. Vedením šla
+kategorie Jídla a Nápojů se skvělými prodeji za 7392821, což tvoří 40.9%
+tržního podílu. Elektronika následovala blízko za prodejovými čísly ve
+výši 3789132.7, což odpovídá přibližně 21% tržního podílu.
 
-Podobně se na trhu EMEA ukazuje, že potraviny a nápoje jsou dominantním
-hráčem z hlediska prodejních čísel, představující ohromující 5265113,2,
-což představuje 38,8 % celkových prodejů. Elektronika následuje těsně za
-ní, přispívající 3182803,4, což je 23,5 % prodejů.
+Na trhu EMEA vidíme také impozantní prodejová čísla od kategorie Jídla a
+Nápojů (5265113.2), což tudíž tvoří 38.8% tržního podílu, a Elektronika
+s prodejem ve výši 3182803.4, což představuje 23.5% tržního podílu.
 
-Dodatečně se potraviny a nápoje stávají hlavním přispěvatelem k prodejům
-odlehlých produktů, s obrovskou částkou 15543469,7, což představuje
-významných 40,1 % celkových prodejů. Elektronika následuje s přínosem
-8608962,8, což je 22,2 % celkových prodejů. Tyto čísla zdůrazňují význam
-těchto produktů v celkovém úspěchu prodejů společnosti.
+Celkově kategorie Jídla a Nápojů a Elektronika pohánějí Outlying
+Produkty s významnými čísly ve výši 15543469.7 a 8608962.8, což odpovídá
+40.1% a 22.2% tržního podílu.
 
 ### Summarization
 
@@ -203,12 +198,12 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-The company achieved total sales of \$38,790,478.4 with contributions
-from NA and EMEA regions. Food & Beverage dominated both markets with
-highest sales figures, totaling \$15,543,469.7 and \$5,265,113.2,
-respectively. Electronics followed with \$8,608,962.8 and \$3,182,803.4
-in sales. These products are significant for the company’s overall sales
-success.
+Total Sales of 38790478.4 have been achieved by the company across all
+regions. NA and EMEA are the top regions with sales figures of
+18079736.4 and 13555412.7, respectively. Food & Beverage and Electronics
+are the leading products, with impressive sales figures in both regions
+driving the market share. They account for 40.1% and 22.2% of the market
+share respectively, combining to contribute to the overall success.
 
 # Python
 
