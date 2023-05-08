@@ -65,8 +65,6 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">narrate_forecast</span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
-<span>  measure <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  dimensions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  date <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  frequency <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  summarization <span class="op">=</span> <span class="st">"sum"</span>,</span>
@@ -96,16 +94,6 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>df</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> or <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble()</a></code> Data frame of tibble, can be aggregated or raw</p></dd>
-
-
-<dt>measure</dt>
-<dd><p>Numeric measure for function to create calculations with,
-if NULL then it will take the first numeric field available</p></dd>
-
-
-<dt>dimensions</dt>
-<dd><p>Vector of dimensions for analysis, by default all character
-or factor variable will be used</p></dd>
 
 
 <dt>date</dt>
@@ -151,6 +139,18 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
 <dt>actuals</dt>
 <dd><p>Name of the actuals column in the data frame</p></dd>
+
+
+<dt>template_cy</dt>
+<dd><p><code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code> template for current year volumes narrative</p></dd>
+
+
+<dt>template_ftm</dt>
+<dd><p><code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code> template for future 12 months projection</p></dd>
+
+
+<dt>template_ftm_change</dt>
+<dd><p><code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code> template for projected change in the next 12 months</p></dd>
 
 
 <dt>use_renviron</dt>
