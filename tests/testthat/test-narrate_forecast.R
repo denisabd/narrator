@@ -1,6 +1,6 @@
 test_that("narrate_forecast() works", {
   fit_prophet <- function(data) {
-    model <- prophet::prophet(data)
+    model <- suppressMessages(prophet::prophet(data))
     future <- prophet::make_future_dataframe(model, periods = 12, freq = "month")
     forecast <- predict(model, future)
     return(forecast)
@@ -22,7 +22,8 @@ test_that("narrate_forecast() works", {
     dplyr::select(-data) %>%
     tidyr::unnest(forecast) %>%
     dplyr::select(ds, yhat) %>%
-    dplyr::left_join(actuals)
+    dplyr::left_join(actuals) %>%
+    suppressMessages()
 
   expect_no_error(narrate_forecast(df, actuals = "y", forecast = "yhat"))
   expect_no_error(narrate_forecast(df, actuals = "y", forecast = "yhat"))

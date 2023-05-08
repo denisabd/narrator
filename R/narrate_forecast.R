@@ -293,7 +293,7 @@ narrate_forecast <- function(
 
   trend_narrative <- trend_df %>%
     narrator::narrate_trend(
-      type = "yoy",
+      type = type,
       coverage = coverage,
       coverage_limit = coverage_limit,
       narration_depth = narration_depth
@@ -301,7 +301,7 @@ narrate_forecast <- function(
 
   variables_trend <- trend_df %>%
     narrator::narrate_trend(
-      type = "yoy",
+      type = type,
       coverage = coverage,
       coverage_limit = coverage_limit,
       narration_depth = narration_depth,
@@ -309,7 +309,9 @@ narrate_forecast <- function(
     )
 
   narrative <- append(narrative, trend_narrative)
-  variables <- append(variables, variables_trend)
+  variables <- append(variables, variables_trend[names(variables_trend) != "narrative"])
+
+  variables <- append(variables, list(narrative = narrative), 0)
 
   # ChatGPT -----------------------------------------------------------------
   if (use_chatgpt) {
