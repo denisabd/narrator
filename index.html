@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content='Template-based natural language generation system that converts a data frame to text.
+<meta name="description" content='Template-based natural language generation system that converts a data frames to textual narratives.
     Different narrative types are available depending on the data frame structure.
     Narrative outputs can be further improved, translated or summarized using "ChatGPT".'>
 <title>Create Natural Language Text Narratives from the Data • narrator</title>
@@ -17,7 +17,7 @@
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Create Natural Language Text Narratives from the Data">
-<meta property="og:description" content='Template-based natural language generation system that converts a data frame to text.
+<meta property="og:description" content='Template-based natural language generation system that converts a data frames to textual narratives.
     Different narrative types are available depending on the data frame structure.
     Narrative outputs can be further improved, translated or summarized using "ChatGPT".'>
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -173,10 +173,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">narrative_enhanced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/enhance_narrative.html">enhance_narrative</a></span><span class="op">(</span><span class="va">narrative_one</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span></code></pre></div>
-<p>The total sales figure for all regions amounts to a substantial $38,790,478.4. Notable outlying regions by sales include North America (with a sales figure of $18,079,736.4, accounting for 46.6% of the total sales) and the EMEA (with a sales figure of $13,555,412.7, accounting for 34.9% of the total sales).</p>
-<p>In North America, the most significant products by sales include the Food &amp; Beverage category, generating $7,392,821 in revenue (which equates to 40.9% of North America’s total sales), followed by Electronics with a revenue of $3,789,132.7 (equating to 21% of North America’s total sales).</p>
-<p>Similarly, in the EMEA region, the most significant products by sales also include the Food &amp; Beverage category, generating $5,265,113.2 in revenue (which equates to 38.8% of EMEA’s total sales), followed by Electronics with a revenue of $3,182,803.4 (equating to 23.5% of EMEA’s total sales).</p>
-<p>Outlying products that are generating a significant revenue include the Food &amp; Beverage category with sales of $15,543,469.7 (equating to 40.1% of total sales from all regions) and Electronics with sales of $8,608,962.8 (equating to 22.2% of total sales from all regions).</p>
+<p>The aggregate Total Sales across all Regions amount to an impressive sum of 38790478.4. The Outlying Regions by Sales, namely, North America (NA) and Europe, Middle East, and Africa (EMEA) contribute significantly to the total revenue with 46.6% and 34.9% respectively.</p>
+<p>The North American market displays remarkable statistics, with Food &amp; Beverage being the leading product by generating 40.9% of sales followed by Electronics, which contributes 21%. Similarly, the EMEA market portrays positive results with Food &amp; Beverage leading in generating 38.8% of sales, followed by Electronics contributing 23.5%.</p>
+<p>Moreover, the Outlying Products by Sales, consisting of Food &amp; Beverage and Electronics, remains the top-performing products, generating 40.1% and 22.2% of sales respectively.</p>
 <div class="section level3">
 <h3 id="translation">Translation<a class="anchor" aria-label="anchor" href="#translation"></a>
 </h3>
@@ -184,10 +183,9 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">translation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/translate_narrative.html">translate_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span>, language <span class="op">=</span> <span class="st">"Czech"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">translation</span><span class="op">)</span></span></code></pre></div>
-<p>Celková prodejní čísla pro všechny regiony činí významných 38 790 478,4 dolarů. Významné regiony podle prodejů zahrnují Severní Ameriku (s prodejními čísly ve výši 18 079 736,4 dolarů, což představuje 46,6% celkových prodejů) a EMEA (s prodejními čísly ve výši 13 555 412,7 dolarů, což představuje 34,9% celkových prodejů).</p>
-<p>V Severní Americe nejvýznamnější produkty podle prodejů zahrnují kategorii potravin a nápojů, která generuje výnos ve výši 7 392 821 dolarů (což odpovídá 40,9% celkových prodejů Severní Ameriky), následovanou elektronikou s tržbou 3 789 132,7 dolarů (což odpovídá 21% celkových prodejů Severní Ameriky).</p>
-<p>Podobně v oblasti EMEA jsou nejvýznamnější produkty dle prodejů také kategorie potravin a nápojů, které generují tržby ve výši 5 265 113,2 dolarů (což odpovídá 38,8% celkových prodejů v oblasti EMEA), následované elektronikou s tržbou 3 182 803,4 dolarů (což odpovídá 23,5% celkových prodejů v oblasti EMEA).</p>
-<p>Významné produkty generující významné příjmy zahrnují kategorii potravin a nápojů s prodejem 15 543 469,7 dolarů (což odpovídá 40,1% celkových prodejů ze všech regionů) a elektronikou s prodejem 8 608 962,8 dolarů (což odpovídá 22,2% celkových prodejů ze všech regionů).</p>
+<p>Celkové prodeje ve všech regionech dosahují úctyhodné částky 38 790 478,4. Regiony NA (Severní Amerika) a EMEA (Evropa, Střední východ a Afrika) přispívají k celkovému výnosu významnými podíly 46,6 % a 34,9 %.</p>
+<p>Severní americký trh vykazuje pozoruhodné statistiky, přičemž předním výrobkem, který generuje 40,9 % prodeje, je potraviny a nápoje, následované elektronikou, která přispívá 21 %. Podobně EMEA trh ukazuje pozitivní výsledky, kdy potraviny a nápoje vedou v generování 38,8 % prodeje, řízené elektronikou s příspěvkem 23,5 %.</p>
+<p>Kromě toho produkty tvořící nejvyšší prodeje, tedy potraviny a nápoje a elektronika, zůstávají nejúspěšnějšími produkty a generují 40,1 % a 22,2 % prodeje.</p>
 </div>
 <div class="section level3">
 <h3 id="summarization">Summarization<a class="anchor" aria-label="anchor" href="#summarization"></a>
@@ -196,7 +194,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summarization</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarize_narrative.html">summarize_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">summarization</span><span class="op">)</span></span></code></pre></div>
-<p>Total sales for all regions amount to $38.79 million, with North America accounting for 46.6% and the EMEA for 34.9% of sales. The most significant products in these regions are Food &amp; Beverage and Electronics. Overall, Food &amp; Beverage contributes to 40.1% of total sales, while Electronics contributes to 22.2%.</p>
+<p>Total sales are $38,790,478.4, with North America and EMEA leading at 46.6% and 34.9%. Food &amp; Beverage and Electronics are the top products, with Food &amp; Beverage contributing 40.9% and 38.8% respectively in North America and EMEA. The Outlying Products by Sales generate 40.1% and 22.2% of sales respectively.</p>
 </div>
 </div>
 </div>
