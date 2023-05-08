@@ -6,7 +6,8 @@
 \usage{
 enhance_narrative(
   narrative,
-  prompt = "Improve the narrative by adding better business language for the following:",
+  prompt =
+    "Improve the written narrative by adding better business language for the following:",
   openai_api_key = Sys.getenv("OPENAI_API_KEY")
 )
 }

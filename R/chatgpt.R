@@ -1,3 +1,26 @@
+#' Check Internet Connection
+#'
+#' @noRd
+internet_available <- function() {
+  response <- tryCatch(
+    httr::GET("http://google.com"),
+    error = function(e) {
+      return(NULL)
+    })
+
+  if (is.null(response)) {
+    return(FALSE)
+  }
+
+  status <- httr::status_code(response)
+
+  if (status == 200) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
 #' Enhance the narrative output with ChatGPT
 #'
 #' @inheritParams narrate_descriptive
@@ -19,11 +42,16 @@
 #' }
 enhance_narrative <- function(
     narrative,
-    prompt = "Improve the narrative by adding better business language for the following:",
+    prompt = "Improve the written narrative by adding better business language for the following:",
     openai_api_key = Sys.getenv("OPENAI_API_KEY")
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
+
+  if (!internet_available()) {
+    message("No internet connection")
+    return(narrative)
+  }
 
   if ("list" %in% class(narrative)) {
     narrative <- as.character(narrative)
@@ -66,6 +94,11 @@ translate_narrative <- function(
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
 
+  if (!internet_available()) {
+    message("No internet connection")
+    return(narrative)
+  }
+
   if ("list" %in% class(narrative)) {
     narrative <- as.character(narrative)
   }
@@ -105,6 +138,11 @@ summarize_narrative <- function(
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
 
+  if (!internet_available()) {
+    message("No internet connection")
+    return(narrative)
+  }
+
   if ("list" %in% class(narrative)) {
     narrative <- as.character(narrative)
   }
@@ -131,6 +169,12 @@ gpt_get_completions <- function(prompt, openai_api_key = Sys.getenv("OPENAI_API_
   if (nchar(openai_api_key) == 0) {
     stop("`OPENAI_API_KEY` not provided.")
   }
+
+  if (!internet_available()) {
+    message("No internet connection")
+    return(narrative)
+  }
+
   # See https://platform.openai.com/docs/api-reference/chat
   # and https://beta.openai.com/docs/api-reference/completions/create
   model <- Sys.getenv("OPENAI_MODEL", "gpt-3.5-turbo")

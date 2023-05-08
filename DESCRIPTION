@@ -8,7 +8,7 @@ Authors@R:
         email = "denisabdullincz@gmail.com", 
         role = c("aut", "cre")
         )
-Description: Template-based natural language generation system that converts a data frame to text.
+Description: Template-based natural language generation system that converts a data frames to textual narratives.
     Different narrative types are available depending on the data frame structure.
     Narrative outputs can be further improved, translated or summarized using "ChatGPT".
 License: MIT + file LICENSE
@@ -29,9 +29,9 @@ Imports:
     rlang,
     V8,
     shiny,
+    htmltools,
     lubridate,
     tidyr,
-    htmltools,
     DT,
     miniUI (>= 0.1.1)
 Suggests: 

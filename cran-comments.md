@@ -16,5 +16,8 @@
 * checking Rd line widths ... NOTE
   Rd file 'narrate_descriptive.Rd':
     \usage lines wider than 90 characters:
+  
+  Rd file 'narrate_forecast.Rd':
+    \usage lines wider than 90 characters:
 
 Usage lines wider than 90 characters for several functions are required since function arguments contain narrative templates and are longer.

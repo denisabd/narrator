@@ -7,7 +7,8 @@
 clean_text(
   text,
   upper = c("YTD", "PYTD"),
-  lower = c("vs", "br>", "h1>", "h2>", "h3>", "h4>", "h5>", "h6>", "b>")
+  lower = c("vs", "br>", "h1>", "h2>", "h3>", "h4>", "h5>", "h6>", "b>", "<span",
+    "span>")
 )
 }
 \arguments{

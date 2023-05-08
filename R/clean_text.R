@@ -14,11 +14,11 @@
 #' clean_text(" Total  is 12,300 Orders ( 23.5 % for East  ) ")
 clean_text <- function(text,
                        upper = c("YTD", "PYTD"),
-                       lower = c("vs", "br>", "h1>", "h2>", "h3>", "h4>", "h5>", "h6>", "b>")
+                       lower = c("vs", "br>", "h1>", "h2>", "h3>", "h4>", "h5>", "h6>", "b>", "<span", "span>")
 ) {
 
   #assertion
-  text_processed <- stringr::str_squish(text)
+  text_processed <- stringr::str_trim(text)
 
   # helper to detect the upper case
   is_upper <- function(string) {
@@ -68,7 +68,7 @@ clean_text <- function(text,
   }
 
   # Replace excessive whitespaces once again - in case if replacement led to multiple spaces
-  text_processed <- stringr::str_squish(text_processed)
+  text_processed <- stringr::str_trim(text_processed)
 
   return(text_processed)
 }

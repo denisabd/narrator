@@ -28,6 +28,7 @@ reference:
   - add_tag
   - starts_with("clean")
   - starts_with("format")
+  - to_html
 
 - title: Helpers
   desc: Helpers for other than formatting purposes

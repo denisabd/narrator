@@ -14,11 +14,13 @@ format_pct <- function(text,
                        positive = "green",
                        negative = "red") {
 
-
   # Check if text or number is provided for text
   if (!is.character(text) && !is.numeric(text) && !is.list(text)) {
     stop("Provide list, character text or numeric value")
   }
+
+  # convert back to the same class after
+  text_class <- class(text)
 
   # Replace excessive punctuation
   text <- lapply(text, stringr::str_replace_all, " %", "%")
@@ -53,6 +55,12 @@ format_pct <- function(text,
   } else {
     text_output <- text %>%
       vapply(clean_text)
+  }
+
+  if (text_class == "character") {
+    text_output <- as.character(text_output)
+  } else if (text_class == "numeric") {
+    text_output <- as.numeric(text_output)
   }
 
   return(text_output)

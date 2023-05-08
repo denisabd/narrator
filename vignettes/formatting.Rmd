@@ -24,34 +24,24 @@ library(htmltools)
 
 You can use the output of `narrator` in HTML reports or shiny with additional formatting that can be added using `format_pct()` and `add_tag()` functions. If the output is a named list, which is a default behaviour of the `narrate_*` functions, names can be used as headers and narratives rendered below.
 
+When using `to_html()` function you can easily add formatting for tags and percentage to be displayed is any color you choose:
+
 ```{r}
 narrative <- sales %>%
   group_by(Region, Product) %>%
   summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
   arrange(desc(Sales)) %>%
-  narrate_descriptive() %>%
-  format_pct()
+  narrate_descriptive()
 
-names(narrative) <- add_tag(names(narrative), "h3")
-
-narrative <- unlist(narrative)
-
-mapply(c, names(narrative), as.character(narrative)) %>%
-  as.character() %>%
-  htmltools::HTML()
+to_html(narrative)
 ```
 
-
 ```{r}
-
+to_html(narrative, title_tag = "h5", positive = "purple")
 ```
 
-
+Narrator will also convert the output from Chat GPT and replace the new lines with a double `<br>` tag to ensure it is correctly indexed.
 ```{r}
-
-```
-
-
-```{r}
-
+"The Total Sales across all Products amounted to an impressive $11,381,210.7, with Home and Tools emerging as the top performing categories by Sales with $4,599,370.9 (40.4%) and $4,404,196.7 (38.7%) respectively.\n\nFurther analysis reveals that in the Home category, the North American (NA) and Europe, Middle East and Africa (EMEA)." %>%
+  to_html()
 ```

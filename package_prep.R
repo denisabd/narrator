@@ -30,7 +30,6 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 devtools::test()
 
 devtools::check()
-#rhub::check_for_cran()
 
 # code coverage
 covr::report()
@@ -43,6 +42,10 @@ urlchecker::url_check()
 devtools::check(remote = TRUE, manual = TRUE)
 devtools::check_win_devel()
 rhub::check_for_cran()
+
+# CRAN SUBMISSION
+#usethis::use_version('minor')
+#devtools::submit_cran()
 
 # licence -----------------------------------------------------------------
 usethis::use_mit_license("Denis Abdullin")

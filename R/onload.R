@@ -18,5 +18,5 @@ utils::globalVariables(c("cum_share", "dep_rel", "feats", "head_token_id", "lag"
                          "plural", "share", "token", "token_fixed", "token_id",
                          "upos", "value", "Narrative", "Product", "Region", "Sales",
                          "abs_change", "change", "change_p", "curr_volume",
-                         "data", "n", "name", "prev_volume", "result",
-                         "template", "type", "week", "year"))
+                         "data", "n", "name", "prev_volume", "result", "narrative",
+                         "template", "type", "week", "year", "Date", "Month"))

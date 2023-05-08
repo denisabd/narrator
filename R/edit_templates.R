@@ -5,7 +5,8 @@
 edit_templates <- function() {
 
   templates <- list_templates() %>%
-    dplyr::select(name, type, template)
+    dplyr::select(name, type, template) %>%
+    dplyr::filter(type != "forecast")
 
   df_descriptive <- narrator::sales %>%
     dplyr::group_by(Region, Product) %>%
@@ -55,10 +56,10 @@ edit_templates <- function() {
         label = "Export",
         class = "btn-warning"),
 
-      h3("Templates"),
+      shiny::h3("Templates"),
       DT::DTOutput("template_table"),
 
-      h3("Updated Narrative"),
+      shiny::h3("Updated Narrative"),
       DT::DTOutput("new_table")
     )
   )
@@ -180,9 +181,6 @@ edit_templates <- function() {
 
       templates_trend <- rv$data %>%
         dplyr::filter(type == "trend")
-
-      templates_new <<- templates_new
-      template_type <<- rv$template_type
 
       output_descriptive <- do.call(narrator::narrate_descriptive,
                                     c(list(df = df_descriptive), split(templates_descriptive$template, templates_descriptive$name))

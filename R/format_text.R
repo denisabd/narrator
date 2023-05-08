@@ -29,7 +29,7 @@ format_text <- function(text, color = "auto", bold = TRUE) {
 
   # bold text
   if (bold == TRUE) {
-    text_processed <- sprintf("<b> <span style='color: %s;'>%s</span> </b>", color, text)
+    text_processed <- sprintf("<b><span style='color: %s;'>%s</span></b>", color, text)
   } else {
     text_processed <- sprintf("<span style='color: %s;'>%s</span>", color, text)
   }
