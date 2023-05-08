@@ -6,8 +6,6 @@
 \usage{
 narrate_forecast(
   df,
-  measure = NULL,
-  dimensions = NULL,
   date = NULL,
   frequency = NULL,
   summarization = "sum",
@@ -35,12 +33,6 @@ narrate_forecast(
 \arguments{
 \item{df}{\code{\link[=data.frame]{data.frame()}} or \code{\link[=tibble]{tibble()}} Data frame of tibble, can be aggregated or raw}
 
-\item{measure}{Numeric measure for function to create calculations with,
-if NULL then it will take the first numeric field available}
-
-\item{dimensions}{Vector of dimensions for analysis, by default all character
-or factor variable will be used}
-
 \item{date}{Name of the date column to be used for time based analysis}
 
 \item{frequency}{Level of time based aggregation for comparing across years}
@@ -63,6 +55,12 @@ coverage to avoid extremely verbose narrative creation}
 \item{forecast}{Name of the forecast column in the data frame}
 
 \item{actuals}{Name of the actuals column in the data frame}
+
+\item{template_cy}{\code{\link[glue]{glue}} template for current year volumes narrative}
+
+\item{template_ftm}{\code{\link[glue]{glue}} template for future 12 months projection}
+
+\item{template_ftm_change}{\code{\link[glue]{glue}} template for projected change in the next 12 months}
 
 \item{use_renviron}{If \link{TRUE} use .Renviron variables in the template.
 You can also set \code{options(narrator.use_renviron = TRUE)} to make it global for the session,

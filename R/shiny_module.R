@@ -52,7 +52,7 @@ narratorUI <- function(
              inputId = ns("format"),
              label = "Format",
              value = format
-             ),
+           ),
 
     ),
     column(width = 9,
@@ -67,6 +67,7 @@ narratorUI <- function(
 #'
 #' @param id Namespace specification
 #' @param df Reactive data frame
+#' @param narrative_type Type of narrative 'descriptive', 'trend' or 'forecast'
 #' @param summarization Summarization/aggregation for the data - 'sum', 'count' or 'average'
 #' @param ... Additional arguments for `narrate_*` functions
 #'
@@ -80,6 +81,7 @@ narratorUI <- function(
 narratorServer <- function(
     id,
     df,
+    narrative_type = "descriptive",
     summarization = "sum",
     ...
 ) {
@@ -97,14 +99,34 @@ narratorServer <- function(
 
       observeEvent(c(df(), input$narration_depth, input$coverage, input$coverage_limit, input$format), {
 
-        narrative <- df() %>%
-          dplyr::ungroup() %>%
-          narrate_descriptive(
-            summarization = summarization,
-            narration_depth = input$narration_depth,
-            coverage = input$coverage,
-            coverage_limit = input$coverage_limit,
-            ...)
+        if (narrative_type == "descriptive") {
+          narrative <- df() %>%
+            dplyr::ungroup() %>%
+            narrate_descriptive(
+              summarization = summarization,
+              narration_depth = input$narration_depth,
+              coverage = input$coverage,
+              coverage_limit = input$coverage_limit,
+              ...)
+        } else if (narrative_type == "trend") {
+          narrative <- df() %>%
+            dplyr::ungroup() %>%
+            narrate_trend(
+              summarization = summarization,
+              narration_depth = input$narration_depth,
+              coverage = input$coverage,
+              coverage_limit = input$coverage_limit,
+              ...)
+        } else if (narrative_type == "forecast") {
+          narrative <- df() %>%
+            dplyr::ungroup() %>%
+            narrate_forecast(
+              summarization = summarization,
+              narration_depth = input$narration_depth,
+              coverage = input$coverage,
+              coverage_limit = input$coverage_limit,
+              ...)
+        }
 
         if (input$format == TRUE) {
           narrative <- narrative %>%

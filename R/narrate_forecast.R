@@ -3,6 +3,9 @@
 #' @inheritParams narrate_trend
 #' @param forecast Name of the forecast column in the data frame
 #' @param actuals Name of the actuals column in the data frame
+#' @param template_cy \code{\link[glue]{glue}} template for current year volumes narrative
+#' @param template_ftm \code{\link[glue]{glue}} template for future 12 months projection
+#' @param template_ftm_change \code{\link[glue]{glue}} template for projected change in the next 12 months
 #'
 #' @return A [list()] of narratives by default and [character()] if `simplify = TRUE`
 #' @export
@@ -41,8 +44,6 @@
 #' narrate_forecast(df)
 narrate_forecast <- function(
     df,
-    measure = NULL,
-    dimensions = NULL,
     date = NULL,
     frequency = NULL,
     summarization = "sum",
@@ -79,28 +80,7 @@ narrate_forecast <- function(
 
   if (coverage <= 0 || coverage > 1) stop("'coverage' must be more than 0 and less or equal to 1")
 
-  # Calculating dimensions from a data.frame
-  if (is.null(dimensions)) {
-    dimensions <- df %>%
-      dplyr::select(where(is.character), where(is.factor)) %>%
-      names()
-  } else {
-    if (!all(dimensions %in% names(df))) {
-      stop("all dimensions must be columns the data frame (df)")
-    }
-  }
-
-  # Checking dimensions data types
-  dimension_dtypes <- df %>%
-    dplyr::select(dplyr::all_of(dimensions)) %>%
-    head() %>%
-    dplyr::collect() %>%
-    lapply(class)
-
-  if (!all(dimension_dtypes %in% c("character", "factor"))) {
-    stop(glue::glue("Data types for {toString(dimensions)} must be either 'character' or 'numeric', but is {toString(dimension_dtypes)}"))
-  }
-
+  # Assertion for actuals and forecast value
   if (!class(df[[actuals]]) %in% c("numeric", "integer", "character", "factor")) {
     stop(glue::glue("{actuals} must be a numeric column, but is {class(df[[actuals]])}"))
   }

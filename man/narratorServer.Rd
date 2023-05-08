@@ -4,12 +4,20 @@
 \alias{narratorServer}
 \title{Server Logic for Narrator}
 \usage{
-narratorServer(id, df, summarization = "sum", ...)
+narratorServer(
+  id,
+  df,
+  narrative_type = "descriptive",
+  summarization = "sum",
+  ...
+)
 }
 \arguments{
 \item{id}{Namespace specification}
 
 \item{df}{Reactive data frame}
+
+\item{narrative_type}{Type of narrative 'descriptive', 'trend' or 'forecast'}
 
 \item{summarization}{Summarization/aggregation for the data - 'sum', 'count' or 'average'}
 
