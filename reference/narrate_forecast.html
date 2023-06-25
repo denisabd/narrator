@@ -74,6 +74,11 @@
 <span>  narration_depth <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  use_chatgpt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  openai_api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span>,</span>
+<span>  max_tokens <span class="op">=</span> <span class="fl">1024</span>,</span>
+<span>  temperature <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  top_p <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  frequency_penalty <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  presence_penalty <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  forecast <span class="op">=</span> <span class="st">"Forecast"</span>,</span>
 <span>  actuals <span class="op">=</span> <span class="st">"Actuals"</span>,</span>
 <span>  template_cy <span class="op">=</span> <span class="st">"Forecasted volume for {current_year} is {format_num(cy_forecast)}"</span>,</span>
@@ -131,6 +136,30 @@ coverage to avoid extremely verbose narrative creation</p></dd>
 
 <dt>openai_api_key</dt>
 <dd><p>Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with <code>Sys.getenv("OPENAI_API_KEY")</code></p></dd>
+
+
+<dt>max_tokens</dt>
+<dd><p>The maximum number of tokens to generate in the chat completion.</p></dd>
+
+
+<dt>temperature</dt>
+<dd><p>What sampling temperature to use, between 0 and 2. Higher
+values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</p></dd>
+
+
+<dt>top_p</dt>
+<dd><p>An alternative to sampling with temperature, called nucleus sampling, where the model considers
+the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.</p></dd>
+
+
+<dt>frequency_penalty</dt>
+<dd><p>Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far,
+decreasing the model's likelihood to repeat the same line verbatim.</p></dd>
+
+
+<dt>presence_penalty</dt>
+<dd><p>Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
+increasing the model's likelihood to talk about new topics.</p></dd>
 
 
 <dt>forecast</dt>
@@ -259,6 +288,15 @@ or create an environment variable "use_renviron" by changing your .Renviron file
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Forecast change by Region`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regions with biggest changes of Forecast are NA (217.7 K, 3.41 %, 6.4 M to 6.6 M), ASPAC (148.4 K, 10.32 %, 1.4 M to 1.6 M).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`NA by Month`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In NA, significant Months by Forecast change are May (121 K, 28.93 %, 418.2 K to 539.2 K), Dec (106 K, 14.45 %, 733.4 K to 839.4 K), Apr (-75.5 K, -12.79 %, 590.2 K to 514.7 K), Jul (71.2 K, 20.24 %, 351.7 K to 422.9 K).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`ASPAC by Month`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> In ASPAC, significant Months by Forecast change are May (40.5 K, 37.34 %, 108.6 K to 149.1 K), Jul (35.5 K, 57.07 %, 62.2 K to 97.7 K), Nov (-34.1 K, -19.14 %, 178.2 K to 144.1 K), Sep (26.3 K, 29.15 %, 90.3 K to 116.6 K).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`Forecast change by Month`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Months with biggest changes of Forecast are May (141.3 K, 13.62 %, 1 M to 1.2 M), Mar (138 K, 13.94 %, 989.3 K to 1.1 M), Nov (-108.8 K, -6.36 %, 1.7 M to 1.6 M), Sep (97.4 K, 8.68 %, 1.1 M to 1.2 M).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

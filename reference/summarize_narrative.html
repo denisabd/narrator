@@ -66,7 +66,12 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarize_narrative</span><span class="op">(</span></span>
 <span>  <span class="va">narrative</span>,</span>
 <span>  prompt <span class="op">=</span> <span class="st">"Summarize the following narrative to make it shorter:"</span>,</span>
-<span>  openai_api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span></span>
+<span>  openai_api_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"OPENAI_API_KEY"</span><span class="op">)</span>,</span>
+<span>  max_tokens <span class="op">=</span> <span class="fl">1024</span>,</span>
+<span>  temperature <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  top_p <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  frequency_penalty <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  presence_penalty <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -82,6 +87,30 @@
 
 <dt>openai_api_key</dt>
 <dd><p>Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with <code>Sys.getenv("OPENAI_API_KEY")</code></p></dd>
+
+
+<dt>max_tokens</dt>
+<dd><p>The maximum number of tokens to generate in the chat completion.</p></dd>
+
+
+<dt>temperature</dt>
+<dd><p>What sampling temperature to use, between 0 and 2. Higher
+values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.</p></dd>
+
+
+<dt>top_p</dt>
+<dd><p>An alternative to sampling with temperature, called nucleus sampling, where the model considers
+the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.</p></dd>
+
+
+<dt>frequency_penalty</dt>
+<dd><p>Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far,
+decreasing the model's likelihood to repeat the same line verbatim.</p></dd>
+
+
+<dt>presence_penalty</dt>
+<dd><p>Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
+increasing the model's likelihood to talk about new topics.</p></dd>
 
 </dl></div>
     <div class="section level2">
