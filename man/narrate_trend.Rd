@@ -17,6 +17,11 @@ narrate_trend(
   narration_depth = 2,
   use_chatgpt = FALSE,
   openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+  max_tokens = 1024,
+  temperature = 0.5,
+  top_p = 1,
+  frequency_penalty = 0,
+  presence_penalty = 0,
   template_total =
     "From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
   template_average =
@@ -66,6 +71,20 @@ coverage to avoid extremely verbose narrative creation}
 
 \item{openai_api_key}{Your OpenAI API key, you can set it up in .Renviron file as "OPENAI_API_KEY", function will look for it with \code{Sys.getenv("OPENAI_API_KEY")}}
 
+\item{max_tokens}{The maximum number of tokens to generate in the chat completion.}
+
+\item{temperature}{What sampling temperature to use, between 0 and 2. Higher
+values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.}
+
+\item{top_p}{An alternative to sampling with temperature, called nucleus sampling, where the model considers
+the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10\% probability mass are considered.}
+
+\item{frequency_penalty}{Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far,
+decreasing the model's likelihood to repeat the same line verbatim.}
+
+\item{presence_penalty}{Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
+increasing the model's likelihood to talk about new topics.}
+
 \item{template_total}{\code{\link[glue]{glue}} template for total volumes narrative}
 
 \item{template_average}{\code{\link[glue]{glue}} template for average volumes narrative}
@@ -102,7 +121,13 @@ Create Narrative for Metric Development in Time
 }
 \examples{
 sales \%>\%
- dplyr::mutate(Date = lubridate::floor_date(Date, unit = "week")) \%>\%
+ dplyr::mutate(Date = lubridate::floor_date(Date, unit = "month")) \%>\%
+ dplyr::group_by(Region, Product, Date) \%>\%
+ dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) \%>\%
+ narrate_trend()
+
+sales \%>\%
+ dplyr::mutate(Date = lubridate::floor_date(Date, unit = "quarter")) \%>\%
  dplyr::group_by(Region, Product, Date) \%>\%
  dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) \%>\%
  narrate_trend()

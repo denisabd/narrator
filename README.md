@@ -135,20 +135,25 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
-The aggregate Total Sales across all Regions amount to an impressive sum
-of 38790478.4. The Outlying Regions by Sales, namely, North America (NA)
-and Europe, Middle East, and Africa (EMEA) contribute significantly to
-the total revenue with 46.6% and 34.9% respectively.
+The Total Sales generated across all Regions amounted to a staggering
+38790478.4. Upon closer examination, it was found that the Outlying
+Regions, namely NA and EMEA, contributed significantly to this
+impressive figure. NA accounted for 18079736.4, which translates to
+46.6%, while EMEA contributed 13555412.7, which is 34.9% of the Total
+Sales.
 
-The North American market displays remarkable statistics, with Food &
-Beverage being the leading product by generating 40.9% of sales followed
-by Electronics, which contributes 21%. Similarly, the EMEA market
-portrays positive results with Food & Beverage leading in generating
-38.8% of sales, followed by Electronics contributing 23.5%.
+Further analysis of the sales data revealed that within NA, the
+significant Products that contributed to these sales figures were Food &
+Beverage, generating 7392821 or 40.9%, followed by Electronics, which
+generated 3789132.7 or 21%. Similarly, within EMEA, the significant
+Products were Food & Beverage, generating 5265113.2 or 38.8%, followed
+by Electronics, which generated 3182803.4 or 23.5%.
 
-Moreover, the Outlying Products by Sales, consisting of Food & Beverage
-and Electronics, remains the top-performing products, generating 40.1%
-and 22.2% of sales respectively.
+It is noteworthy to mention that the Outlying Products that contributed
+to the Total Sales were primarily Food & Beverage, generating 15543469.7
+or 40.1%, followed by Electronics, which generated 8608962.8 or 22.2%.
+These sales figures are a testament to the strong performance of the
+Food & Beverage category across all Regions.
 
 ### Translation
 
@@ -160,19 +165,24 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
-Celkové prodeje ve všech regionech dosahují úctyhodné částky 38 790
-478,4. Regiony NA (Severní Amerika) a EMEA (Evropa, Střední východ a
-Afrika) přispívají k celkovému výnosu významnými podíly 46,6 % a 34,9 %.
+Celkové tržby vygenerované ve všech oblastech dosáhly ohromujícího čísla
+38790478.4. Po bližším prozkoumání bylo zjištěno, že odlehlé oblasti,
+konkrétně NA a EMEA, významně přispěly k tomuto úžasnému číslu. NA
+představuje 18079736.4, což představuje 46,6%, zatímco EMEA přispěla
+13555412.7, což je 34,9% celkových tržeb.
 
-Severní americký trh vykazuje pozoruhodné statistiky, přičemž předním
-výrobkem, který generuje 40,9 % prodeje, je potraviny a nápoje,
-následované elektronikou, která přispívá 21 %. Podobně EMEA trh ukazuje
-pozitivní výsledky, kdy potraviny a nápoje vedou v generování 38,8 %
-prodeje, řízené elektronikou s příspěvkem 23,5 %.
+Další analýza prodejních dat odhalila, že v rámci NA jsou významné
+produkty, které přispěly k těmto prodejním číslům, potraviny a nápoje,
+které vygenerovaly 7392821 nebo 40,9%, následované elektronikou, která
+vygenerovala 3789132.7 nebo 21%. Podobně v rámci EMEA jsou významné
+produkty potraviny a nápoje, které vygenerovaly 5265113.2 nebo 38,8%,
+následované elektronikou, která vygenerovala 3182803.4 nebo 23,5%.
 
-Kromě toho produkty tvořící nejvyšší prodeje, tedy potraviny a nápoje a
-elektronika, zůstávají nejúspěšnějšími produkty a generují 40,1 % a 22,2
-% prodeje.
+Je důležité zmínit, že odlehlé produkty, které přispěly k celkovým
+tržbám, byly především potraviny a nápoje, které vygenerovaly 15543469.7
+nebo 40,1%, následované elektronikou, která vygenerovala 8608962.8 nebo
+22,2%. Tyto prodejní čísla jsou důkazem silného výkonu kategorie
+potravin a nápojů ve všech oblastech.
 
 ### Summarization
 
@@ -184,11 +194,12 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-Total sales are \$38,790,478.4, with North America and EMEA leading at
-46.6% and 34.9%. Food & Beverage and Electronics are the top products,
-with Food & Beverage contributing 40.9% and 38.8% respectively in North
-America and EMEA. The Outlying Products by Sales generate 40.1% and
-22.2% of sales respectively.
+Total sales were 38790478.4, with significant contributions from North
+America (46.6%) and EMEA (34.9%). Food & Beverage was the top-selling
+product in both regions, generating 40.9% and 38.8% of sales,
+respectively. Electronics followed with 21% and 23.5% of sales. Food &
+Beverage and Electronics were also the top-selling products overall,
+contributing 40.1% and 22.2% to total sales, respectively.
 
 # Python
 

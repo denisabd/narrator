@@ -43,7 +43,12 @@ internet_available <- function() {
 enhance_narrative <- function(
     narrative,
     prompt = "Improve the written narrative by adding better business language for the following:",
-    openai_api_key = Sys.getenv("OPENAI_API_KEY")
+    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+    max_tokens = 1024,
+    temperature = 0.5,
+    top_p = 1,
+    frequency_penalty = 0,
+    presence_penalty = 0
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
@@ -60,7 +65,14 @@ enhance_narrative <- function(
   narrative <- paste(narrative, collapse = " ")
 
   output <- paste0(prompt, narrative) %>%
-    gpt_get_completions(openai_api_key = openai_api_key) %>%
+    gpt_get_completions(
+      openai_api_key = openai_api_key,
+      max_tokens = max_tokens,
+      temperature = temperature,
+      top_p = top_p,
+      frequency_penalty = frequency_penalty,
+      presence_penalty = presence_penalty
+    ) %>%
     parse_response()
 
   return(output)
@@ -89,7 +101,12 @@ translate_narrative <- function(
     narrative,
     prompt = "Using professional language translate the following text to",
     language,
-    openai_api_key = Sys.getenv("OPENAI_API_KEY")
+    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+    max_tokens = 1024,
+    temperature = 0.5,
+    top_p = 1,
+    frequency_penalty = 0,
+    presence_penalty = 0
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
@@ -106,7 +123,14 @@ translate_narrative <- function(
   narrative <- paste(narrative, collapse = " ")
 
   output <- paste(prompt, language, ':', narrative) %>%
-    gpt_get_completions(openai_api_key = openai_api_key) %>%
+    gpt_get_completions(
+      openai_api_key = openai_api_key,
+      max_tokens = max_tokens,
+      temperature = temperature,
+      top_p = top_p,
+      frequency_penalty = frequency_penalty,
+      presence_penalty = presence_penalty
+    ) %>%
     parse_response()
 
   return(output)
@@ -133,7 +157,12 @@ translate_narrative <- function(
 summarize_narrative <- function(
     narrative,
     prompt = "Summarize the following narrative to make it shorter:",
-    openai_api_key = Sys.getenv("OPENAI_API_KEY")
+    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+    max_tokens = 1024,
+    temperature = 0.5,
+    top_p = 1,
+    frequency_penalty = 0,
+    presence_penalty = 0
 ) {
 
   if (openai_api_key == "" | is.null(openai_api_key)) stop("Open AI API key is required to run the function")
@@ -153,7 +182,14 @@ summarize_narrative <- function(
     prompt,
     narrative
   ) %>%
-    gpt_get_completions(openai_api_key = openai_api_key) %>%
+    gpt_get_completions(
+      openai_api_key = openai_api_key,
+      max_tokens = max_tokens,
+      temperature = temperature,
+      top_p = top_p,
+      frequency_penalty = frequency_penalty,
+      presence_penalty = presence_penalty
+    ) %>%
     parse_response()
 
   return(output)
@@ -163,9 +199,26 @@ summarize_narrative <- function(
 #'
 #' @param prompt The prompt to generate completions for.
 #' @param openai_api_key OpenAI's API key.
+#' @param max_tokens The maximum number of tokens to generate in the chat completion.
+#' @param temperature What sampling temperature to use, between 0 and 2. Higher
+#' values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+#' @param top_p An alternative to sampling with temperature, called nucleus sampling, where the model considers
+#' the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+#' @param frequency_penalty Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far,
+#' decreasing the model's likelihood to repeat the same line verbatim.
+#' @param presence_penalty Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
+#' increasing the model's likelihood to talk about new topics.
 #'
 #' @noRd
-gpt_get_completions <- function(prompt, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+gpt_get_completions <- function(
+    prompt,
+    openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+    max_tokens = 1024,
+    temperature = 0.5,
+    top_p = 1,
+    frequency_penalty = 0,
+    presence_penalty = 0) {
+
   if (nchar(openai_api_key) == 0) {
     stop("`OPENAI_API_KEY` not provided.")
   }
@@ -180,11 +233,11 @@ gpt_get_completions <- function(prompt, openai_api_key = Sys.getenv("OPENAI_API_
   model <- Sys.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
   params <- list(
     model = model,
-    max_tokens = as.numeric(Sys.getenv("OPENAI_MAX_TOKENS", 1024)),
-    temperature = as.numeric(Sys.getenv("OPENAI_TEMPERATURE", 1)),
-    top_p = as.numeric(Sys.getenv("OPENAI_TOP_P", 1)),
-    frequency_penalty = as.numeric(Sys.getenv("OPENAI_FREQUENCY_PENALTY", 0)),
-    presence_penalty = as.numeric(Sys.getenv("OPENAI_PRESENCE_PENALTY", 0))
+    max_tokens = as.numeric(Sys.getenv("OPENAI_MAX_TOKENS", max_tokens)),
+    temperature = as.numeric(Sys.getenv("OPENAI_TEMPERATURE", temperature)),
+    top_p = as.numeric(Sys.getenv("OPENAI_TOP_P", top_p)),
+    frequency_penalty = as.numeric(Sys.getenv("OPENAI_FREQUENCY_PENALTY", frequency_penalty)),
+    presence_penalty = as.numeric(Sys.getenv("OPENAI_PRESENCE_PENALTY", presence_penalty))
   )
 
   if (as.logical(Sys.getenv("OPENAI_VERBOSE", FALSE))) {

@@ -53,6 +53,11 @@ narrate_forecast <- function(
     narration_depth = 2,
     use_chatgpt = FALSE,
     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+    max_tokens = 1024,
+    temperature = 0.5,
+    top_p = 1,
+    frequency_penalty = 0,
+    presence_penalty = 0,
     forecast = "Forecast",
     actuals = "Actuals",
     template_cy = "Forecasted volume for {current_year} is {format_num(cy_forecast)}",
@@ -295,7 +300,15 @@ narrate_forecast <- function(
 
   # ChatGPT -----------------------------------------------------------------
   if (use_chatgpt) {
-    narrative <- enhance_narrative(narrative, openai_api_key = openai_api_key)
+    narrative <- enhance_narrative(
+      narrative,
+      openai_api_key = openai_api_key,
+      max_tokens = max_tokens,
+      temperature = temperature,
+      top_p = top_p,
+      frequency_penalty = frequency_penalty,
+      presence_penalty = presence_penalty
+    )
   }
 
   # Output ------------------------------------------------------------------

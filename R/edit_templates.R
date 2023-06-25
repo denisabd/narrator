@@ -13,8 +13,8 @@ edit_templates <- function() {
     dplyr::summarise(Sales = sum(Sales))
 
   df_trend <- narrator::sales %>%
-    dplyr::mutate(Month = lubridate::floor_date(Date, unit = "months")) %>%
-    dplyr::group_by(Region, Product, Month) %>%
+    dplyr::mutate(Date = lubridate::floor_date(Date, unit = "months")) %>%
+    dplyr::group_by(Region, Product, Date) %>%
     dplyr::summarise(Sales = sum(Sales))
 
   not.null <- function(x) {

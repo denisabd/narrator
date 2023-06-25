@@ -10,7 +10,13 @@
 #'
 #' @examples
 #' sales %>%
-#'  dplyr::mutate(Date = lubridate::floor_date(Date, unit = "week")) %>%
+#'  dplyr::mutate(Date = lubridate::floor_date(Date, unit = "month")) %>%
+#'  dplyr::group_by(Region, Product, Date) %>%
+#'  dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+#'  narrate_trend()
+#'
+#' sales %>%
+#'  dplyr::mutate(Date = lubridate::floor_date(Date, unit = "quarter")) %>%
 #'  dplyr::group_by(Region, Product, Date) %>%
 #'  dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
 #'  narrate_trend()
@@ -27,6 +33,11 @@ narrate_trend <- function(
     narration_depth = 2,
     use_chatgpt = FALSE,
     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
+    max_tokens = 1024,
+    temperature = 0.5,
+    top_p = 1,
+    frequency_penalty = 0,
+    presence_penalty = 0,
     template_total = "From {timeframe_prev} to {timeframe_curr}, {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
     template_average = "Average {measure} had an {trend} of {change} ({change_p}, {total_prev} to {total_curr}).",
     template_outlier = "{dimension} with biggest changes of {measure} is {outlier_insight}.",
@@ -48,7 +59,7 @@ narrate_trend <- function(
     dplyr::ungroup()
 
   if (coverage_limit < 1) stop("'coverage_limit' must be higher or equal to 1")
-  if (coverage_limit%%1!=0) stop("'coverage_limit' must be an interger, no decimals allowed")
+  if (coverage_limit%%1!=0) stop("'coverage_limit' must be an integer, no decimals allowed")
 
   if (coverage <= 0 || coverage > 1) stop("'coverage' must be more than 0 and less or equal to 1")
 
@@ -302,6 +313,27 @@ narrate_trend <- function(
       rlang::set_names(narrative_name)
   }
 
+  # Adding Date as dimension and leaving last two years only
+  if (frequency %in% c("quarter", "month", "week")) {
+    time_dimension <- stringr::str_to_title(frequency)
+
+    df <- df %>%
+      dplyr::filter(lubridate::year(base::get(date)) >= lubridate::year(max_date) - 1) %>%
+      dplyr::mutate(
+        !!time_dimension := switch(
+          frequency,
+          "quarter" = paste0("Q", lubridate::quarter(base::get(date))),
+          "month" = lubridate::month(base::get(date), label = TRUE),
+          "week" = paste("Week", lubridate::week(base::get(date))),
+        )
+      ) %>%
+      dplyr::mutate(
+        !!time_dimension := as.character(base::get(time_dimension))
+      )
+
+    dimensions <- c(dimensions, time_dimension)
+  }
+
   # High-Level Narrative ----------------------------------------------------
   if (length(dimensions) > 0) {
 
@@ -514,7 +546,15 @@ narrate_trend <- function(
 
   # ChatGPT -----------------------------------------------------------------
   if (use_chatgpt) {
-    narrative <- enhance_narrative(narrative, openai_api_key = openai_api_key)
+    narrative <- enhance_narrative(
+      narrative,
+      openai_api_key = openai_api_key,
+      max_tokens = max_tokens,
+      temperature = temperature,
+      top_p = top_p,
+      frequency_penalty = frequency_penalty,
+      presence_penalty = presence_penalty
+    )
   }
 
   # Output ------------------------------------------------------------------
