@@ -241,76 +241,83 @@ narrate_trend <- function(
   narrative_name <- glue::glue("{timeframe_curr} vs {timeframe_prev}")
 
   change <- round(total_curr_raw - total_prev_raw, 1)
-  change_p <- paste(round((total_curr_raw/total_prev_raw - 1)*100, 1), "%")
-  trend <- ifelse(change > 0, "increase", "decrease")
 
-  if (format_numbers == TRUE) {
-    total_curr <- format_num(total_curr_raw, decimals = 2)
-    total_prev <- format_num(total_prev_raw, decimals = 2)
-    change <- format_num(change, decimals = 2)
+  if (!is.na(change)) {
+
+    change_p <- paste(round((total_curr_raw/total_prev_raw - 1)*100, 1), "%")
+    trend <- ifelse(change > 0, "increase", "decrease")
+
+    if (format_numbers == TRUE) {
+      total_curr <- format_num(total_curr_raw, decimals = 2)
+      total_prev <- format_num(total_prev_raw, decimals = 2)
+      change <- format_num(change, decimals = 2)
+    } else {
+      total_curr <- total_curr_raw
+      total_prev <- total_prev_raw
+      change <- format_num(change, decimals = 2)
+    }
+
+    # Sum/Count ---------------------------------------------------------------
+    if (summarization %in% c("sum", "count")) {
+
+      narrative_total <- glue::glue(
+        template_total,
+        .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
+      )
+
+      narrative <- list(narrative_total) %>%
+        rlang::set_names(narrative_name)
+
+      variables <- list(
+        list(
+          narrative_total = narrative_total,
+          template_total = template_total,
+          measure = measure,
+          total_curr = total_curr,
+          total_curr_raw = total_curr_raw,
+          total_prev = total_prev,
+          total_prev_raw = total_prev_raw,
+          timeframe_curr = timeframe_curr,
+          timeframe_prev = timeframe_prev,
+          change = change,
+          change_p = change_p,
+          trend = trend
+        )
+      ) %>%
+        rlang::set_names(narrative_name)
+
+      # Average ------------------------------------------------------------
+    } else if (summarization == "average") {
+
+      narrative_average <- glue::glue(
+        template_average,
+        .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
+      )
+
+      narrative <- list(narrative_average) %>%
+        rlang::set_names(narrative_name)
+
+      variables <- list(
+        list(
+          narrative_average = narrative_average,
+          template_average = template_average,
+          measure = measure,
+          total_curr = total_curr,
+          total_curr_raw = total_curr_raw,
+          total_prev = total_prev,
+          total_prev_raw = total_prev_raw,
+          timeframe_curr = timeframe_curr,
+          timeframe_prev = timeframe_prev,
+          change = change,
+          change_p = change_p,
+          trend = trend
+        )
+      ) %>%
+        rlang::set_names(narrative_name)
+    }
   } else {
-    total_curr <- total_curr_raw
-    total_prev <- total_prev_raw
-    change <- format_num(change, decimals = 2)
-  }
-
-  # Sum/Count ---------------------------------------------------------------
-  if (summarization %in% c("sum", "count")) {
-
-    narrative_total <- glue::glue(
-      template_total,
-      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
-    )
-
-    narrative <- list(narrative_total) %>%
-      rlang::set_names(narrative_name)
-
-    variables <- list(
-      list(
-        narrative_total = narrative_total,
-        template_total = template_total,
-        measure = measure,
-        total_curr = total_curr,
-        total_curr_raw = total_curr_raw,
-        total_prev = total_prev,
-        total_prev_raw = total_prev_raw,
-        timeframe_curr = timeframe_curr,
-        timeframe_prev = timeframe_prev,
-        change = change,
-        change_p = change_p,
-        trend = trend
-      )
-    ) %>%
-      rlang::set_names(narrative_name)
-
-    # Average ------------------------------------------------------------
-  } else if (summarization == "average") {
-
-    narrative_average <- glue::glue(
-      template_average,
-      .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
-    )
-
-    narrative <- list(narrative_average) %>%
-      rlang::set_names(narrative_name)
-
-    variables <- list(
-      list(
-        narrative_average = narrative_average,
-        template_average = template_average,
-        measure = measure,
-        total_curr = total_curr,
-        total_curr_raw = total_curr_raw,
-        total_prev = total_prev,
-        total_prev_raw = total_prev_raw,
-        timeframe_curr = timeframe_curr,
-        timeframe_prev = timeframe_prev,
-        change = change,
-        change_p = change_p,
-        trend = trend
-      )
-    ) %>%
-      rlang::set_names(narrative_name)
+    narrative <- list()
+    variables <- list()
   }
 
   # Adding Date as dimension and leaving last two years only
@@ -558,6 +565,8 @@ narrate_trend <- function(
   }
 
   # Output ------------------------------------------------------------------
+  if (length(narrative) == 0) return(NULL)
+
   if (return_data == TRUE) {
     return(variables)
   }

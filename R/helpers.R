@@ -264,6 +264,14 @@ pytd_volume <- function(
     previous_year <- lubridate::year(py_date)
   }
 
+  df <- df %>%
+    dplyr::mutate(year = lubridate::year(base::get(date))) %>%
+    dplyr::filter(year == previous_year,
+                  base::get(date) <= py_date)
+
+  # return NA rather than 0 if there are no records for previous year
+  if (nrow(df) == 0) return(NA)
+
   py_volume <- df %>%
     dplyr::mutate(year = lubridate::year(base::get(date))) %>%
     dplyr::filter(year == previous_year,
@@ -413,7 +421,10 @@ get_trend_outliers <- function(
     ) %>%
     dplyr::ungroup() %>%
     dplyr::select(-data) %>%
-    dplyr::arrange(-abs_change)
+    dplyr::arrange(-abs_change) %>%
+    dplyr::filter(!is.na(change))
+
+  if (nrow(table) == 0) return(NULL)
 
   if (summarization %in% c("sum", "count")) {
 

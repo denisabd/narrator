@@ -28,7 +28,6 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 
 # devtools checks and test ---------------------------------------------------------
 devtools::test()
-
 devtools::check()
 
 # code coverage
