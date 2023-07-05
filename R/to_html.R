@@ -20,7 +20,7 @@
 to_html <- function(
     narrative,
     format_percentage = TRUE,
-    title_tag = "h3",
+    title_tag = "h4",
     ...) {
 
   if (!class(narrative) %in% c("list", "character")) stop("narrative must be a list or character")

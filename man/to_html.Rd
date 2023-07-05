@@ -4,7 +4,7 @@
 \alias{to_html}
 \title{Format the Narrative with HTML tags for Interactive Reports and Applications}
 \usage{
-to_html(narrative, format_percentage = TRUE, title_tag = "h3", ...)
+to_html(narrative, format_percentage = TRUE, title_tag = "h4", ...)
 }
 \arguments{
 \item{narrative}{List of narratives returned by narrate_* function}

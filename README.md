@@ -69,16 +69,16 @@ narrative_one
 #> Total Sales across all Regions is 38790478.4.
 #> 
 #> $`Region by Sales`
-#> Outlying Regions by Sales are NA (18079736.4, 46.6 %), EMEA (13555412.7, 34.9 %).
+#> Outlying Regions by Sales are NA (18079736.4, 46.6 %) and EMEA (13555412.7, 34.9 %).
 #> 
 #> $`NA by Product`
-#> In NA, significant Products by Sales are Food & Beverage (7392821, 40.9 %), Electronics (3789132.7, 21 %).
+#> In NA, significant Products by Sales are Food & Beverage (7392821, 40.9 %) and Electronics (3789132.7, 21 %).
 #> 
 #> $`EMEA by Product`
-#> In EMEA, significant Products by Sales are Food & Beverage (5265113.2, 38.8 %), Electronics (3182803.4, 23.5 %).
+#> In EMEA, significant Products by Sales are Food & Beverage (5265113.2, 38.8 %) and Electronics (3182803.4, 23.5 %).
 #> 
 #> $`Product by Sales`
-#> Outlying Products by Sales are Food & Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).
+#> Outlying Products by Sales are Food & Beverage (15543469.7, 40.1 %) and Electronics (8608962.8, 22.2 %).
 ```
 
 You can analyze changes over time using `narrate_trend()` function:
@@ -96,16 +96,16 @@ narrative_two
 #> From 2020 YTD to 2021 YTD, Sales had an increase of 1.13 M (9.1 %, 12.42 M to 13.55 M).
 #> 
 #> $`Sales change by Region`
-#> Regions with biggest changes of Sales are NA (533.1 K, 9.1 %, 5.9 M to 6.4 M), EMEA (416.9 K, 9.91 %, 4.2 M to 4.6 M).
+#> Regions with biggest changes of Sales are NA (533.1 K, 9.1 %, 5.9 M to 6.4 M) and EMEA (416.9 K, 9.91 %, 4.2 M to 4.6 M).
 #> 
 #> $`NA by Product`
-#> In NA, significant Products by Sales change are Food & Beverage (243.3 K, 9.92 %, 2.5 M to 2.7 M), Tools (190.5 K, 32.72 %, 582.2 K to 772.7 K).
+#> In NA, significant Products by Sales change are Food & Beverage (243.3 K, 9.92 %, 2.5 M to 2.7 M) and Tools (190.5 K, 32.72 %, 582.2 K to 772.7 K).
 #> 
 #> $`EMEA by Product`
-#> In EMEA, significant Products by Sales change are Electronics (313.1 K, 36.05 %, 868.6 K to 1.2 M), Food & Beverage (244.8 K, 15.01 %, 1.6 M to 1.9 M).
+#> In EMEA, significant Products by Sales change are Electronics (313.1 K, 36.05 %, 868.6 K to 1.2 M) and Food & Beverage (244.8 K, 15.01 %, 1.6 M to 1.9 M).
 #> 
 #> $`Sales change by Product`
-#> Products with biggest changes of Sales are Food & Beverage (535.4 K, 10.63 %, 5 M to 5.6 M), Electronics (525.9 K, 19.79 %, 2.7 M to 3.2 M).
+#> Products with biggest changes of Sales are Food & Beverage (535.4 K, 10.63 %, 5 M to 5.6 M) and Electronics (525.9 K, 19.79 %, 2.7 M to 3.2 M).
 ```
 
 ## ChatGPT

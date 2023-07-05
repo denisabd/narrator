@@ -274,9 +274,7 @@ narrate_descriptive <- function(
         ")"
       )
     ) %>%
-      purrr::pmap(paste0) %>%
-      unlist() %>%
-      toString()
+      purrr::pmap(paste0)
 
     if (n_outliers > 1) {
       template_outlier_final <- template_outlier_multiple
@@ -290,6 +288,8 @@ narrate_descriptive <- function(
       template_outlier_final,
       .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
     )
+
+    outlier_insight <- toString(unlist(outlier_insight))
 
     if (template_selected == "multiple") {
       variables_l1 <- list(
@@ -375,9 +375,7 @@ narrate_descriptive <- function(
             ")"
           )
         ) %>%
-          purrr::pmap(paste0) %>%
-          unlist() %>%
-          toString()
+          purrr::pmap(paste0)
 
         if (n_outliers > 1) {
           template_outlier_l2_final <- template_outlier_l2_multiple
@@ -387,7 +385,12 @@ narrate_descriptive <- function(
           tempate_selected <- "single"
         }
 
-        narrative_outlier_l2 <- glue::glue(template_outlier_l2_final)
+        narrative_outlier_l2 <- glue::glue(
+          template_outlier_l2_final,
+          .transformer = collapse_transformer(sep = collapse_sep, last = collapse_last)
+        )
+
+        outlier_insight <- toString(unlist(outlier_insight))
 
         if (template_selected == "multiple") {
           variables_l2 <- list(
