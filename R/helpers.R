@@ -111,12 +111,12 @@ ytd_volume <- function(
   if (nrow(df) == 0) stop("df must have at least one row, execution is stopped")
 
   # Getting the right data types
-  df <- df %>%
-    dplyr::ungroup() %>%
-    tibble::as_tibble() %>%
-    readr::type_convert(na = c("")) %>%
-    suppressMessages() %>%
-    suppressWarnings()
+  # df <- df %>%
+  #   dplyr::ungroup() %>%
+  #   tibble::as_tibble() %>%
+  #   readr::type_convert(na = c("")) %>%
+  #   suppressMessages() %>%
+  #   suppressWarnings()
 
   # Summarization Assertion
   if (!summarization %in% c("sum", "count", "average")) stop("summarization must of be one of: 'sum', 'count' or 'mean'.")
@@ -187,6 +187,7 @@ ytd_volume <- function(
 #' @param summarization summarization field in series, one of the following methods - 'count', 'mean', 'sum'
 #' @param current_year add current year to avoid situation when some of the groups don't have data in latest periods and current year is estimated incorrectly
 #' @param py_date date to be used for PYTD calculation, if NULL then \code{get_py_date()} will be used by default
+#' @param frequency time series frequency
 #'
 #' @return \code{numeric} value
 #' @noRd
@@ -196,19 +197,20 @@ pytd_volume <- function(
     date = NULL,
     summarization = "sum",
     current_year = NULL,
-    py_date = NULL) {
+    py_date = NULL,
+    frequency = NULL) {
 
   # Table must be a data.frame and have at least one row
   if (!is.data.frame(df)) stop("df must be a data.frame or tibble")
   if (nrow(df) == 0) stop("df must have at least one row, execution is stopped")
 
   # Getting the right data types
-  df <- df %>%
-    dplyr::ungroup() %>%
-    tibble::as_tibble() %>%
-    readr::type_convert(na = c("")) %>%
-    suppressMessages() %>%
-    suppressWarnings()
+  # df <- df %>%
+  #   dplyr::ungroup() %>%
+  #   tibble::as_tibble() %>%
+  #   readr::type_convert(na = c("")) %>%
+  #   suppressMessages() %>%
+  #   suppressWarnings()
 
   # Summarization Assertion
   if (!summarization %in% c("sum", "count", "average")) stop("summarization must of be one of: 'sum', 'count' or 'mean'.")
@@ -242,7 +244,7 @@ pytd_volume <- function(
 
   # PY Date
   if (is.null(py_date)) {
-    py_date <- get_py_date(df)
+    py_date <- get_py_date(df, frequency = frequency)
   } else {
     py_date <- as.Date(py_date)
   }
@@ -393,6 +395,7 @@ get_descriptive_outliers <- function(
 #' @param coverage Portion of variability to be covered by narrative, 0 to 1
 #' @param coverage_limit Maximum number of elements to be narrated, overrides
 #' coverage to avoid extremely verbose narrative creation
+#' @param frequency Time series frequency
 #'
 #' @noRd
 get_trend_outliers <- function(
@@ -402,7 +405,8 @@ get_trend_outliers <- function(
     total = NULL,
     summarization = "sum",
     coverage = 0.5,
-    coverage_limit = 5) {
+    coverage_limit = 5,
+    frequency = NULL) {
 
   table <- df %>%
     dplyr::group_by(dplyr::across(dplyr::all_of(dimension))) %>%
@@ -413,7 +417,8 @@ get_trend_outliers <- function(
                                    measure = measure),
       prev_volume = purrr::map_dbl(data, pytd_volume,
                                    summarization = summarization,
-                                   measure = measure),
+                                   measure = measure,
+                                   frequency = frequency),
       change = curr_volume - prev_volume,
       change_p = paste(round(change/prev_volume*100, 2), "%"),
       abs_change = abs(change),

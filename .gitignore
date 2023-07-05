@@ -6,4 +6,5 @@ inst/doc
 docs
 sandbox
 package_prep.R
+profiling.R
 .DS_Store

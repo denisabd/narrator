@@ -22,7 +22,8 @@ narrate_forecast(
   presence_penalty = 0,
   forecast = "Forecast",
   actuals = "Actuals",
-  template_cy = "Forecasted volume for {current_year} is {format_num(cy_forecast)}",
+  template_cy =
+    "Forecasted volumes for {current_year} are equal to {format_num(cy_forecast)}",
   template_ftm = "Overall forecast for the next 12 months is {format_num(ftm_forecast)}",
   template_ftm_change =
     "Projected {trend} in the next 12 months is equal to {format_num(ftm_change)} ({ftm_change_p}\%).",

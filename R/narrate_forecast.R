@@ -60,7 +60,7 @@ narrate_forecast <- function(
     presence_penalty = 0,
     forecast = "Forecast",
     actuals = "Actuals",
-    template_cy = "Forecasted volume for {current_year} is {format_num(cy_forecast)}",
+    template_cy = "Forecasted volumes for {current_year} are equal to {format_num(cy_forecast)}",
     template_ftm = "Overall forecast for the next 12 months is {format_num(ftm_forecast)}",
     template_ftm_change = "Projected {trend} in the next 12 months is equal to {format_num(ftm_change)} ({ftm_change_p}%).",
     use_renviron = FALSE,
@@ -105,6 +105,10 @@ narrate_forecast <- function(
       stop("Date column is required in 'Date', 'dttm', 'POSIXlt' or 'POSIXct' formats")
     }
   }
+
+  # leaving only the neccessary fields
+  df <- df %>%
+    dplyr::select(dplyr::all_of(c(date, forecast, actuals)))
 
   if (!date %in% names(df)) stop("{date} is not a column in the data frame")
 

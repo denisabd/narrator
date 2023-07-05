@@ -356,7 +356,8 @@ narrate_trend <- function(
                          "count" = NULL),
           summarization = summarization,
           coverage = coverage,
-          coverage_limit = coverage_limit)
+          coverage_limit = coverage_limit,
+          frequency = frequency)
 
       if (is.null(output)) next
 
@@ -374,6 +375,27 @@ narrate_trend <- function(
         outlier_prev_volume <- format_num(outlier_prev_volume)
         outlier_change <- format_num(outlier_change)
       }
+
+      ###
+      # inc <- which(trend == "increase")
+      # dec <- which(trend == "decrease")
+      #
+      # outlier_insight_inc <- list(
+      #   outlier_levels[inc], " (", outlier_change[inc], ", ", outlier_change_p[inc], ", ",
+      #   outlier_prev_volume[inc], " to ", outlier_curr_volume[inc],")"
+      # ) %>%
+      #   purrr::pmap(paste0) %>%
+      #   unlist() %>%
+      #   toString()
+      #
+      # outlier_insight_dec <- list(
+      #   outlier_levels[dec], " (", outlier_change[dec], ", ", outlier_change_p[dec], ", ",
+      #   outlier_prev_volume[dec], " to ", outlier_curr_volume[dec],")"
+      # ) %>%
+      #   purrr::pmap(paste0) %>%
+      #   unlist() %>%
+      #   toString()
+      ###
 
       outlier_insight <- list(
         outlier_levels, " (", outlier_change, ", ", outlier_change_p, ", ",
@@ -463,7 +485,8 @@ narrate_trend <- function(
                              "count" = NULL),
               summarization = summarization,
               coverage = coverage,
-              coverage_limit = coverage_limit)
+              coverage_limit = coverage_limit,
+              frequency = frequency)
 
           if (is.null(output)) next
 
