@@ -112,7 +112,7 @@ realization:</p>
 <span><span class="co">#&gt; Total Sales across all Products is 38790478.4.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $narrative$`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %), Home (4599370.9, 11.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %) and Home (4599370.9, 11.9 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Total Sales`</span></span>
@@ -137,7 +137,7 @@ realization:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
 <span><span class="co">#&gt; $`Product by Sales`$narrative_outlier_final</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %), Home (4599370.9, 11.9 %).</span></span>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %) and Home (4599370.9, 11.9 %).</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`$template_outlier_multiple</span></span>
 <span><span class="co">#&gt; [1] "Outlying {pluralize(dimension)} by {measure} are {outlier_insight}."</span></span>
@@ -173,7 +173,7 @@ plural:</p>
 <span><span class="co">#&gt; Overall Sales for all Products are equal to 38790478.4. </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %) and Electronics (8608962.8, 22.2 %).</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sales</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/narrate_descriptive.html">narrate_descriptive</a></span><span class="op">(</span></span>
@@ -221,7 +221,7 @@ function name, underscore, and template name - <code>descriptive</code>
 <span><span class="co">#&gt; Total Sales across all Products is 38790478.4.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $`Product by Sales`</span></span>
-<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %), Electronics (8608962.8, 22.2 %).</span></span></code></pre></div>
+<span><span class="co">#&gt; Outlying Products by Sales are Food &amp; Beverage (15543469.7, 40.1 %) and Electronics (8608962.8, 22.2 %).</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="list-templates">List Templates<a class="anchor" aria-label="anchor" href="#list-templates"></a>
@@ -292,14 +292,14 @@ is {total}.</td>
 <td align="left">forecast</td>
 <td align="left">template_cy</td>
 <td align="left">Forecasted volumes for {current_year} are equal to
-{format_num(cy_forecast)}</td>
+{format_num(cy_forecast)}.</td>
 </tr>
 <tr class="even">
 <td align="left">narrate_forecast</td>
 <td align="left">forecast</td>
 <td align="left">template_ftm</td>
 <td align="left">Overall forecast for the next 12 months is
-{format_num(ftm_forecast)}</td>
+{format_num(ftm_forecast)}.</td>
 </tr>
 <tr class="odd">
 <td align="left">narrate_forecast</td>
