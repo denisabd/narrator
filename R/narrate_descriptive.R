@@ -43,7 +43,6 @@
 #' @param ... other arguments passed to \code{\link[glue]{glue}}
 #'
 #' @importFrom rlang :=
-#' @importFrom tidyselect where
 #' @importFrom utils head
 #'
 #' @return A [list()] of narratives by default and [character()] if `simplify = TRUE`

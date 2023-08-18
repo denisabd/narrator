@@ -25,7 +25,6 @@ Imports:
     tibble,
     purrr,
     magrittr,
-    tidyselect,
     rlang,
     V8,
     shiny,

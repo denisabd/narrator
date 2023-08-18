@@ -48,6 +48,6 @@ sales <- tibble::tibble(
 
 # Save Data
 sales %>%
-  readr::write_csv("data-raw/sales.csv")
+  readr::write_csv("data-raw/sales.csv", na = "")
 
 usethis::use_data(sales, overwrite = TRUE, internal = FALSE)
