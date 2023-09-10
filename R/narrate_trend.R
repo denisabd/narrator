@@ -2,7 +2,7 @@
 #'
 #' @inheritParams narrate_descriptive
 #' @param date Name of the date column to be used for time based analysis
-#' @param frequency Level of time based aggregation for comparing across years
+#' @param frequency Level of time based aggregation for comparing across years 'quarter', 'month', 'week'
 #' @param type Type of trend analysis to create: 1 or 'yoy', 2 or 'previous period', 3 or 'same period last year'
 #'
 #' @return A [list()] of narratives by default and [character()] if `simplify = TRUE`
@@ -109,7 +109,7 @@ narrate_trend <- function(
   if (length(date) == 0) stop("Trend narrative requires a measure")
 
   if (!any(class(df[[date]]) %in% c("Date", "POSIXct", "POSIXlt"))) {
-    stop(glue::glue("{date} must be a numeric column, but is {class(df[[date]])[1]}"))
+    stop(glue::glue("{date} must be a date column of class 'Date', 'POSIXct' or 'POSIXlt', but is {class(df[[date]])[1]}"))
   }
 
   if (is.null(frequency)) {
