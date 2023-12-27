@@ -41,7 +41,7 @@ narrate_forecast(
 
 \item{date}{Name of the date column to be used for time based analysis}
 
-\item{frequency}{Level of time based aggregation for comparing across years}
+\item{frequency}{Level of time based aggregation for comparing across years 'quarter', 'month', 'week'}
 
 \item{summarization}{Approach for data summarization/aggregation - 'sum', 'count' or 'average'}
 

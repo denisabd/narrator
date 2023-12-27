@@ -20,6 +20,32 @@ test_that("narrate_trend() works", {
   )
 })
 
+test_that("narrate_trend() works with date fields named as frequencies", {
+  expect_no_error(
+    narrator::sales %>%
+      dplyr::mutate(Month = lubridate::floor_date(Date, unit = "months")) %>%
+      dplyr::group_by(Region, Month) %>%
+      dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+      narrate_trend()
+  )
+
+  expect_no_error(
+    narrator::sales %>%
+      dplyr::mutate(Week = lubridate::floor_date(Date, unit = "weeks")) %>%
+      dplyr::group_by(Region, Week) %>%
+      dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+      narrate_trend()
+  )
+
+  expect_no_error(
+    narrator::sales %>%
+      dplyr::mutate(Quarter = lubridate::floor_date(Date, unit = "quarters")) %>%
+      dplyr::group_by(Region, Quarter) %>%
+      dplyr::summarise(Sales = sum(Sales, na.rm = TRUE)) %>%
+      narrate_trend()
+  )
+})
+
 test_that("narrate_trend() works", {
   expect_no_error(
     narrator::sales %>%

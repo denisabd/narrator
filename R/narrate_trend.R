@@ -324,6 +324,14 @@ narrate_trend <- function(
   if (frequency %in% c("quarter", "month", "week")) {
     time_dimension <- stringr::str_to_title(frequency)
 
+    # Fix if the name of date field is similar to frequency
+    if (date == time_dimension) {
+      df <- df %>%
+        dplyr::rename(Date := !!date)
+
+      date <- "Date"
+    }
+
     df <- df %>%
       dplyr::filter(lubridate::year(base::get(date)) >= lubridate::year(max_date) - 1) %>%
       dplyr::mutate(
