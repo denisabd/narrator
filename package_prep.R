@@ -27,7 +27,7 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 #usethis::use_lifecycle_badge(stage = "experimental")
 
 # devtools checks and test ---------------------------------------------------------
-devtools::test()
+devtools::check(remote = TRUE, manual = TRUE)
 devtools::check()
 
 # code coverage
@@ -38,9 +38,11 @@ usethis::use_release_issue()
 
 devtools::build_readme()
 urlchecker::url_check()
+
 devtools::check(remote = TRUE, manual = TRUE)
 devtools::check_win_devel()
 rhub::check_for_cran()
+#revdepcheck::revdep_check(num_workers = 6)
 
 # CRAN SUBMISSION
 #usethis::use_version('minor')

@@ -23,7 +23,7 @@ sales <- narrator::sales
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
+status](https://www.r-pkg.org/badges/version/narrator)
 [![Codecov test
 coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
 [![R-CMD-check](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml)

@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/narrator)](https://CRAN.R-project.org/package=narrator)
+\[![CRAN status](https://www.r-pkg.org/badges/version/narrator)
 [![Codecov test
 coverage](https://codecov.io/gh/denisabd/narrator/branch/main/graph/badge.svg)](https://app.codecov.io/gh/denisabd/narrator?branch=main)
 [![R-CMD-check](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/denisabd/narrator/actions/workflows/R-CMD-check.yaml)
@@ -135,6 +134,23 @@ narrative_enhanced <- enhance_narrative(narrative_one)
 cat(narrative_enhanced)
 ```
 
+Total Sales across all Regions amount to \$38,790,478.4. The Outlying
+Regions, namely North America (NA) and Europe, the Middle East, and
+Africa (EMEA), account for significant portions of these sales. NA
+contributes \$18,079,736.4, representing 46.6% of the total sales, while
+EMEA contributes \$13,555,412.7, representing 34.9%.
+
+Within the NA region, the top-performing product categories by sales are
+Food & Beverage, generating \$7,392,821 (40.9%), and Electronics,
+generating \$3,789,132.7 (21%). In the EMEA region, the significant
+product categories by sales are Food & Beverage, generating
+\$5,265,113.2 (38.8%), and Electronics, generating \$3,182,803.4
+(23.5%).
+
+When considering all regions, the outlying products that contribute
+significantly to sales are Food & Beverage, generating \$15,543,469.7
+(40.1%), and Electronics, generating \$8,608,962.8 (22.2%).
+
 ### Translation
 
 Translate you text using `translate_narrative()` function, specify
@@ -145,6 +161,25 @@ translation <- translate_narrative(narrative_enhanced, language = "Czech")
 cat(translation)
 ```
 
+Celkové tržby ve všech regionech činí 38 790 478,4 dolarů. Okrajové
+regiony, konkrétně Severní Amerika (NA) a Evropa, Střední východ a
+Afrika (EMEA), představují významnou část těchto tržeb. NA přispívá
+částkou 18 079 736,4 dolarů, což představuje 46,6% celkových tržeb,
+zatímco EMEA přispívá částkou 13 555 412,7 dolarů, což představuje
+34,9%.
+
+V rámci regionu NA jsou nejúspěšnějšími kategoriemi produktů podle tržeb
+potraviny a nápoje, které generují 7 392 821 dolarů (40,9%), a
+elektronika, která generuje 3 789 132,7 dolarů (21%). V regionu EMEA
+jsou významné kategorie produktů podle tržeb potraviny a nápoje, které
+generují 5 265 113,2 dolarů (38,8%), a elektronika, která generuje 3 182
+803,4 dolarů (23,5%).
+
+Při zohlednění všech regionů jsou okrajové produkty, které významně
+přispívají k tržbám, potraviny a nápoje, které generují 15 543 469,7
+dolarů (40,1%), a elektronika, která generuje 8 608 962,8 dolarů
+(22,2%).
+
 ### Summarization
 
 If your output is too verbose you can summarize it with
@@ -154,6 +189,13 @@ If your output is too verbose you can summarize it with
 summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
+
+Total Sales: \$38.8M with North America and EMEA leading. NA contributes
+\$18.1M (46.6%) and EMEA contributes \$13.6M (34.9%). Top product
+categories in NA are Food & Beverage (\$7.4M) and Electronics (\$3.8M).
+In EMEA, it’s Food & Beverage (\$5.3M) and Electronics (\$3.2M).
+Overall, Food & Beverage generates \$15.5M (40.1%) and Electronics
+generates \$8.6M (22.2%).
 
 # Python
 

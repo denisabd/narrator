@@ -1,4 +1,4 @@
-* This is a new release.
+* This is a new package submission.
 
 ## Test environments
 * local
@@ -11,13 +11,4 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* checking Rd line widths ... NOTE
-  Rd file 'narrate_descriptive.Rd':
-    \usage lines wider than 90 characters:
-  
-  Rd file 'narrate_forecast.Rd':
-    \usage lines wider than 90 characters:
-
-Usage lines wider than 90 characters for several functions are required since function arguments contain narrative templates and are longer.
+0 errors ✔ | 0 warnings ✔ | 1 note ✖

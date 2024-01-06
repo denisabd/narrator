@@ -1,16 +1,16 @@
 Package: narrator
-Title: Create Natural Language Text Narratives from the Data
+Title: Create Natural Language Text Narratives from Tabular Data
 Version: 0.1.0
 Authors@R: 
     person(
         given = "Denis", 
         family = "Abdullin", 
         email = "denisabdullincz@gmail.com", 
-        role = c("aut", "cre")
+        role = c("aut", "cre", "cph")
         )
 Description: Template-based natural language generation system that converts a data frames to textual narratives.
     Different narrative types are available depending on the data frame structure.
-    Narrative outputs can be further improved, translated or summarized using "ChatGPT".
+    Narrative outputs can be further improved, translated or summarized using 'OpenAI' API.
 License: MIT + file LICENSE
 URL: https://denisabd.github.io/narrator/
 BugReports: https://github.com/denisabd/narrator/issues/
@@ -31,17 +31,16 @@ Imports:
     htmltools,
     lubridate,
     tidyr,
+    jsonlite,
+    httr,
     DT,
     miniUI (>= 0.1.1)
 Suggests: 
     covr,
     knitr,
     rmarkdown,
-    reticulate,
     echarts4r,
     prophet,
-    jsonlite,
-    httr,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: 

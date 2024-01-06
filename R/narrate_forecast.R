@@ -54,7 +54,7 @@ narrate_forecast <- function(
     use_chatgpt = FALSE,
     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
     max_tokens = 1024,
-    temperature = 0.5,
+    temperature = 0,
     top_p = 1,
     frequency_penalty = 0,
     presence_penalty = 0,
