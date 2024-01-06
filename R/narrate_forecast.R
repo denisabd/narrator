@@ -10,7 +10,7 @@
 #' @return A [list()] of narratives by default and [character()] if `simplify = TRUE`
 #' @export
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("prophet")
 #' library(prophet)
 #' library(dplyr)
 #' library(tidyr)

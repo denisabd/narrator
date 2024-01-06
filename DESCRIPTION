@@ -39,7 +39,6 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    echarts4r,
     prophet,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr

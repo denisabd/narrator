@@ -3,12 +3,10 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   descriptive: descriptive.html
-  echarts: echarts.html
-  forecast: forecast.html
   formatting: formatting.html
   templates: templates.html
   trend: trend.html
-last_built: 2024-01-06T10:53Z
+last_built: 2024-01-06T12:59Z
 urls:
   reference: https://denisabd.github.io/narrator/reference
   article: https://denisabd.github.io/narrator/articles

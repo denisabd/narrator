@@ -105,6 +105,7 @@ A \code{\link[=list]{list()}} of narratives by default and \code{\link[=characte
 Create Narrative for Time Series Forecast Data Frames
 }
 \examples{
+\dontshow{if (rlang::is_installed("prophet")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(prophet)
 library(dplyr)
 library(tidyr)
@@ -136,4 +137,5 @@ df <- grouped_data \%>\%
                 Forecast = yhat)
 
 narrate_forecast(df)
+\dontshow{\}) # examplesIf}
 }
