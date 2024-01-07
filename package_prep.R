@@ -17,7 +17,7 @@ devtools::install(upgrade = "never", build_vignettes = TRUE)
 
 # website -----------------------------------------------------------------
 devtools::build_readme()
-pkgdown::build_site(lazy = FALSE, new_process = TRUE)
+pkgdown::build_site(lazy = TRUE, new_process = TRUE)
 
 # github actions
 # Run once
@@ -28,7 +28,7 @@ pkgdown::build_site(lazy = FALSE, new_process = TRUE)
 
 # devtools checks and test ---------------------------------------------------------
 devtools::check(remote = TRUE, manual = TRUE)
-devtools::check()
+devtools::test()
 
 # code coverage
 covr::report()
@@ -53,7 +53,6 @@ usethis::use_mit_license("Denis Abdullin")
 
 # vignettes ---------------------------------------------------------------
 usethis::use_vignette(name = "formatting", title = "Formatting Output")
-usethis::use_vignette(name = "echarts", title = "Narrate Echarts Plots")
 usethis::use_vignette(name = "templates", title = "Editing Templates")
 usethis::use_vignette(name = "trend", title = "Trend Narratives")
 

@@ -170,7 +170,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">narrative_enhanced</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/enhance_narrative.html">enhance_narrative</a></span><span class="op">(</span><span class="va">narrative_one</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales across all Regions amount to $38,790,478.4. The Outlying Regions, namely North America (NA) and Europe, the Middle East, and Africa (EMEA), account for significant portions of these sales. NA contributes $18,079,736.4, representing 46.6% of the total, while EMEA contributes $13,555,412.7, representing 34.9%.</p>
+<p>Total Sales across all Regions amount to $38,790,478.4. The Outlying Regions, namely North America (NA) and Europe, the Middle East, and Africa (EMEA), account for significant portions of these sales. NA contributes $18,079,736.4, representing 46.6% of the total sales, while EMEA contributes $13,555,412.7, representing 34.9%.</p>
 <p>Within the NA region, the top-performing product categories by sales are Food &amp; Beverage, generating $7,392,821 (40.9%), and Electronics, generating $3,789,132.7 (21%). In the EMEA region, the significant product categories by sales are Food &amp; Beverage, generating $5,265,113.2 (38.8%), and Electronics, generating $3,182,803.4 (23.5%).</p>
 <p>When considering all regions, the outlying products that contribute significantly to sales are Food &amp; Beverage, generating $15,543,469.7 (40.1%), and Electronics, generating $8,608,962.8 (22.2%).</p>
 <div class="section level3">
@@ -180,8 +180,8 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">translation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/translate_narrative.html">translate_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span>, language <span class="op">=</span> <span class="st">"Czech"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">translation</span><span class="op">)</span></span></code></pre></div>
-<p>Celkové tržby ve všech regionech činí 38 790 478,4 dolarů. Okrajové regiony, konkrétně Severní Amerika (NA) a Evropa, Střední východ a Afrika (EMEA), představují významnou část těchto tržeb. NA přispívá částkou 18 079 736,4 dolarů, což představuje 46,6% celkového objemu, zatímco EMEA přispívá částkou 13 555 412,7 dolarů, což představuje 34,9%.</p>
-<p>V rámci regionu NA jsou nejúspěšnějšími kategoriemi produktů podle tržeb potraviny a nápoje, které generují 7 392 821 dolarů (40,9%), a elektronika, která generuje 3 789 132,7 dolarů (21%). V regionu EMEA jsou významné kategorie produktů podle tržeb potraviny a nápoje, které generují 5 265 113,2 dolarů (38,8%), a elektronika, která generuje 3 182 803,4 dolarů (23,5%).</p>
+<p>Celkové tržby ve všech regionech činí 38 790 478,4 dolarů. Okrajové regiony, konkrétně Severní Amerika (NA) a Evropa, Střední východ a Afrika (EMEA), představují významnou část těchto tržeb. NA přispívá částkou 18 079 736,4 dolarů, což představuje 46,6% celkových tržeb, zatímco EMEA přispívá částkou 13 555 412,7 dolarů, což představuje 34,9%.</p>
+<p>V rámci regionu NA jsou nejúspěšnějšími kategoriemi produktů podle tržeb potraviny a nápoje, které generují 7 392 821 dolarů (40,9%), a elektronika, která generuje 3 789 132,7 dolarů (21%). V regionu EMEA jsou významnými kategoriemi produktů podle tržeb potraviny a nápoje, které generují 5 265 113,2 dolarů (38,8%), a elektronika, která generuje 3 182 803,4 dolarů (23,5%).</p>
 <p>Při zohlednění všech regionů jsou okrajové produkty, které významně přispívají k tržbám, potraviny a nápoje, které generují 15 543 469,7 dolarů (40,1%), a elektronika, která generuje 8 608 962,8 dolarů (22,2%).</p>
 </div>
 <div class="section level3">
@@ -191,7 +191,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summarization</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarize_narrative.html">summarize_narrative</a></span><span class="op">(</span><span class="va">narrative_enhanced</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">summarization</span><span class="op">)</span></span></code></pre></div>
-<p>Total Sales: $38.8M across North America and EMEA regions. NA contributes $18.1M (46.6%) and EMEA contributes $13.6M (34.9%). Top product categories in NA are Food &amp; Beverage ($7.4M) and Electronics ($3.8M). In EMEA, it’s Food &amp; Beverage ($5.3M) and Electronics ($3.2M). Overall, Food &amp; Beverage generates $15.5M (40.1%) and Electronics generates $8.6M (22.2%).</p>
+<p>Total Sales: $38.8M with North America and EMEA leading. NA contributes $18.1M (46.6%) and EMEA contributes $13.6M (34.9%). Top product categories in NA are Food &amp; Beverage ($7.4M) and Electronics ($3.8M). In EMEA, it’s Food &amp; Beverage ($5.3M) and Electronics ($3.2M). Overall, Food &amp; Beverage generates $15.5M (40.1%) and Electronics generates $8.6M (22.2%).</p>
 </div>
 </div>
 </div>

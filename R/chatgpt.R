@@ -65,7 +65,7 @@ enhance_narrative <- function(
   narrative <- paste(narrative, collapse = " ")
 
   output <- paste0(prompt, narrative) %>%
-    gpt_get_completions(
+    get_completions(
       openai_api_key = openai_api_key,
       max_tokens = max_tokens,
       temperature = temperature,
@@ -123,7 +123,7 @@ translate_narrative <- function(
   narrative <- paste(narrative, collapse = " ")
 
   output <- paste(prompt, language, ':', narrative) %>%
-    gpt_get_completions(
+    get_completions(
       openai_api_key = openai_api_key,
       max_tokens = max_tokens,
       temperature = temperature,
@@ -182,7 +182,7 @@ summarize_narrative <- function(
     prompt,
     narrative
   ) %>%
-    gpt_get_completions(
+    get_completions(
       openai_api_key = openai_api_key,
       max_tokens = max_tokens,
       temperature = temperature,
@@ -210,7 +210,7 @@ summarize_narrative <- function(
 #' increasing the model's likelihood to talk about new topics.
 #'
 #' @noRd
-gpt_get_completions <- function(
+get_completions <- function(
     prompt,
     openai_api_key = Sys.getenv("OPENAI_API_KEY"),
     max_tokens = 1024,

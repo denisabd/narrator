@@ -1,4 +1,6 @@
 test_that("narrate_forecast() works", {
+  testthat::skip_if_not_installed("prophet")
+
   fit_prophet <- function(data) {
     model <- suppressMessages(prophet::prophet(data))
     future <- prophet::make_future_dataframe(model, periods = 12, freq = "month")
