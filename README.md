@@ -171,9 +171,9 @@ zatímco EMEA přispívá částkou 13 555 412,7 dolarů, což představuje
 V rámci regionu NA jsou nejúspěšnějšími kategoriemi produktů podle tržeb
 potraviny a nápoje, které generují 7 392 821 dolarů (40,9%), a
 elektronika, která generuje 3 789 132,7 dolarů (21%). V regionu EMEA
-jsou významnými kategoriemi produktů podle tržeb potraviny a nápoje,
-které generují 5 265 113,2 dolarů (38,8%), a elektronika, která generuje
-3 182 803,4 dolarů (23,5%).
+jsou významné kategorie produktů podle tržeb potraviny a nápoje, které
+generují 5 265 113,2 dolarů (38,8%), a elektronika, která generuje 3 182
+803,4 dolarů (23,5%).
 
 Při zohlednění všech regionů jsou okrajové produkty, které významně
 přispívají k tržbám, potraviny a nápoje, které generují 15 543 469,7
@@ -190,12 +190,9 @@ summarization <- summarize_narrative(narrative_enhanced)
 cat(summarization)
 ```
 
-Total Sales: \$38.8M with North America and EMEA leading. NA contributes
-\$18.1M (46.6%) and EMEA contributes \$13.6M (34.9%). Top product
-categories in NA are Food & Beverage (\$7.4M) and Electronics (\$3.8M).
-In EMEA, it’s Food & Beverage (\$5.3M) and Electronics (\$3.2M).
-Overall, Food & Beverage generates \$15.5M (40.1%) and Electronics
-generates \$8.6M (22.2%).
+Total Sales: \$38.8M across North America and EMEA regions. NA
+contributes \$18.1M (46.6%) and EMEA contributes \$13.6M (34.9%). Top
+product categories: Food & Beverage and Electronics.
 
 # Python
 
